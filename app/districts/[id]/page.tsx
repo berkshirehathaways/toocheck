@@ -1,7 +1,12 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
-import { CandidateCard } from '@/components/domain';
+import {
+  CandidateCard,
+  ChipDivider,
+  HudLabel,
+  StatusChip,
+} from '@/components/domain';
 import { SortSelector } from '@/components/domain/SortSelector';
 import { formatSourceBasis } from '@/lib/format-date';
 import { isSortKey, sortCompareRows, type SortKey } from '@/lib/api/sort';
@@ -37,28 +42,38 @@ export default async function DistrictPage({ params, searchParams }: PageProps) 
   const election = getElection(district.electionId);
   const sort: SortKey = isSortKey(sortParam) ? sortParam : 'ballot';
   const rows = sortCompareRows(getCompareData(id), sort);
-  const basisDate = formatSourceBasis(getDistrictSourceCheckedAt(id));
+  const basis = formatSourceBasis(getDistrictSourceCheckedAt(id));
 
   return (
-    <main className="mx-auto max-w-4xl px-4 py-6">
-      <div className="sticky top-0 z-10 -mx-4 mb-4 border-b border-border bg-background/95 px-4 py-3 backdrop-blur">
-        <div className="flex flex-wrap items-baseline justify-between gap-2">
-          <div>
-            <p className="text-xs uppercase tracking-[0.22em] text-muted-foreground">
-              {election?.name ?? '선거'}
-            </p>
-            <h1 className="text-xl font-semibold tracking-tight">{district.name}</h1>
-            <p className="text-xs text-muted-foreground">{basisDate}</p>
+    <main className="mx-auto max-w-6xl px-6 py-6">
+      <div className="sticky top-14 z-30 -mx-6 mb-6 border-b border-hair bg-bg/90 px-6 py-4 backdrop-blur">
+        <div className="flex flex-wrap items-end justify-between gap-3">
+          <div className="space-y-2">
+            <StatusChip tone="live">
+              <span>DISTRICT</span>
+              <ChipDivider />
+              <span>SAMPLE_GA</span>
+              <ChipDivider />
+              <span>BASIS / {basis}</span>
+            </StatusChip>
+            <h1 className="font-ko text-2xl font-bold text-ink">
+              {district.name}
+              <span className="mono mono-10 ml-3 text-dim">
+                · {election?.name}
+              </span>
+            </h1>
           </div>
           <SortSelector basePath={`/districts/${id}`} current={sort} />
         </div>
       </div>
 
-      <p className="mb-4 text-xs text-muted-foreground">
-        {district.description ?? '본 화면의 후보 정보는 공개자료 기준이며, 자료가 비어 있는 항목은 빈칸으로 둡니다.'}
+      <p className="mono mono-10 mb-5 text-dim">
+        <span className="normal-case tracking-normal" style={{ letterSpacing: 0 }}>
+          {district.description ?? '본 화면의 모든 정보는 공개자료 기준이며, 자료가 비어 있는 항목은 빈칸으로 둡니다.'}
+        </span>
       </p>
 
-      <div className="grid gap-3 sm:grid-cols-2">
+      <div className="grid gap-px bg-hair sm:grid-cols-2 lg:grid-cols-3">
         {rows.map((row) => {
           const top = listPromises(row.candidate.id)
             .slice()
@@ -70,18 +85,19 @@ export default async function DistrictPage({ params, searchParams }: PageProps) 
               candidate={row.candidate}
               row={row}
               topPromises={top}
+              basisDate={basis}
+              className="border-0"
             />
           );
         })}
       </div>
 
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-2 text-xs text-muted-foreground">
-        <Link href={`/districts/${id}/compare`} className="underline-offset-2 hover:underline">
+      <div className="mono mono-10 mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-hair pt-6 text-dim">
+        <Link href="/districts" className="hover:text-cyan">← 다른 지역 선택</Link>
+        <Link href={`/districts/${id}/compare`} className="text-cyan hover:underline">
           후보 비교표 보기 →
         </Link>
-        <Link href="/correction" className="underline-offset-2 hover:underline">
-          자료에 오류가 있다면 정정 요청
-        </Link>
+        <Link href="/correction" className="hover:text-cyan">정정 요청 →</Link>
       </div>
     </main>
   );

@@ -10,22 +10,41 @@ const config: Config = {
   theme: {
     container: {
       center: true,
-      padding: '1rem',
+      padding: '1.5rem',
       screens: {
-        '2xl': '1200px',
+        '2xl': '1280px',
       },
     },
     extend: {
       fontFamily: {
         sans: [
-          'Pretendard',
+          'var(--font-body)',
           'Pretendard Variable',
+          'Pretendard',
           '-apple-system',
           'BlinkMacSystemFont',
           'system-ui',
-          'Roboto',
           'sans-serif',
         ],
+        display: [
+          'var(--font-display-en)',
+          'Bebas Neue',
+          'Rajdhani',
+          'sans-serif',
+        ],
+        ko: [
+          'Pretendard Variable',
+          'Pretendard',
+          'system-ui',
+          'sans-serif',
+        ],
+        mono: [
+          'var(--font-mono)',
+          'JetBrains Mono',
+          'ui-monospace',
+          'monospace',
+        ],
+        serif: ['Fraunces', 'Iowan Old Style', 'Georgia', 'serif'],
       },
       fontSize: {
         base: ['15px', '1.6'],
@@ -60,6 +79,23 @@ const config: Config = {
           DEFAULT: 'hsl(var(--destructive))',
           foreground: 'hsl(var(--destructive-foreground))',
         },
+        cyan: {
+          DEFAULT: '#06b6d4',
+          glow: 'rgba(6,182,212,0.4)',
+        },
+        lime: {
+          DEFAULT: '#bef264',
+          glow: 'rgba(190,242,100,0.4)',
+        },
+        ink: '#F3F4F6',
+        dim: 'rgba(243,244,246,0.55)',
+        faint: 'rgba(243,244,246,0.10)',
+        hair: 'rgba(255,255,255,0.10)',
+        'hair-soft': 'rgba(255,255,255,0.06)',
+        bg: {
+          DEFAULT: '#050505',
+          elev: '#0c0d10',
+        },
         signal: {
           info: '#3b6fb0',
           check: '#a86b1f',
@@ -67,9 +103,10 @@ const config: Config = {
         },
       },
       borderRadius: {
+        none: '0',
         lg: 'var(--radius)',
-        md: 'calc(var(--radius) - 2px)',
-        sm: 'calc(var(--radius) - 4px)',
+        md: 'calc(var(--radius) + 2px)',
+        sm: 'calc(var(--radius) + 4px)',
       },
     },
   },

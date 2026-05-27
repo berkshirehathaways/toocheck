@@ -1,23 +1,11 @@
-/* 결정 E13: A4 가로 1페이지 인쇄 지원 */
 @media print {
-  @page {
-    size: A4 landscape;
-    margin: 12mm;
-  }
-  body {
-    background: white !important;
-    color: black !important;
-  }
-  header > div {
-    page-break-inside: avoid;
-  }
-  table {
-    font-size: 11px !important;
-  }
-  .md\:hidden {
-    display: none !important;
-  }
-  .hidden.md\:block {
-    display: block !important;
-  }
+  @page { size: A4 landscape; margin: 12mm; }
+  html, body { background: #ffffff !important; color: #050505 !important; }
+  header > div { page-break-inside: avoid; }
+  table { font-size: 11px !important; }
+  .md\:hidden { display: none !important; }
+  .hidden.md\:block { display: block !important; }
+  .hud-panel { background: #ffffff !important; border-color: #cbd0d6 !important; }
+  thead tr { background: #f4f5f7 !important; color: #050505 !important; }
+  th, td { color: #050505 !important; }
 }

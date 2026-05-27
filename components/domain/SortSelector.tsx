@@ -11,7 +11,6 @@ export interface SortSelectorProps {
 export function SortSelector({ basePath, current }: SortSelectorProps) {
   const router = useRouter();
   const params = useSearchParams();
-
   const onChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const v = e.target.value;
     if (!isSortKey(v)) return;
@@ -23,13 +22,13 @@ export function SortSelector({ basePath, current }: SortSelectorProps) {
   };
 
   return (
-    <label className="inline-flex items-center gap-2 text-xs text-muted-foreground">
-      <span className="sr-only">정렬</span>
-      <span aria-hidden>정렬</span>
+    <label className="mono mono-10 inline-flex items-center gap-2 text-dim">
+      <span aria-hidden>정렬 //</span>
       <select
         value={current}
         onChange={onChange}
-        className="rounded-md border border-border bg-background px-2 py-1 text-xs text-foreground focus:outline-none focus:ring-2 focus:ring-ring"
+        className="mono mono-10 border border-hair bg-bg px-2 py-1 text-ink focus:outline-none focus:ring-1 focus:ring-cyan"
+        aria-label="정렬"
       >
         {SORT_KEYS.map((k) => (
           <option key={k} value={k}>

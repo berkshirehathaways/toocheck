@@ -1,14 +1,16 @@
 import * as React from 'react';
 import { cn } from '@/lib/utils';
 
-type Tone = 'neutral' | 'info' | 'check' | 'attention' | 'muted';
+type Tone = 'neutral' | 'info' | 'check' | 'attention' | 'muted' | 'lime' | 'cyan';
 
 const TONE_CLS: Record<Tone, string> = {
-  neutral: 'bg-secondary text-secondary-foreground border-border',
-  info: 'bg-[#eaf1f9] text-[#1f4068] border-[#bcd0e5]',
-  check: 'bg-[#f6ebd9] text-[#6a4316] border-[#e2c79a]',
-  attention: 'bg-[#f1dada] text-[#5a1f1f] border-[#d6a8a8]',
-  muted: 'bg-muted text-muted-foreground border-border',
+  neutral: 'border-hair bg-bg-elev text-ink/85',
+  muted: 'border-hair-soft bg-bg-elev text-dim',
+  info: 'border-[#2c4b73] bg-[#15243a] text-[#9bbbe2]',
+  check: 'border-[#594321] bg-[#322411] text-[#e0b075]',
+  attention: 'border-[#5b2424] bg-[#2a1414] text-[#e09b9b]',
+  lime: 'border-lime/40 bg-lime/10 text-lime',
+  cyan: 'border-cyan/40 bg-cyan/10 text-cyan',
 };
 
 export interface NeutralBadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
@@ -20,7 +22,7 @@ export function NeutralBadge({ tone = 'neutral', className, children, ...props }
   return (
     <span
       className={cn(
-        'inline-flex items-center gap-1 rounded-md border px-2 py-0.5 text-xs font-medium',
+        'inline-flex items-center gap-1 border px-2 py-0.5 text-[11px] font-medium leading-none',
         TONE_CLS[tone],
         className
       )}

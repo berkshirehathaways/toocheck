@@ -1,6 +1,5 @@
 import { cn } from '@/lib/utils';
 
-// 결정 E11: 텍스트 + 인라인 막대 (full-width)
 export interface AssetBreakdownBarProps {
   breakdown: { realEstate: number; deposit: number; securities: number; other: number };
   className?: string;
@@ -11,17 +10,17 @@ const SEGMENTS: Array<{
   label: string;
   cls: string;
 }> = [
-  { key: 'realEstate', label: '부동산', cls: 'bg-foreground/85' },
-  { key: 'deposit', label: '예금', cls: 'bg-foreground/55' },
-  { key: 'securities', label: '증권', cls: 'bg-foreground/35' },
-  { key: 'other', label: '기타', cls: 'bg-foreground/20' },
+  { key: 'realEstate', label: '부동산', cls: 'bg-ink/85' },
+  { key: 'deposit', label: '예금', cls: 'bg-cyan/70' },
+  { key: 'securities', label: '증권', cls: 'bg-lime/70' },
+  { key: 'other', label: '기타', cls: 'bg-ink/25' },
 ];
 
 export function AssetBreakdownBar({ breakdown, className }: AssetBreakdownBarProps) {
   const total = SEGMENTS.reduce((a, s) => a + (breakdown[s.key] ?? 0), 0) || 1;
   return (
     <div className={cn('space-y-2', className)}>
-      <div className="flex h-2.5 w-full overflow-hidden rounded-full bg-muted">
+      <div className="flex h-2 w-full overflow-hidden border border-hair bg-bg">
         {SEGMENTS.map((s) => {
           const v = breakdown[s.key] ?? 0;
           if (v === 0) return null;
@@ -35,12 +34,12 @@ export function AssetBreakdownBar({ breakdown, className }: AssetBreakdownBarPro
           );
         })}
       </div>
-      <ul className="flex flex-wrap gap-x-3 gap-y-1 text-xs text-muted-foreground">
+      <ul className="mono mono-10 flex flex-wrap gap-x-3 gap-y-1 text-dim">
         {SEGMENTS.map((s) => (
-          <li key={s.key} className="inline-flex items-center gap-1">
-            <span className={cn('h-2 w-2 rounded-sm', s.cls)} aria-hidden />
+          <li key={s.key} className="inline-flex items-center gap-1.5">
+            <span className={cn('block h-1.5 w-1.5', s.cls)} aria-hidden />
             <span>
-              {s.label} {breakdown[s.key] ?? 0}%
+              {s.label} <span className="tabular-nums text-ink/85">{breakdown[s.key] ?? 0}%</span>
             </span>
           </li>
         ))}
