@@ -1,27 +1,32 @@
 import type { Metadata, Viewport } from 'next';
+import { SITE } from '@/lib/site/config';
+import { SiteHeader } from '@/components/layout/Header';
+import { SiteFooter } from '@/components/layout/Footer';
 import './globals.css';
 
-const SITE_NAME = '투표 전 체크';
-const SITE_NAME_EN = 'Toocheck';
-const SITE_URL = 'https://toocheck.site';
-const DESCRIPTION =
-  '공개자료를 바탕으로 후보자 정보를 비교해 보여주는 비당파 도구. 후보 지지·반대 의도가 없습니다.';
+const TITLE = `${SITE.nameKo} · ${SITE.nameEn}`;
 
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_URL),
+  metadataBase: new URL(SITE.url),
   title: {
-    default: `${SITE_NAME} · ${SITE_NAME_EN}`,
-    template: `%s · ${SITE_NAME}`,
+    default: TITLE,
+    template: `%s · ${SITE.nameKo}`,
   },
-  description: DESCRIPTION,
-  applicationName: SITE_NAME,
+  description: SITE.disclaimerLong,
+  applicationName: SITE.nameKo,
+  keywords: ['선거', '후보자', '공개자료', '비당파', '비교'],
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
-    url: SITE_URL,
-    siteName: SITE_NAME,
-    title: `${SITE_NAME} · ${SITE_NAME_EN}`,
-    description: DESCRIPTION,
+    url: SITE.url,
+    siteName: SITE.nameKo,
+    title: TITLE,
+    description: SITE.disclaimerShort,
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: TITLE,
+    description: SITE.disclaimerShort,
   },
   robots: {
     index: false,
@@ -39,7 +44,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ko" suppressHydrationWarning>
-      <body>{children}</body>
+      <body className="flex min-h-screen flex-col">
+        <SiteHeader />
+        <div className="flex-1">{children}</div>
+        <SiteFooter />
+      </body>
     </html>
   );
 }
