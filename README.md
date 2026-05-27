@@ -37,6 +37,14 @@ toocheck/
 
 `docs/issues/README.md` 참조. Phase 0 (#1~#3) 직렬 → Phase 1 (#4 후 #5~#9·#11 병렬) → Phase 2 (#10·#12).
 
+## QA
+
+- `pnpm test` — vitest 단위테스트 (lib/* + loader + sort)
+- `pnpm check:forbidden` — 시드 텍스트가 forbidden-words 사전 통과 확인
+- `pnpm e2e` — Playwright 골든 패스 (랜딩 → 후보 목록 → 상세 → 비교 → 정정 요청)
+  - 최초 1회 `pnpm exec playwright install --with-deps chromium` 필요
+- Lighthouse 목표 (모바일): **Performance 80 / Accessibility 90**
+
 ## 라이선스
 
 미정 (레포 private 유지, public 전환 시점 재검토 — 결정 [A5](https://github.com/shaun0927/toocheck/issues/13#a5)).
