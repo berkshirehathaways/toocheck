@@ -1,0 +1,52 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222 12% 12%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 12% 12%;
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 42%;
+    --primary: 222 12% 18%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 220 14% 96%;
+    --secondary-foreground: 222 12% 18%;
+    --accent: 220 14% 96%;
+    --accent-foreground: 222 12% 18%;
+    --destructive: 0 70% 38%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 13% 88%;
+    --input: 220 13% 88%;
+    --ring: 222 12% 18%;
+    --radius: 0.5rem;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    font-feature-settings: 'tnum' on, 'lnum' on;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont,
+      system-ui, Roboto, 'Helvetica Neue', 'Segoe UI', 'Apple SD Gothic Neo',
+      'Noto Sans KR', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    word-break: keep-all;
+    overflow-wrap: anywhere;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-foreground;
+  }
+}
