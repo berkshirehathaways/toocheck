@@ -4,6 +4,7 @@ const nextConfig = {
   images: {
     remotePatterns: [],
   },
+  serverExternalPackages: ['@resvg/resvg-js'],
 };
 
 export default nextConfig;
