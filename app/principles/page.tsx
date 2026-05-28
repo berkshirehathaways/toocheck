@@ -44,10 +44,10 @@ export default function PrinciplesPage() {
   return (
     <main className="mx-auto max-w-3xl space-y-8 px-6 py-12">
       <header className="space-y-3">
-        <HudLabel tone="cyan">서비스 원칙 · 5가지</HudLabel>
+        <HudLabel tone="cyan">모든 화면·시드·정정 처리에 일관 적용</HudLabel>
         <h1 className="display-ko text-4xl font-bold text-ink">서비스 원칙</h1>
         <p className="text-[14.5px] text-ink/75">
-          {SITE.nameKo}는 다음 5가지 원칙 아래에서 운영됩니다. 본 원칙은 모든 화면·시드·정정 처리에 일관 적용됩니다.
+          {SITE.nameKo}는 다음 {PRINCIPLES.length}가지 원칙 아래에서 운영됩니다.
         </p>
       </header>
 

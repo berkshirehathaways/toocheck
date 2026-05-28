@@ -36,13 +36,13 @@ export default async function ComparePage({ params, searchParams }: PageProps) {
     <main className="mx-auto max-w-6xl px-6 py-6">
       <header className="mb-6 space-y-3">
         <StatusChip tone="live">
-          <span>비교</span><ChipDivider /><span>{district.name}</span><ChipDivider /><span>기준일 · {basis}</span>
+          <span>후보 {rows.length}명</span><ChipDivider /><span>11개 항목</span><ChipDivider /><span>기준일 · {basis}</span>
         </StatusChip>
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <HudLabel tone="cyan">후보 비교표 · 11항목</HudLabel>
+            <HudLabel tone="cyan">한 화면에서 11개 항목을 나란히</HudLabel>
             <h1 className="display-ko mt-2 text-2xl font-bold text-ink">
-              {district.name} · 후보 비교표
+              {district.name} · 비교표
             </h1>
           </div>
           <div className="flex flex-wrap items-center gap-3 print:hidden">

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { HudLabel, LimeStamp, RegistrationMarks } from '@/components/domain';
 import { SITE } from '@/lib/site/config';
-import { listDistricts, listElections } from '@/mocks/loader';
+import { listCandidates, listDistricts, listElections } from '@/mocks/loader';
 
 export const metadata = {
   title: '지역 선택',
@@ -11,21 +11,23 @@ export const metadata = {
 export default function DistrictListPage() {
   const elections = listElections();
   const lookups = elections.map((e) => ({ election: e, districts: listDistricts(e.id) }));
+  const totalDistricts = lookups.reduce((a, x) => a + x.districts.length, 0);
+  const sampleCandCount = listCandidates(SITE.testDistrictId).length;
 
   return (
     <main className="mx-auto max-w-3xl space-y-8 px-6 py-12">
       <header className="space-y-2">
-        <HudLabel tone="cyan">지역 선택</HudLabel>
+        <HudLabel tone="cyan">{totalDistricts}개 지역 등록 · 정식 베타 준비 중</HudLabel>
         <h1 className="display-ko text-4xl font-bold text-ink">지역 선택</h1>
         <p className="text-sm text-ink/75">
           정식 베타 단계에서는 우편번호·주소 검색으로 지역구를 안내합니다.
-          현재는 아래 테스트 지역 1곳을 이용해 주세요.
+          현재는 아래 테스트 지역을 이용해 주세요.
         </p>
       </header>
 
       <section className="relative hud-panel p-5">
         <RegistrationMarks color="dim" inset={8} />
-        <HudLabel tone="dim">우편번호 검색 · 준비 중</HudLabel>
+        <HudLabel tone="dim">정식 베타 단계에 활성화 예정</HudLabel>
         <h2 className="mt-2 font-ko text-base font-bold text-ink/80">우편번호로 지역 찾기</h2>
         <div aria-disabled className="mt-3 flex flex-col gap-2 sm:flex-row">
           <input
@@ -51,11 +53,13 @@ export default function DistrictListPage() {
       <section className="relative hud-panel p-6">
         <RegistrationMarks color="cyan" inset={8} />
         <div className="absolute -top-3 left-6">
-          <LimeStamp rotate={-4}>테스트 지역 · 시연용</LimeStamp>
+          <LimeStamp rotate={-4}>시연용 가상 데이터</LimeStamp>
         </div>
-        <HudLabel tone="cyan">샘플 시 가나구청장</HudLabel>
+        <HudLabel tone="cyan">후보 {sampleCandCount}명 등록 · 2026 지방선거</HudLabel>
         <h2 className="mt-3 font-ko text-2xl font-bold text-ink">샘플 시 가나구청장</h2>
-        <p className="label-ko mt-1 text-dim">2026 지방선거 · 후보 04명</p>
+        <p className="label-ko mt-1 text-dim">
+          공약 비교 · 공개자료 · 함께 확인할 지점까지 한 화면에서 살펴봅니다.
+        </p>
         <Link
           href={`/districts/${SITE.testDistrictId}`}
           className="label-ko-lg mt-5 inline-flex items-center gap-2 border border-cyan bg-cyan px-5 py-3 text-bg transition-colors hover:bg-ink hover:border-ink"
@@ -68,15 +72,13 @@ export default function DistrictListPage() {
       </section>
 
       <section className="space-y-2">
-        <HudLabel tone="dim">등록된 선거</HudLabel>
+        <HudLabel tone="dim">등록된 선거 {elections.length}건</HudLabel>
         <ul className="label-ko divide-y divide-hair border border-hair text-ink/80">
           {lookups.map(({ election, districts }) => (
             <li key={election.id} className="flex flex-wrap items-center gap-3 px-3 py-2.5">
               <span className="text-cyan tabular-nums">{election.electionDate.replace(/-/g, '.')}</span>
-              <span className="font-medium text-ink">
-                {election.name}
-              </span>
-              <span className="ml-auto text-dim">지역 {String(districts.length).padStart(2, '0')}곳</span>
+              <span className="font-medium text-ink">{election.name}</span>
+              <span className="ml-auto text-dim">지역 {districts.length}곳</span>
               <span className="text-lime">진행 중</span>
             </li>
           ))}

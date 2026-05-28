@@ -59,7 +59,7 @@ export function CandidateCard({ candidate, row, topPromises, basisDate, classNam
 
       <div className="mb-3">
         <h3 className="font-ko text-2xl font-bold tracking-tight text-ink">{candidate.name}</h3>
-        <p className="label-ko mt-1 text-dim">· {candidate.party}</p>
+        <p className="label-ko mt-1 text-dim">{candidate.party}</p>
       </div>
 
       {pending ? (

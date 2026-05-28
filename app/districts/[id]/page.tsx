@@ -49,17 +49,14 @@ export default async function DistrictPage({ params, searchParams }: PageProps) 
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div className="space-y-2">
             <StatusChip tone="live">
-              <span>지역</span>
+              <span>후보 {rows.length}명</span>
               <ChipDivider />
-              <span>{district.name}</span>
+              <span>{election?.name}</span>
               <ChipDivider />
               <span>기준일 · {basis}</span>
             </StatusChip>
             <h1 className="font-ko text-2xl font-bold text-ink">
               {district.name}
-              <span className="label-ko ml-3 text-dim">
-                · {election?.name}
-              </span>
             </h1>
           </div>
           <SortSelector basePath={`/districts/${id}`} current={sort} />
