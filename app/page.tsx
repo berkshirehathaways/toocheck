@@ -34,15 +34,16 @@ export default function HomePage() {
             <div className="mt-5 inline-block">
               <LimeStamp rotate={-4}>검수 완료 · {SITE.team}</LimeStamp>
             </div>
-            <h1 className="mt-6 display-ko text-[clamp(40px,7.5vw,84px)] text-ink">
-              공약은 보고,
+            <h1 className="mt-6 display-ko text-[clamp(44px,8vw,96px)] text-ink">
+              당신의 후보는,
               <br />
-              <span className="stroke-cyan">자료는 확인하고,</span>
-              <br />
-              판단은{' '}
-              <span className="lime-block">본인</span>
-              이.
+              <span className="stroke-cyan">어떤 </span>
+              <span className="lime-block">사람</span>
+              <span className="stroke-cyan">입니까?</span>
             </h1>
+            <p className="mt-6 display-ko text-2xl font-bold tracking-tight text-ink sm:text-3xl">
+              투표 전 체크, 투<span className="text-cyan">체크</span>
+            </p>
             <p className="mt-6 max-w-md text-[15px] leading-relaxed text-ink/70">
               {SITE.disclaimerLong}
             </p>

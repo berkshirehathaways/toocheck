@@ -14,9 +14,11 @@ export function SiteHeader() {
         <Link href="/" className="flex items-baseline gap-3">
           <span aria-hidden className="block h-2.5 w-2.5 bg-lime shadow-[0_0_8px_rgba(190,242,100,0.7)]" />
           <span className="display-ko text-xl font-extrabold tracking-tight text-ink">
-            {SITE.nameShort}
+            투<span className="text-cyan">체크</span>
           </span>
-          <span className="label-ko hidden text-dim sm:inline">투표 전 체크</span>
+          <span className="label-ko hidden text-dim sm:inline">
+            투표 전 <span className="text-cyan/80">체크</span>
+          </span>
         </Link>
 
         <nav aria-label="주요 메뉴">
