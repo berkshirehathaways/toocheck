@@ -136,9 +136,18 @@ describe('resolveDistricts — 기초의원 동 단위 정밀 매칭 (시·도 �
     expect(['dong', 'sigungu']).toContain(bm?.precision);
   });
 
-  it('기초 조례 미커버 시·도는 itemized fallback 유지', () => {
-    // 전라남도는 기초 조례 미인제스트 → 구·시·군의 의원은 시·군·구 fallback
+  it('전국 기초 조례 인제스트 후 순천시도 동 단위 정밀 매칭', () => {
     const r = resolveDistricts({ sidoName: '전라남도', sigunguName: '순천시', hname: '풍덕동' });
+    const bm = r.offices.find((o) => o.officeKind === 'basic_member');
+    expect(bm?.precision).toBe('dong');
+  });
+
+  it('매핑에 없는 동명은 시·군·구 fallback (메커니즘 유지)', () => {
+    const r = resolveDistricts({
+      sidoName: '서울특별시',
+      sigunguName: '강남구',
+      hname: '존재하지않는동999',
+    });
     const bm = r.offices.find((o) => o.officeKind === 'basic_member');
     expect(['sigungu', 'sigungu_unique']).toContain(bm?.precision);
   });
