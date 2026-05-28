@@ -119,6 +119,21 @@ export const candidates: Candidate[] = [
       { year: 2014, electionName: '제6회 전국동시지방선거', district: '서울 종로 제2선거구', party: '새정치민주연합', votes: 20630, votePct: 52.09, rank: 1, result: '당선', note: '초선 9대 시의원', sourceUrl: 'https://ko.wikipedia.org/wiki/유찬종', sourceLicense: 'CC BY-SA 4.0' },
       { year: 2022, electionName: '제8회 전국동시지방선거', district: '서울 종로구청장', party: '더불어민주당', votes: 32857, votePct: 47.09, rank: 2, result: '낙선', sourceUrl: 'https://ko.wikipedia.org/wiki/유찬종', sourceLicense: 'CC BY-SA 4.0' },
     ],
+    // ─── #14 추가 ───
+    nameEnglish: 'Yoo Chan Jong', // 서울시의회 9대 의원 등록명 (smc.seoul.kr)
+    // 서울시의회 9대 의정활동 (2014-07-01 ~ 2018-04-12 / 종로구 제2선거구)
+    // 출처: https://www.smc.seoul.kr/main/memberPop.do?mno=872&period=9
+    councilTerms: [
+      { council: '서울특별시의회 9대', position: '서울특별시의회의원', start: '2014-07-01', end: '2018-04-12', electoralDistrict: '종로구 제2선거구', sourceUrl: 'https://www.smc.seoul.kr/main/memberPop.do?mno=872&period=9', sourceLicense: 'public_record' },
+      { council: '서울특별시의회 9대', position: '주택공간위원회위원', start: '2014-07-17', end: '2018-04-12', sourceUrl: 'https://www.smc.seoul.kr/main/memberPop.do?mno=872&period=9', sourceLicense: 'public_record' },
+      { council: '서울특별시의회 9대', position: '한옥지원특별위원회위원', start: '2014-12-19', end: '2016-04-18', sourceUrl: 'https://www.smc.seoul.kr/main/memberPop.do?mno=872&period=9', sourceLicense: 'public_record' },
+      { council: '서울특별시의회 9대', position: '예산결산특별위원회위원', start: '2015-09-03', end: '2016-09-09', sourceUrl: 'https://www.smc.seoul.kr/main/memberPop.do?mno=872&period=9', sourceLicense: 'public_record' },
+      // #14 결정 C: "특혜의혹" 단어 포함 위원회 → needsReview + displayLabel 축약
+      { council: '서울특별시의회 9대', position: '서울국제금융센터(SIFC) 특혜의혹 진상규명을 위한 행정사무조사 특별위원회위원', displayLabel: '서울국제금융센터(SIFC) 진상규명 행정사무조사 특별위원회위원', needsReview: true, start: '2015-12-21', end: '2016-06-20', sourceUrl: 'https://www.smc.seoul.kr/main/memberPop.do?mno=872&period=9', sourceLicense: 'public_record' },
+      { council: '서울특별시의회 9대', position: '정책위원회위원', start: '2016-08-01', end: '2017-07-31', sourceUrl: 'https://www.smc.seoul.kr/main/memberPop.do?mno=872&period=9', sourceLicense: 'public_record' },
+      { council: '서울특별시의회 9대', position: '예산결산특별위원회위원', start: '2016-09-10', end: '2017-09-09', sourceUrl: 'https://www.smc.seoul.kr/main/memberPop.do?mno=872&period=9', sourceLicense: 'public_record' },
+      { council: '서울특별시의회 9대', position: '서울주택도시공사 사장 후보자 인사청문특별위원회위원', start: '2017-12-15', end: '2017-12-21', sourceUrl: 'https://www.smc.seoul.kr/main/memberPop.do?mno=872&period=9', sourceLicense: 'public_record' },
+    ],
     necId: '100154016',
     status: 'active',
     reviewStatus: 'reviewed',
@@ -142,6 +157,13 @@ export const candidates: Candidate[] = [
       '(전)청와대 통일비서관',
     ],
     electionRunCount: 3,
+    // ─── #14 추가 (Wikidata Q16175546, 출생일 1966-05-04 가드레일 통과) ───
+    highSchool: '경복고등학교',
+    councilTerms: [
+      // 출처: https://www.wikidata.org/wiki/Q16175546 (CC0)
+      { council: '대한민국 국회 17대', position: '국회의원', start: '2004-05-30', end: '2008-05-29', electoralDistrict: '강원도 속초시·고성군·양양군', sourceUrl: 'https://www.wikidata.org/wiki/Q16175546', sourceLicense: 'CC0' },
+      { council: '대한민국 국회 19대', position: '국회의원', start: '2012-05-30', end: '2016-05-29', electoralDistrict: '강원도 속초시·고성군·양양군', sourceUrl: 'https://www.wikidata.org/wiki/Q16175546', sourceLicense: 'CC0' },
+    ],
     necId: '100163635',
     status: 'active',
     reviewStatus: 'reviewed',
@@ -248,6 +270,30 @@ export const disclosures: CandidateDisclosure[] = [
     ],
     sourcePublishedAt: '2026-05-13',
     sourceCheckedAt: '2026-05-28',
+    // ─── #14 추가: peti 재산 detail (2026-03-26 정기 변동등록 공개) ───
+    // 출처: 정부공직자윤리위원회 공고 제2026-4호
+    // privacy: 시·도 단위만 / 본인+가족 합계만 (#14 결정 A·B)
+    petiBreakdown: {
+      asOf: '2025-12-31',
+      disclosedAt: '2026-03-26',
+      publicNoticeNo: '정부공직자윤리위원회 공고 제2026-4호',
+      categories: [
+        { name: '건물', totalKrw: 1_362_000_000, itemCount: 2, yearOverYearChangeKrw: 34_000_000 },
+        { name: '토지', totalKrw: 797_950_000, itemCount: 18, yearOverYearChangeKrw: 10_376_000 },
+        { name: '예금', totalKrw: 378_241_000, itemCount: 4, yearOverYearChangeKrw: -86_401_000 },
+        { name: '회원권', totalKrw: 185_200_000, itemCount: 3 },
+        { name: '증권', totalKrw: 161_594_000, itemCount: 2, yearOverYearChangeKrw: 42_334_000 },
+        { name: '자동차등', totalKrw: 66_560_000, itemCount: 4, yearOverYearChangeKrw: -10_180_000 },
+        { name: '가상자산', totalKrw: 36_620_000, itemCount: 2, yearOverYearChangeKrw: -177_334_000 },
+        { name: '채무', totalKrw: -376_643_000, itemCount: 1, yearOverYearChangeKrw: 28_553_000 },
+      ],
+      realEstateRegions: [
+        { region: '충청남도', itemCount: 6 },
+        { region: '강원특별자치도', itemCount: 3 },
+      ],
+      selfOnlyKrw: 2_697_216_000,
+      selfPlusFamilyKrw: 3_384_487_000,
+    },
   },
 ];
 

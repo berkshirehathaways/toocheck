@@ -28,6 +28,7 @@
 
 ### Phase 3 — 실데이터 수집 (mock → real 전환)
 13. [#13 실데이터 수집 파이프라인 — 소스 매핑 & 갭 트래커](./13-data-ingestion.md)
+14. [#14 데이터 공개 정책 + 수집 파이프라인 (FINAL)](./14-data-publication-policy.md)
 
 ## 의존 그래프
 

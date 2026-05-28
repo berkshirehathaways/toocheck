@@ -26,10 +26,11 @@ import {
 
 interface PageProps { params: Promise<{ id: string }>; }
 
-// 함께 확인할 지점 anchor는 운영자 작성 항목이 있을 때만 노출 (런타임 동적)
+// 인적사항·의정활동·함께 확인할 지점 anchor는 데이터가 있을 때만 동적으로 노출
 const BASE_ANCHORS = [
   { id: 'profile', label: '인적사항' },
   { id: 'disclosure', label: '공개 자료' },
+  { id: 'council', label: '의정 활동' },
   { id: 'promises', label: '공약' },
   { id: 'military', label: '병역' },
   { id: 'past', label: '과거 출마' },
@@ -58,10 +59,14 @@ export default async function CandidatePage({ params }: PageProps) {
   const crossPoints = row ? buildCrossCheckPoints(row, allPromises) : [];
   const isPending = candidate.reviewStatus !== 'reviewed';
   const basis = formatSourceBasis(disclosure?.sourceCheckedAt ?? null);
-  // 함께 확인할 지점 anchor는 운영자 작성 항목이 있을 때만 노출
+  // 의정활동 anchor는 councilTerms 있을 때만, 함께 확인할 지점은 crossPoints 있을 때만
+  const hasCouncil = (candidate.councilTerms?.length ?? 0) > 0;
+  const filteredBase = hasCouncil
+    ? BASE_ANCHORS
+    : BASE_ANCHORS.filter((a) => a.id !== 'council');
   const ANCHORS = crossPoints.length > 0
-    ? [...BASE_ANCHORS, { id: 'cross-check', label: '함께 확인할 지점' } as const]
-    : BASE_ANCHORS;
+    ? [...filteredBase, { id: 'cross-check', label: '함께 확인할 지점' } as const]
+    : filteredBase;
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-6">
@@ -115,6 +120,9 @@ export default async function CandidatePage({ params }: PageProps) {
                 </span>
               ) : null}
             </h1>
+            {candidate.nameEnglish ? (
+              <p className="label-ko mt-1 text-dim">{candidate.nameEnglish}</p>
+            ) : null}
             <p className="label-ko mt-2 text-dim">
               {candidate.party}
               {candidate.birthDate
@@ -142,8 +150,8 @@ export default async function CandidatePage({ params }: PageProps) {
         </div>
       </section>
 
-      {/* 인적사항 (NEC info.nec 등록자료 — 직업·학력·경력) */}
-      {(candidate.occupation || candidate.education || (candidate.career && candidate.career.length > 0)) ? (
+      {/* 인적사항 (NEC info.nec 등록자료 — 직업·학력·경력) + 출신고(Wikidata 가드레일) */}
+      {(candidate.occupation || candidate.education || candidate.highSchool || (candidate.career && candidate.career.length > 0)) ? (
         <section id="profile" className="mb-10 scroll-mt-32">
           <HudLabel tone="cyan">인적사항</HudLabel>
           <article className="hud-panel relative mt-3 grid gap-4 p-5 sm:grid-cols-3">
@@ -158,6 +166,16 @@ export default async function CandidatePage({ params }: PageProps) {
               <div>
                 <p className="label-ko text-dim">학력</p>
                 <p className="mt-1 leading-relaxed text-ink/85">{candidate.education}</p>
+                {candidate.highSchool ? (
+                  <p className="label-ko mt-1 text-dim">
+                    출신고 · <span className="text-ink/80">{candidate.highSchool}</span>
+                  </p>
+                ) : null}
+              </div>
+            ) : candidate.highSchool ? (
+              <div>
+                <p className="label-ko text-dim">학력</p>
+                <p className="mt-1 text-ink/85">{candidate.highSchool}</p>
               </div>
             ) : null}
             {candidate.career && candidate.career.length > 0 ? (
@@ -170,6 +188,50 @@ export default async function CandidatePage({ params }: PageProps) {
                 </ul>
               </div>
             ) : null}
+          </article>
+        </section>
+      ) : null}
+
+      {/* 의정 활동 (#14 §1-5 + §1-7 출처: 서울시의회 / Wikidata 가드레일 통과) */}
+      {candidate.councilTerms && candidate.councilTerms.length > 0 ? (
+        <section id="council" className="mb-10 scroll-mt-32">
+          <HudLabel tone="cyan">의정 활동</HudLabel>
+          <p className="label-ko mt-2 text-dim">
+            시·도의회 또는 국회 의정 활동 (시간순). 정부 공식 자료 인용.
+          </p>
+          <article className="hud-panel relative mt-3 p-5">
+            <RegistrationMarks color="dim" size={10} inset={6} />
+            <ul className="space-y-3 text-sm">
+              {[...candidate.councilTerms]
+                .sort((a, b) => a.start.localeCompare(b.start))
+                .map((term, i) => (
+                  <li key={i} className="border-b border-hair-soft pb-2 last:border-b-0 last:pb-0">
+                    <div className="flex flex-wrap items-baseline gap-2">
+                      <span className="label-ko text-cyan tabular-nums">
+                        {term.start.replace(/-/g, '.')} ~ {term.end.replace(/-/g, '.')}
+                      </span>
+                      <span className="label-ko text-dim">{term.council}</span>
+                      {term.needsReview ? (
+                        <NeutralBadge tone="muted">운영자 검수 표기</NeutralBadge>
+                      ) : null}
+                    </div>
+                    <p className="mt-0.5 leading-relaxed text-ink/85">
+                      {/* #14 결정 C: needsReview면 displayLabel 축약명 노출 */}
+                      {term.needsReview && term.displayLabel
+                        ? term.displayLabel
+                        : term.position}
+                    </p>
+                    {term.electoralDistrict ? (
+                      <p className="label-ko mt-0.5 text-dim">
+                        지역구 · {term.electoralDistrict}
+                      </p>
+                    ) : null}
+                  </li>
+                ))}
+            </ul>
+            <p className="label-ko mt-4 border-t border-hair pt-3 text-dim">
+              출처: 위 항목별 링크 · 라이선스: 공공누리 / Wikidata CC0
+            </p>
           </article>
         </section>
       ) : null}

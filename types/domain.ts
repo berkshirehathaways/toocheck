@@ -85,6 +85,33 @@ export interface Candidate {
   electionRunCount?: number;
   /** 과거 출마 결과 (위키 출처 — CC BY-SA 4.0 표기 의무). */
   pastElections?: PastElectionResult[];
+
+  // ─── #14 결정 보강 (2026-05-28 검증 사이클 종료) ───
+  /** 영문명. 정부 공식 자료(서울시의회 등). 예: "Yoo Chan Jong" */
+  nameEnglish?: string;
+  /** 출신 고등학교. Wikidata 출생일 가드레일 통과 시만 채움. */
+  highSchool?: string;
+  /** 의정 활동(시의회·국회 통합). 시간순 표시. */
+  councilTerms?: CouncilTerm[];
+}
+
+/**
+ * 의정 활동 단위 (시의회·국회 통합).
+ * 출처: 서울시의회 / Wikidata(가드레일 통과 시) / 국회 OpenAPI(향후).
+ * 운영자가 §17 의심 단어 포함 시 needsReview=true 로 마크.
+ */
+export interface CouncilTerm {
+  council: string;            // "서울특별시의회 9대" / "대한민국 국회 17대"
+  position: string;           // 위원회 명·국회의원 본직 등
+  start: string;              // ISO YYYY-MM-DD
+  end: string;
+  electoralDistrict?: string; // "종로구 제2선거구" / "강원 속초·고성·양양"
+  sourceUrl: string;
+  sourceLicense?: 'public_record' | 'CC0' | 'CC BY-SA 4.0';
+  /** §17 의심 단어(예: "의혹") 포함 시 운영자 검수 후 표시. */
+  needsReview?: boolean;
+  /** 운영자 1차 검수 시 원본 명칭과 다른 축약 표시명. */
+  displayLabel?: string;
 }
 
 /** 위키백과 등 외부 출처 인용 — `Candidate.pastElections[]` 에 사용. */
@@ -131,6 +158,61 @@ export interface CandidateDisclosure {
   photoUrl?: string;
   /** 전과 건수 요약 (NEC info.nec). detail이 없을 때 표시용. criminalRecords.length와 일치하지 않을 수 있음 (TIF detail 부재 시). */
   criminalRecordCountSummary?: number;
+
+  // ─── #14 결정 보강 (peti 재산 detail) ───
+  /**
+   * 공직자윤리위원회 정기 재산공개 정밀 분해. **현직자 한정**.
+   * privacy 보호: 가족 구성원별 분리 비공개. 부동산 시·도 단위만.
+   */
+  petiBreakdown?: AssetCategoryBreakdown;
+}
+
+/**
+ * peti.go.kr 재산 정밀 분해.
+ * NEC assetTotal 요약을 8개 카테고리 + 전년 대비 증감으로 보완.
+ * 출처: 정부공직자윤리위원회 공고.
+ */
+export interface AssetCategoryBreakdown {
+  /** 등록기준일 ISO. 예: "2025-12-31" */
+  asOf: string;
+  /** 공개일자 ISO. 예: "2026-03-26" */
+  disclosedAt: string;
+  /** 공고 번호. 예: "정부공직자윤리위원회 공고 제2026-4호" */
+  publicNoticeNo: string;
+  /** 8개 카테고리별 합계 + 변동. */
+  categories: AssetCategoryItem[];
+  /**
+   * 부동산 시·도 단위 + 건수만. (#14 결정 A: 시·도 + 건수만)
+   * privacy 보호: 시·군·구·동·지번·면적은 저장하지 않음.
+   */
+  realEstateRegions?: Array<{ region: string; itemCount: number }>;
+  /** 본인 단독 자산 합계 (원). */
+  selfOnlyKrw: number;
+  /**
+   * 본인 + 가족 통합 합계 (원). (#14 결정 B: 본인 + 본인+가족 합계만)
+   * 가족 구성원별 분리·명의는 비공개.
+   */
+  selfPlusFamilyKrw: number;
+}
+
+export interface AssetCategoryItem {
+  name:
+    | '토지'
+    | '건물'
+    | '예금'
+    | '증권'
+    | '채무'
+    | '회원권'
+    | '가상자산'
+    | '자동차등'
+    | '기타';
+  totalKrw: number;
+  itemCount: number;
+  /**
+   * 전년 대비 증감 (원). 양수 = 증가, 음수 = 감소.
+   * (#14 결정 D: 단순 수치만, 색상·화살표 강조 비표시)
+   */
+  yearOverYearChangeKrw?: number;
 }
 
 export interface CriminalRecord {
