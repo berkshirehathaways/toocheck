@@ -163,6 +163,29 @@
   }
 }
 
+/* Mobile touch & input optimizations */
+/* Kill the grey tap-flash on iOS/Android; we rely on explicit hover/active/focus states. */
+a,
+button,
+summary,
+input,
+select,
+textarea,
+[role='button'] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (max-width: 640px) {
+  /* iOS Safari auto-zooms when a focused form control's font-size < 16px.
+     Force >=16px on mobile only (desktop design untouched). !important overrides
+     utility classes like .label-ko (11px) applied to inputs. */
+  input:not([type='checkbox']):not([type='radio']),
+  textarea,
+  select {
+    font-size: 16px !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

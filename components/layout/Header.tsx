@@ -39,7 +39,7 @@ export function SiteHeader() {
                     href={n.href}
                     aria-current={active ? 'page' : undefined}
                     className={cn(
-                      'label-ko relative transition-colors',
+                      'label-ko relative inline-flex h-11 items-center transition-colors',
                       active ? 'text-cyan' : 'text-ink/70 hover:text-cyan'
                     )}
                   >
@@ -47,7 +47,7 @@ export function SiteHeader() {
                     {active ? (
                       <span
                         aria-hidden
-                        className="absolute -bottom-[18px] left-0 right-0 h-0.5 bg-cyan"
+                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-cyan"
                       />
                     ) : null}
                   </Link>
