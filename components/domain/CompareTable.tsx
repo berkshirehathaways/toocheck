@@ -64,7 +64,7 @@ export function CompareTable({ rows }: CompareTableProps) {
                   {pending ? '—' : (r.disclosure?.taxArrears.length ?? 0) > 0 ? <span className="text-[#e0b075]">있음</span> : <span className="text-dim">없음</span>}
                 </td>
                 <td className="px-3 py-3 text-xs text-dim">
-                  {pending ? '—' : r.disclosure?.militarySummary ?? '공개자료'}
+                  {pending ? '—' : (r.disclosure?.militarySummary ?? r.disclosure?.militaryRecord ?? '공개자료')}
                 </td>
                 <td className="px-3 py-3 tabular-nums">{pending ? '—' : r.promiseCount}</td>
               </tr>

@@ -222,7 +222,7 @@ export const disclosures: CandidateDisclosure[] = [
     fiveYearTaxArrearsKrw: 0,
     currentTaxArrearsKrw: 0,
     militaryRecord: '군복무를 마친사람',
-    militarySummary: '군복무 완료 (육군 병장 만기전역 — 나무위키 보조)',
+    // militarySummary는 NEC 등록서류 스캔(gubun=4) 검수 후 채움 — 미수집 단계에서 외부 인용 금지
     photoUrl: 'http://cdn.nec.go.kr/photo_20260603/Gsg1101/Hb100154016/gicho/100154016.JPG',
     sourceUrls: [
       'http://info.nec.go.kr/electioninfo/candidate_detail_info.xhtml?electionId=0020260603&huboId=100154016',
@@ -241,7 +241,7 @@ export const disclosures: CandidateDisclosure[] = [
     fiveYearTaxArrearsKrw: 0,
     currentTaxArrearsKrw: 0,
     militaryRecord: '군복무를 마친사람',
-    militarySummary: '군복무 완료',
+    // militarySummary는 NEC 등록서류 스캔(gubun=4) 검수 후 채움
     photoUrl: 'http://cdn.nec.go.kr/photo_20260603/Gsg1101/Hb100163635/gicho/100163635.JPG',
     sourceUrls: [
       'http://info.nec.go.kr/electioninfo/candidate_detail_info.xhtml?electionId=0020260603&huboId=100163635',
@@ -314,8 +314,6 @@ export const promises: CandidatePromise[] = [
     category: 'integrity',
     specificityScore: 3,
     source: 'manual',
-    crossCheckText:
-      '입찰 공개 범위와 비식별화 기준은 후속 조례로 정의되어야 합니다. 후보의 공약 본문에는 구체적 항목 목록이 포함되어 있지 않으므로, 공개 일정과 함께 적용 범위를 확인할 필요가 있습니다.',
   },
   {
     id: 'pr_002_2',
@@ -377,8 +375,6 @@ export const promises: CandidatePromise[] = [
     category: 'housing',
     specificityScore: 1,
     source: 'manual',
-    crossCheckText:
-      '본 후보는 부동산 비중이 지역 내 상위 분위에 해당하는 공개 자료가 있습니다. 주거 분야 공약의 영향 범위(임대·매매·재건축 등)를 함께 살펴보는 것이 좋습니다.',
   },
   {
     id: 'pr_003_2',
@@ -389,8 +385,6 @@ export const promises: CandidatePromise[] = [
     category: 'tax',
     specificityScore: 1,
     source: 'manual',
-    crossCheckText:
-      '본 후보는 과거 종합소득세 체납 후 완납한 공개 자료가 있습니다. 조세 공약의 적용 항목과 재원 마련 방안을 함께 살펴볼 것을 권장합니다.',
   },
   {
     id: 'pr_003_3',

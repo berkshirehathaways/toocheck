@@ -72,7 +72,7 @@ export function CompareMobile({ rows }: CompareMobileProps) {
                 <Row k="재산 상위" v={pending ? '—' : r.assetInTopQuintile ? '상위 20%' : '—'} />
                 <Row k="전과 공개" v={pending ? '—' : (r.disclosure?.criminalRecords.length ?? 0) > 0 ? '있음' : '없음'} />
                 <Row k="체납 공개" v={pending ? '—' : (r.disclosure?.taxArrears.length ?? 0) > 0 ? '있음' : '없음'} />
-                <Row k="병역" v={pending ? '—' : r.disclosure?.militarySummary ?? '공개자료'} />
+                <Row k="병역" v={pending ? '—' : (r.disclosure?.militarySummary ?? r.disclosure?.militaryRecord ?? '공개자료')} />
                 <Row k="공약 수" v={pending ? '—' : String(r.promiseCount)} />
               </dl>
               <div className="mt-3 border-t border-hair-soft pt-3">

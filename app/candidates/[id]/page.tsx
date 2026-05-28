@@ -26,13 +26,13 @@ import {
 
 interface PageProps { params: Promise<{ id: string }>; }
 
-const ANCHORS = [
+// 함께 확인할 지점 anchor는 운영자 작성 항목이 있을 때만 노출 (런타임 동적)
+const BASE_ANCHORS = [
   { id: 'profile', label: '인적사항' },
   { id: 'disclosure', label: '공개 자료' },
   { id: 'promises', label: '공약' },
   { id: 'military', label: '병역' },
   { id: 'past', label: '과거 출마' },
-  { id: 'cross-check', label: '함께 확인할 지점' },
 ] as const;
 
 export async function generateMetadata({ params }: PageProps) {
@@ -58,6 +58,10 @@ export default async function CandidatePage({ params }: PageProps) {
   const crossPoints = row ? buildCrossCheckPoints(row, allPromises) : [];
   const isPending = candidate.reviewStatus !== 'reviewed';
   const basis = formatSourceBasis(disclosure?.sourceCheckedAt ?? null);
+  // 함께 확인할 지점 anchor는 운영자 작성 항목이 있을 때만 노출
+  const ANCHORS = crossPoints.length > 0
+    ? [...BASE_ANCHORS, { id: 'cross-check', label: '함께 확인할 지점' } as const]
+    : BASE_ANCHORS;
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-6">
@@ -249,18 +253,13 @@ export default async function CandidatePage({ params }: PageProps) {
         </section>
       ) : null}
 
-      <section id="cross-check" className="mb-10 scroll-mt-32">
-        <HudLabel tone="lime">함께 확인할 지점</HudLabel>
-        <p className="label-ko mt-2 text-dim">
-          공개자료와 공약을 함께 살펴볼 때 도움이 될 만한 항목입니다. 운영자가 작성한 경우 우선 표시되며, 자동 매칭이 없는 경우 표시하지 않습니다.
-        </p>
-        {crossPoints.length === 0 ? (
-          <p className="label-ko mt-4 border border-dashed border-hair bg-bg-elev px-4 py-3 text-dim">
-            <span className="text-ink/70">
-              지금 표시할 함께 확인 지점이 없습니다. 서비스가 의혹을 만들지 않습니다.
-            </span>
+      {/* 함께 확인할 지점 — 운영자가 작성한 항목이 있을 때만 노출 (자동 매칭 비활성화) */}
+      {crossPoints.length > 0 ? (
+        <section id="cross-check" className="mb-10 scroll-mt-32">
+          <HudLabel tone="lime">함께 확인할 지점</HudLabel>
+          <p className="label-ko mt-2 text-dim">
+            공개자료와 공약을 함께 살펴볼 때 도움이 될 만한 운영자 작성 항목입니다.
           </p>
-        ) : (
           <ul className="mt-4 space-y-3">
             {crossPoints.map((p) => {
               const promise = allPromises.find((x) => x.id === p.promiseId);
@@ -273,19 +272,12 @@ export default async function CandidatePage({ params }: PageProps) {
                     </p>
                   ) : null}
                   <p className="leading-relaxed text-ink/85">{p.text}</p>
-                  <p className="label-ko mt-2 text-dim">
-                    {p.source === 'manual' ? (
-                      <span className="text-lime">운영자 작성</span>
-                    ) : (
-                      <span className="text-cyan">자동 매칭</span>
-                    )}
-                  </p>
                 </li>
               );
             })}
           </ul>
-        )}
-      </section>
+        </section>
+      ) : null}
 
       <div className="label-ko mt-12 flex flex-wrap items-center justify-between gap-3 border-t border-hair pt-5 text-dim">
         {district ? (
