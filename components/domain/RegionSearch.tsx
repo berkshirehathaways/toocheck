@@ -11,6 +11,8 @@ interface SigunguItem {
 }
 
 interface CandidateLite {
+  /** 후보 상세 페이지가 게시된 경우에만 존재(비례대표는 개인 페이지 없음). */
+  id?: string;
   name: string;
   party: string;
   ballotNumber: number;
@@ -41,14 +43,52 @@ interface RegionResult {
   races: RaceResult[];
 }
 
-const PARTY_TONE: Record<string, string> = {
-  더불어민주당: 'text-[#5b8def]',
-  국민의힘: 'text-[#e06b6b]',
-  무소속: 'text-dim',
+// 정당별 스타일 — 텍스트색(AA 대비 확보)·칩 좌측 액센트색(한눈 식별).
+const PARTY_STYLE: Record<string, { text: string; accent: string }> = {
+  더불어민주당: { text: 'text-[#6ea8ff]', accent: 'border-l-[#3b6fd4]' },
+  국민의힘: { text: 'text-[#ff8a8a]', accent: 'border-l-[#d44b4b]' },
+  개혁신당: { text: 'text-[#ff9e64]', accent: 'border-l-[#d97636]' },
+  조국혁신당: { text: 'text-[#7fd1ff]', accent: 'border-l-[#3aa3e0]' },
+  진보당: { text: 'text-[#ff7b9c]', accent: 'border-l-[#d44b6b]' },
+  정의당: { text: 'text-[#ffd24a]', accent: 'border-l-[#d4a82a]' },
 };
+const DEFAULT_PARTY = { text: 'text-ink/75', accent: 'border-l-hair' };
+const NONPARTY = { text: 'text-ink/55', accent: 'border-l-hair' };
 
-function partyClass(party: string): string {
-  return PARTY_TONE[party] ?? 'text-ink/70';
+function partyStyle(party: string): { text: string; accent: string } {
+  if (party === '무소속') return NONPARTY;
+  return PARTY_STYLE[party] ?? DEFAULT_PARTY;
+}
+
+/** 후보 칩 — id가 있으면 상세 페이지로 링크(클릭 가능), 없으면(비례대표) 비링크 표시. */
+function CandidateChip({ c }: { c: CandidateLite }) {
+  const ps = partyStyle(c.party);
+  const inner = (
+    <>
+      {c.ballotNumber > 0 ? (
+        <span className="tabular-nums font-semibold text-cyan">{c.ballotNumber}</span>
+      ) : null}
+      <span className="font-semibold text-ink">{c.name}</span>
+      <span className={ps.text}>{c.party}</span>
+    </>
+  );
+  const base = `label-ko flex items-baseline gap-1.5 border border-hair border-l-2 px-2.5 py-1.5 ${ps.accent}`;
+
+  if (!c.id) {
+    return <span className={`${base} bg-white/[0.02] text-ink/70`}>{inner}</span>;
+  }
+  return (
+    <Link
+      href={`/candidates/${c.id}`}
+      aria-label={`기호 ${c.ballotNumber} ${c.name} (${c.party}) 후보 상세 보기`}
+      className={`${base} group bg-white/[0.04] transition-colors hover:border-cyan hover:bg-cyan/10 focus-visible:outline focus-visible:outline-1 focus-visible:outline-cyan`}
+    >
+      {inner}
+      <span aria-hidden className="text-dim transition-colors group-hover:text-cyan">
+        →
+      </span>
+    </Link>
+  );
 }
 
 export function RegionSearch() {
@@ -125,12 +165,12 @@ export function RegionSearch() {
     <section className="relative hud-panel p-5 sm:p-6">
       <RegistrationMarks color="cyan" inset={8} />
       <HudLabel tone="cyan">내 지역구 후보 한눈에 보기</HudLabel>
-      <h2 className="mt-2 font-ko text-xl font-bold text-ink">시·군·구로 후보 찾기</h2>
-      <p className="label-ko mt-1 text-dim">
+      <h2 className="mt-2 font-ko text-2xl font-bold text-ink sm:text-3xl">시·군·구로 후보 찾기</h2>
+      <p className="label-ko mt-1.5 text-dim">
         예: <span className="text-ink/80">양천구</span> 입력 → 그 지역의 시·도지사·교육감·구청장·시·도의원·구의원 후보를 한 번에.
       </p>
 
-      <div ref={boxRef} className="relative mt-4">
+      <div ref={boxRef} className="relative mt-5">
         <input
           type="text"
           value={query}
@@ -142,7 +182,7 @@ export function RegionSearch() {
           onFocus={() => setOpen(true)}
           onKeyDown={onKeyDown}
           placeholder="시·군·구 이름을 입력하세요 (예: 양천구, 해운대구, 순천시)"
-          className="label-ko w-full border border-hair bg-bg px-3 py-2.5 text-ink outline-none focus:border-cyan"
+          className="w-full border-2 border-hair bg-bg px-4 py-3.5 text-base text-ink outline-none transition-colors focus:border-cyan"
           aria-label="시군구 검색"
         />
         {open && suggestions.length > 0 ? (
@@ -154,7 +194,7 @@ export function RegionSearch() {
                   onMouseEnter={() => setActive(i)}
                   onClick={() => void choose(it)}
                   className={
-                    'label-ko flex w-full items-baseline gap-2 px-3 py-2 text-left ' +
+                    'label-ko flex w-full items-baseline gap-2 px-4 py-2.5 text-left ' +
                     (i === active ? 'bg-cyan/15 text-ink' : 'text-ink/80')
                   }
                 >
@@ -174,7 +214,8 @@ export function RegionSearch() {
       ) : data ? (
         <div className="mt-5 space-y-4">
           <p className="label-ko text-dim">
-            {data.sido} {data.sigungu} · 2026 지방선거 후보
+            {data.sido} {data.sigungu} · 2026 지방선거 후보{' '}
+            <span className="text-cyan">· 후보를 누르면 상세 페이지로 이동합니다</span>
           </p>
           {data.races.filter((race) => race.candidateCount > 0).map((race) => (
             <div key={race.officeKind} className="border-t border-hair-soft pt-3">
@@ -188,23 +229,19 @@ export function RegionSearch() {
               {race.groups.length === 0 ? (
                 <p className="label-ko mt-1 text-dim">등록 후보 없음</p>
               ) : (
-                <div className="mt-2 space-y-2">
+                <div className="mt-2 space-y-2.5">
                   {race.groups.map((g) => (
                     <div key={g.sggId}>
                       {race.sggCount > 1 ? (
-                        <p className="label-ko text-dim">{g.sggName}</p>
+                        <p className="label-ko flex items-center gap-1.5 text-ink/65">
+                          <span aria-hidden className="inline-block h-1 w-1 bg-cyan/70" />
+                          {g.sggName}
+                        </p>
                       ) : null}
-                      <ul className="mt-1 flex flex-wrap gap-1.5">
+                      <ul className="mt-1.5 flex flex-wrap gap-2">
                         {g.candidates.map((c) => (
-                          <li
-                            key={`${c.sggId}-${c.ballotNumber}-${c.name}`}
-                            className="label-ko border border-hair px-2 py-1 text-ink/85"
-                          >
-                            {c.ballotNumber > 0 ? (
-                              <span className="text-cyan tabular-nums">{c.ballotNumber} </span>
-                            ) : null}
-                            <span className="font-medium">{c.name}</span>{' '}
-                            <span className={partyClass(c.party)}>{c.party}</span>
+                          <li key={`${c.sggId}-${c.ballotNumber}-${c.name}`}>
+                            <CandidateChip c={c} />
                           </li>
                         ))}
                       </ul>
@@ -214,12 +251,9 @@ export function RegionSearch() {
               )}
             </div>
           ))}
-          <p className="label-ko text-dim">
+          <p className="label-ko text-ink/55">
             * 후보 명단은 중앙선거관리위원회 등록 자료 기준입니다. 시·도의원·구의원은 거주 동에 따라
-            위 선거구 중 하나에 투표합니다. 공약·재산 등 상세 자료는 순차 공개됩니다.{' '}
-            <Link href="/districts" className="text-cyan hover:underline">
-              테스트 지역 상세 보기
-            </Link>
+            위 선거구 중 하나에 투표합니다. 공약·재산 등 상세 자료는 순차 공개됩니다.
           </p>
         </div>
       ) : null}

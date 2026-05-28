@@ -20,9 +20,11 @@ import { resolve } from 'node:path';
 import type { OfficeKind } from '../../types/domain.js';
 
 const ROSTER_PATH = resolve(process.cwd(), 'data/curated/roster-2026.json');
+const SITE_DATA_PATH = resolve(process.cwd(), 'data/curated/site-data.json');
 const OUT_PATH = resolve(process.cwd(), 'data/curated/sigungu-candidates.json');
 
 interface RosterCandidate {
+  id: string;
   name: string;
   party: string;
   ballotNumber: number;
@@ -39,6 +41,8 @@ interface RosterCandidate {
 const INTEGRATION_SIDO = new Set(['전남광주통합특별시']);
 
 interface CandidateLite {
+  /** 후보 상세 페이지(/candidates/[id])가 게시된 경우에만 존재. 비례대표는 개인 페이지가 없어 생략. */
+  id?: string;
   name: string;
   party: string;
   ballotNumber: number;
@@ -58,7 +62,7 @@ const INTEGRATION_ALIAS: Record<string, string[]> = {
   전남광주통합특별시: ['광주광역시', '전라남도'],
 };
 
-function lite(c: RosterCandidate): CandidateLite {
+function lite(c: RosterCandidate, publishedIds: Set<string>): CandidateLite {
   const o: CandidateLite = {
     name: c.name,
     party: c.party,
@@ -66,6 +70,8 @@ function lite(c: RosterCandidate): CandidateLite {
     sggId: c.sggId,
     sggName: c.sggName,
   };
+  // 상세 페이지가 게시된 후보만 id를 실어 보낸다(클릭 시 404 방지).
+  if (publishedIds.has(c.id)) o.id = c.id;
   if (c.proportionalCount) o.proportionalCount = c.proportionalCount;
   return o;
 }
@@ -79,6 +85,9 @@ function sortCands(arr: CandidateLite[]): CandidateLite[] {
 function main() {
   const dryRun = process.argv.includes('--dry-run');
   const roster = JSON.parse(readFileSync(ROSTER_PATH, 'utf-8')) as { candidates: RosterCandidate[] };
+  // 게시된 후보 상세 페이지의 id 집합(site-data.json). 이 집합에 든 후보만 링크를 건다.
+  const siteData = JSON.parse(readFileSync(SITE_DATA_PATH, 'utf-8')) as { candidates: Array<{ id: string }> };
+  const publishedIds = new Set(siteData.candidates.map((c) => c.id));
 
   const sido: Record<string, Partial<Record<OfficeKind, CandidateLite[]>>> = {};
   const sigungu: Record<string, Partial<Record<OfficeKind, CandidateLite[]>>> = {};
@@ -96,7 +105,7 @@ function main() {
     if (!c.officeKind) continue;
     if (SIDO_LEVEL.has(c.officeKind)) {
       const bucket = (sido[c.sidoName] ??= {});
-      (bucket[c.officeKind] ??= []).push(lite(c));
+      (bucket[c.officeKind] ??= []).push(lite(c, publishedIds));
     } else {
       // 통합명으로 등록된 시·군·구 선거(예: 전남 순천 시·도의원)는 물리 시·도로 재매핑
       const effSido = INTEGRATION_SIDO.has(c.sidoName)
@@ -104,7 +113,7 @@ function main() {
         : c.sidoName;
       const key = `${effSido}|${c.guName}`;
       const bucket = (sigungu[key] ??= {});
-      (bucket[c.officeKind] ??= []).push(lite(c));
+      (bucket[c.officeKind] ??= []).push(lite(c, publishedIds));
     }
   }
 
@@ -124,7 +133,7 @@ function main() {
     .sort((a, b) => (a.sido + a.sigungu).localeCompare(b.sido + b.sigungu, 'ko'));
 
   const output = {
-    version: 1,
+    version: 2,
     generatedAt: new Date().toISOString(),
     sgId: '20260603',
     sidoCount: Object.keys(sido).length,
