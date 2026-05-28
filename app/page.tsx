@@ -38,19 +38,15 @@ export default function HomePage() {
               <ChipDivider />
               <span>{election?.name ?? '2026 지방선거'}</span>
               <ChipDivider />
-              <span>지역 01곳</span>
+              <span>지역 1곳</span>
             </StatusChip>
 
-            <h1 className="mt-8 display-ko text-[clamp(44px,7vw,92px)] font-extrabold leading-[1.05] tracking-tight text-ink">
+            <h1 className="mt-8 display-ko text-[clamp(44px,7vw,88px)] font-extrabold leading-[1.05] tracking-tight text-ink">
               당신의 후보는,
               <br />
               어떤{' '}
-              <span className="relative inline-block">
-                <span className="relative z-10">사람</span>
-                <span
-                  aria-hidden
-                  className="absolute inset-x-0 -bottom-1 z-0 h-[0.12em] bg-cyan"
-                />
+              <span className="underline decoration-cyan decoration-[0.085em] underline-offset-[0.18em]">
+                사람
               </span>
               입니까?
             </h1>
@@ -85,10 +81,8 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <p className="mono mono-10 mt-6 text-dim">
-              <span className="normal-case tracking-normal" style={{ letterSpacing: 0 }}>
-                지금 보이는 모든 후보 정보는 시연용 가상 데이터입니다.
-              </span>
+            <p className="label-ko mt-6 text-dim">
+              지금 보이는 모든 후보 정보는 시연용 가상 데이터입니다.
             </p>
           </div>
 
@@ -170,14 +164,10 @@ export default function HomePage() {
               <span>공개자료 우선.</span>
               <span className="text-ink/75">출처·기준일 명시.</span>
               <span>
-                <span className="relative inline-block">
-                  <span className="relative z-10">비당파</span>
-                  <span
-                    aria-hidden
-                    className="absolute inset-x-0 bottom-[0.08em] z-0 h-[0.14em] bg-lime"
-                  />
+                <span className="underline decoration-lime decoration-[0.14em] underline-offset-[0.15em]">
+                  비당파
                 </span>
-                <span>.</span>
+                .
               </span>
             </div>
             <p className="label-ko mt-6 text-dim">
@@ -242,12 +232,8 @@ export default function HomePage() {
               <HudLabel tone="lime">함께 확인할 지점</HudLabel>
               <h3 className="mt-2 display-ko text-3xl font-bold leading-tight text-ink">
                 함께{' '}
-                <span className="relative inline-block">
-                  <span className="relative z-10">확인</span>
-                  <span
-                    aria-hidden
-                    className="absolute inset-x-0 bottom-[0.08em] z-0 h-[0.14em] bg-cyan"
-                  />
+                <span className="underline decoration-cyan decoration-[0.085em] underline-offset-[0.18em]">
+                  확인
                 </span>
                 할 지점
               </h3>
