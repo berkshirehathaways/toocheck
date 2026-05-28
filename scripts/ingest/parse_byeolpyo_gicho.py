@@ -103,17 +103,23 @@ def extract_paragraphs(path):
 
 # ---------- roster 정답 집합 ----------
 def load_roster_sets(sido):
-    """해당 시·도의 유효 (시·군·구 집합, 정규화 sggName→원본 dict) 반환."""
+    """해당 시·도의 유효 (시·군·구 집합, 정규화 sggName 집합, loose 인덱스) 반환.
+
+    loose: 시/군 약칭 흡수용. "전주시가선거구" → loose 키 "전주가선거구" → 원본 매핑.
+    (별표가 "전주가선거구"처럼 시/군을 생략하는 경우 대응. 구는 생략하지 않음: 중구가선거구.)
+    """
     data = json.load(open(ROSTER_SUMMARY, encoding="utf-8"))
-    sigungus, sggnames = set(), set()
+    sigungus, sggnames, loose = set(), set(), {}
     for info in data["sggIndex"].values():
-        if info.get("officeKind") != "basic_member":
-            continue
-        if info.get("sidoName") != sido:
+        if info.get("officeKind") != "basic_member" or info.get("sidoName") != sido:
             continue
         sigungus.add(info["guName"])
-        sggnames.add(re.sub(r"\s", "", info["sggName"]))
-    return sigungus, sggnames
+        nm = re.sub(r"\s", "", info["sggName"])
+        sggnames.add(nm)
+        lk = re.sub(r"(시|군)([가-힣])선거구$", r"\2선거구", nm)
+        if lk != nm and lk not in loose:
+            loose[lk] = nm
+    return sigungus, sggnames, loose
 
 
 def nospace(s):
@@ -126,57 +132,86 @@ SGG_LETTER = re.compile(r"^([가-힣]{1,3})\s*선거구$")
 
 
 def split_region(region):
+    # 괄호 안 리(里) 상세 제거
     region = re.sub(r"\([^)]*\)", "", region)
-    return [p.strip() for p in region.split(",") if p.strip()]
+    out = []
+    for p in region.split(","):
+        p = p.strip()
+        # 일반구 접두 제거: "완산구 노송동" → "노송동" (카카오 hname은 동명만 줌)
+        p = re.sub(r"^[가-힣]+구\s+", "", p)
+        if p:
+            out.append(p)
+    return out
+
+
+def match_sgg(pn, cur, sggnames, loose):
+    """문단(정규화 pn)을 roster sggName으로 해석. 여러 시·도 표기 형식 흡수. 미해당이면 None.
+
+    형식들:
+      A. 전체 이름      "중구가선거구"       → 그대로
+      B. 접미사 없음    "천안시 가" → pn="천안시가" → +"선거구"
+      C. letter만/letter선거구 + 시군구 헤더  "가"/"가선거구" → cur+letter+선거구
+      D. 시/군 약칭     "전주가선거구"        → loose["전주가선거구"]="전주시가선거구"
+    """
+    if "," in pn or len(pn) > 14:
+        return None
+    cands = []
+    if pn.endswith("선거구"):
+        cands.append(pn)  # A
+        m = SGG_LETTER.match(pn)  # "가선거구" → letter "가"
+        if m and cur:
+            cands.append(f"{cur}{m.group(1)}선거구")  # C
+    else:
+        cands.append(pn + "선거구")  # B: "천안시가" → "천안시가선거구"
+        if cur and re.fullmatch(r"[가-힣]{1,3}", pn):
+            cands.append(f"{cur}{pn}선거구")  # C: cur + "가"
+    for c in cands:
+        if c in sggnames:
+            return c
+    for c in cands + [pn]:  # D: 시/군 약칭 loose
+        if c in loose:
+            return loose[c]
+    return None
 
 
 def parse(pars, sido):
-    sigungus, sggnames = load_roster_sets(sido)
+    sigungus, sggnames, loose = load_roster_sets(sido)
     rows = []
     cur = None
     i, n = 0, len(pars)
     while i < n:
         p = pars[i]
         pn = nospace(p)
-        # 시·군·구 (roster 대조)
+        # 시·군·구 헤더 (roster 대조)
         if pn in sigungus:
             cur = pn
             i += 1
             continue
-        if pn.endswith("선거구"):
-            # 형식 A: 선거구 셀이 전체 이름 ("중구가선거구") → roster에 직접 존재
-            # 형식 B: 선거구 셀이 letter만 ("가 선거구") → currentSigungu + letter 조합
-            sgg = None
-            if pn in sggnames:
-                sgg = pn
-            else:
-                m = SGG_LETTER.match(pn)
-                if m and cur and nospace(f"{cur}{m.group(1)}선거구") in sggnames:
-                    sgg = f"{cur}{m.group(1)}선거구"
-            if not sgg:
-                # roster에 없는 조합 → 헤더/오독. 스킵.
-                i += 1
-                continue
-            # 의원정수(숫자) 건너뛰고 구역 수집
-            j = i + 1
-            while j < n and re.fullmatch(r"\d+", nospace(pars[j])):
-                j += 1
-            region_parts = []
-            while j < n:
-                cand = pars[j]
-                cn = nospace(cand)
-                if cn in sigungus or cn.endswith("선거구"):
-                    break
-                region_parts.append(cand)
-                if not cand.rstrip().endswith(","):
-                    j += 1
-                    break
-                j += 1
-            for dong in split_region(" ".join(region_parts)):
-                rows.append((sido, "basic", sgg, dong))
-            i = j
+        if re.fullmatch(r"\d+", pn):
+            i += 1
             continue
-        i += 1
+        sgg = match_sgg(pn, cur, sggnames, loose)
+        if not sgg:
+            i += 1
+            continue
+        # 의원정수(숫자) 건너뛰고 구역 수집
+        j = i + 1
+        while j < n and re.fullmatch(r"\d+", nospace(pars[j])):
+            j += 1
+        region_parts = []
+        while j < n:
+            cand = pars[j]
+            cn = nospace(cand)
+            if cn in sigungus or match_sgg(cn, cur, sggnames, loose):
+                break
+            region_parts.append(cand)
+            if not cand.rstrip().endswith(","):
+                j += 1
+                break
+            j += 1
+        for dong in split_region(" ".join(region_parts)):
+            rows.append((sido, "basic", sgg, dong))
+        i = j
     return rows
 
 
