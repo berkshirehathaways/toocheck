@@ -239,17 +239,17 @@ export default function HomePage() {
             <div className="flex flex-col justify-end gap-3">
               <Link
                 href="/principles"
-                className="label-ko-lg inline-flex items-center justify-between border border-hair px-4 py-3 text-ink/85 transition-colors hover:border-cyan hover:text-cyan"
+                className="label-ko-lg group inline-flex items-center justify-between border border-hair px-4 py-3 text-ink/85 transition-colors hover:border-cyan hover:text-cyan"
               >
-                <span>서비스 원칙 5가지 →</span>
-                <span aria-hidden>►</span>
+                <span>서비스 원칙 5가지 살펴보기</span>
+                <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
               </Link>
               <Link
                 href="/correction"
-                className="label-ko-lg inline-flex items-center justify-between border border-lime/40 bg-lime/10 px-4 py-3 text-lime transition-colors hover:bg-lime hover:text-bg"
+                className="label-ko-lg group inline-flex items-center justify-between border border-lime/40 bg-lime/10 px-4 py-3 text-lime transition-colors hover:bg-lime hover:text-bg"
               >
-                <span>정정 요청 보내기 →</span>
-                <span aria-hidden>►</span>
+                <span>정정 요청 보내기</span>
+                <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
               </Link>
               <p className="label-ko text-dim">
                 회신은 자료 갱신으로 진행됩니다 ·{' '}
