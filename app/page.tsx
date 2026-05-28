@@ -28,7 +28,7 @@ export default function HomePage() {
     <main className="relative overflow-hidden">
       {/* ===== HERO ===== */}
       <section className="relative border-b border-hair bg-bg">
-        <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-50" />
+        <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-30" />
         <SpeedLines />
         <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[1.15fr_1fr] lg:py-28">
           {/* LEFT — headline */}
@@ -118,7 +118,7 @@ export default function HomePage() {
                         ) : (
                           <>
                             <span className="font-ko font-semibold text-ink">{r.candidate.name}</span>
-                            <span className="label-ko text-dim">· {r.candidate.party}</span>
+                            <span className="label-ko text-dim">{r.candidate.party}</span>
                             <span className="ml-auto label-ko tabular-nums text-ink/85">
                               재산 {formatKrwShort(r.disclosure?.assetTotal ?? null)}
                             </span>
@@ -135,10 +135,10 @@ export default function HomePage() {
 
               <Link
                 href={`/districts/${SITE.testDistrictId}`}
-                className="label-ko-lg mt-6 inline-flex items-center justify-between border border-cyan/50 px-4 py-3 text-cyan transition-colors hover:bg-cyan hover:text-bg"
+                className="label-ko-lg group mt-6 inline-flex items-center justify-between border border-cyan bg-cyan/10 px-4 py-3 text-cyan transition-colors hover:bg-cyan hover:text-bg"
               >
                 <span>이 지역 전체 자료 보기</span>
-                <span aria-hidden>→</span>
+                <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
               </Link>
 
               <footer className="mt-6 space-y-1 border-t border-hair-soft pt-4">
