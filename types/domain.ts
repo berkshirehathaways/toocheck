@@ -93,6 +93,18 @@ export interface Candidate {
   highSchool?: string;
   /** 의정 활동(시의회·국회 통합). 시간순 표시. */
   councilTerms?: CouncilTerm[];
+
+  // ─── 직책별 차별화 (2026-05-28 후속 — sgTypecode=6 누락 발견 시) ───
+  /**
+   * 직책 종류. UI/수집 규칙 분기 기준 (`OFFICE_PROFILES` 참조).
+   * 교육감은 `partyAffiliated=false` → `party` 값 무시.
+   * 비례대표는 `isProportional=true` → `ballotNumber`를 명부 순위로 해석.
+   */
+  officeKind?: OfficeKind;
+  /** 비례대표 한정. NEC `hbjgiho`가 명부 순위와 동일하므로 같은 값 복제. */
+  proportionalRank?: number;
+  /** 교육감 한정 — 교원 자격, 학교/교육청 운영 경력. */
+  educationCareer?: EducationCareerEntry[];
 }
 
 /**
@@ -278,4 +290,126 @@ export interface CompareRow {
   badges: BadgeKind[];
   checkPriorityScore: number; // PRD §10, 0~160
   checkPriorityLabel: string; // 결정 D4
+}
+
+// ====================================================================
+// 직책별 차별화 — 2026-05-28 #14 후속.
+//
+// 2026 지방선거 7개 선거 (NEC sgTypecode):
+//   3  시·도지사               — 정당O, 공약의무O
+//   11 교육감                   — **정당X (법률상 무관)**, 공약의무O
+//   4  구·시·군의 장            — 정당O, 공약의무O
+//   5  시·도의원(지역구)        — 정당O, 공약의무O
+//   6  구·시·군의 의원(지역구)  — 정당O, **공약의무X** (NEC 5대공약 미게재)
+//   8  광역의원 비례대표        — 정당O, 공약의무O (정당명부)
+//   9  기초의원 비례대표        — 정당O, **공약의무X** (정당명부)
+//
+// "공약의무X"는 NEC policy.nec 5대공약 수집 불가 → UI에 "공약 미공개 (NEC 의무 비대상)" 안내.
+// ====================================================================
+
+export type OfficeKind =
+  | 'metropolitan_governor'      // 시·도지사 (sgType=3)
+  | 'education_superintendent'   // 교육감 (sgType=11) — 정당 비표시
+  | 'basic_governor'             // 구·시·군의 장 (sgType=4)
+  | 'metropolitan_member'        // 시·도의원 지역구 (sgType=5)
+  | 'basic_member'               // 구·시·군의원 지역구 (sgType=6) — 5대공약 의무X
+  | 'metropolitan_proportional'  // 광역의원 비례 (sgType=8) — 정당명부
+  | 'basic_proportional';        // 기초의원 비례 (sgType=9) — 정당명부, 공약X
+
+export interface OfficeProfile {
+  kind: OfficeKind;
+  /** NEC sgTypecode (policy.nec UI 라벨 기준). */
+  sgTypecode: '3' | '11' | '4' | '5' | '6' | '8' | '9';
+  /** 사람이 읽는 선거명. */
+  label: string;
+  /** policy.nec 5대공약 의무 등록. false면 UI에서 "공약 미공개" 안내. */
+  requiresFiveCommitments: boolean;
+  /** 정당공천 가능. false면 UI에서 정당 칸 비표시 (교육감 한정). */
+  partyAffiliated: boolean;
+  /** 비례대표 여부. true면 hbjgiho를 명부 순위로 해석. */
+  isProportional: boolean;
+  /** 강조 표시 필드 — 직책 특화 의사결정 기준. */
+  emphasisFields: ReadonlyArray<
+    'career' | 'councilTerms' | 'education' | 'educationCareer' | 'partyActivity'
+  >;
+}
+
+export const OFFICE_PROFILES: Record<OfficeKind, OfficeProfile> = {
+  metropolitan_governor: {
+    kind: 'metropolitan_governor',
+    sgTypecode: '3',
+    label: '시·도지사',
+    requiresFiveCommitments: true,
+    partyAffiliated: true,
+    isProportional: false,
+    emphasisFields: ['career', 'councilTerms'],
+  },
+  education_superintendent: {
+    kind: 'education_superintendent',
+    sgTypecode: '11',
+    label: '교육감',
+    requiresFiveCommitments: true,
+    partyAffiliated: false,
+    isProportional: false,
+    emphasisFields: ['education', 'educationCareer'],
+  },
+  basic_governor: {
+    kind: 'basic_governor',
+    sgTypecode: '4',
+    label: '구·시·군의 장',
+    requiresFiveCommitments: true,
+    partyAffiliated: true,
+    isProportional: false,
+    emphasisFields: ['career', 'councilTerms'],
+  },
+  metropolitan_member: {
+    kind: 'metropolitan_member',
+    sgTypecode: '5',
+    label: '시·도의원 (지역구)',
+    requiresFiveCommitments: true,
+    partyAffiliated: true,
+    isProportional: false,
+    emphasisFields: ['councilTerms', 'career'],
+  },
+  basic_member: {
+    kind: 'basic_member',
+    sgTypecode: '6',
+    label: '구·시·군의 의원 (지역구)',
+    requiresFiveCommitments: false,
+    partyAffiliated: true,
+    isProportional: false,
+    emphasisFields: ['career'],
+  },
+  metropolitan_proportional: {
+    kind: 'metropolitan_proportional',
+    sgTypecode: '8',
+    label: '광역의원 비례대표',
+    requiresFiveCommitments: true,
+    partyAffiliated: true,
+    isProportional: true,
+    emphasisFields: ['partyActivity', 'career'],
+  },
+  basic_proportional: {
+    kind: 'basic_proportional',
+    sgTypecode: '9',
+    label: '기초의원 비례대표',
+    requiresFiveCommitments: false,
+    partyAffiliated: true,
+    isProportional: true,
+    emphasisFields: ['partyActivity'],
+  },
+};
+
+/** sgTypecode → OfficeKind 역인덱스. */
+export const SGTYPECODE_TO_OFFICE_KIND: Record<string, OfficeKind> = Object.fromEntries(
+  Object.values(OFFICE_PROFILES).map((p) => [p.sgTypecode, p.kind])
+);
+
+/** 교육감 특화 — 교원 자격·학교 운영 경력. */
+export interface EducationCareerEntry {
+  role: string;          // "교원" / "교장" / "교육감 위원회 ..."
+  organization: string;  // 학교명·교육청명
+  start: string;         // ISO YYYY-MM-DD
+  end?: string;
+  sourceUrl?: string;
 }
