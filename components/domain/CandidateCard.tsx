@@ -45,7 +45,7 @@ export function CandidateCard({ candidate, row, topPromises, basisDate, classNam
     <Link
       href={`/candidates/${candidate.id}`}
       className={cn(
-        'group relative block hud-panel p-5 transition-colors hover:bg-cyan/[0.04]',
+        'group relative block hud-panel p-5 transition-colors hover:bg-cyan/[0.06] hover:border-cyan/50',
         className
       )}
     >

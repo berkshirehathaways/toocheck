@@ -14,18 +14,14 @@ export function SiteFooter() {
         <PhaseMap />
       </div>
 
-      <div className="mx-auto mt-6 max-w-7xl px-6 pb-10">
-        <p className="label-ko flex flex-wrap items-center gap-x-3 gap-y-1 text-dim">
-          <span>© {SITE.team} · 2026</span>
-          <span aria-hidden>·</span>
-          <span>공개자료 기반 운영</span>
-          <span aria-hidden>·</span>
+      <div className="mx-auto mt-6 flex max-w-7xl flex-wrap items-center justify-between gap-x-6 gap-y-2 px-6 pb-10">
+        <p className="label-ko text-dim">
+          © {SITE.team} · 2026 · 공개자료 기반 운영
+        </p>
+        <p className="label-ko text-dim">
           <span>{SITE.domain}</span>
-          <span aria-hidden>·</span>
-          <a
-            href={`mailto:${SITE.contactEmail}`}
-            className="text-cyan hover:underline"
-          >
+          <span aria-hidden className="mx-2 text-ink/25">·</span>
+          <a href={`mailto:${SITE.contactEmail}`} className="text-cyan hover:underline">
             {SITE.contactEmail}
           </a>
         </p>
