@@ -72,11 +72,11 @@ export default async function CandidatePage({ params }: PageProps) {
     <main className="mx-auto max-w-5xl px-6 py-6">
       {/* sticky anchor */}
       <nav aria-label="섹션 이동" className="sticky top-14 z-30 -mx-6 mb-6 border-b border-hair bg-bg/90 px-6 py-2 backdrop-blur">
-        <ol className="label-ko flex flex-wrap gap-x-4 gap-y-1 text-dim">
+        <ol className="label-ko flex gap-x-4 gap-y-1 overflow-x-auto whitespace-nowrap text-dim [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden sm:flex-wrap sm:overflow-x-visible">
           {ANCHORS.map((a, i) => (
-            <li key={a.id}>
-              <a href={`#${a.id}`} className="hover:text-cyan">
-                <span className="mono mono-10 text-cyan">[{String(i + 1).padStart(2, '0')}]</span> {a.label}
+            <li key={a.id} className="shrink-0">
+              <a href={`#${a.id}`} className="inline-flex items-center gap-1 py-1.5 hover:text-cyan">
+                <span className="mono mono-10 text-cyan">[{String(i + 1).padStart(2, '0')}]</span>{a.label}
               </a>
             </li>
           ))}
