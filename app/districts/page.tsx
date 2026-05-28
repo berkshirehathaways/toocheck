@@ -1,5 +1,4 @@
 import {
-  DistrictLookupPanel,
   HudLabel,
   RegionSearch,
 } from '@/components/domain';
@@ -15,26 +14,19 @@ export default function DistrictListPage() {
   const lookups = elections.map((e) => ({ election: e, districts: listDistricts(e.id) }));
 
   return (
-    <main className="mx-auto max-w-3xl space-y-8 px-6 py-12">
-      <header className="space-y-2">
+    <main className="mx-auto max-w-3xl space-y-10 px-6 py-12 sm:py-16">
+      <header className="space-y-3">
         <HudLabel tone="cyan">전국 시·군·구 검색 지원</HudLabel>
-        <h1 className="display-ko text-4xl font-bold text-ink">지역 선택</h1>
-        <p className="text-sm text-ink/75">
-          시·군·구만 입력하면 시·도지사·교육감·구청장·시·도의원·구의원 후보를 한 번에 보여줍니다.
-          정확한 시·도의원·구의원 선거구까지 좁히려면 아래에서 주소로 검색하세요.
+        <h1 className="display-ko text-4xl font-bold text-ink sm:text-5xl">
+          내 지역 후보 찾기
+        </h1>
+        <p className="text-base leading-relaxed text-ink/75">
+          시·군·구 이름만 입력하면 시·도지사·교육감·구청장·시·도의원·구의원 후보를 한 번에 보여줍니다.
+          후보를 누르면 공개자료·공약이 담긴 상세 페이지로 이동합니다.
         </p>
       </header>
 
       <RegionSearch />
-
-      <details className="hud-panel p-5">
-        <summary className="label-ko cursor-pointer text-cyan">
-          주소로 정확한 선거구까지 찾기 (선택)
-        </summary>
-        <div className="mt-4">
-          <DistrictLookupPanel />
-        </div>
-      </details>
 
       <section className="space-y-2">
         <HudLabel tone="dim">등록된 선거 {elections.length}건</HudLabel>

@@ -11,6 +11,8 @@ import index from '@/data/curated/sigungu-candidates.json';
 import type { OfficeKind } from '@/types/domain';
 
 export interface CandidateLite {
+  /** 후보 상세 페이지가 게시된 경우에만 존재(비례대표는 개인 페이지가 없어 생략). */
+  id?: string;
   name: string;
   party: string;
   ballotNumber: number;
