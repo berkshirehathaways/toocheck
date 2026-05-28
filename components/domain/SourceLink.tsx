@@ -15,14 +15,14 @@ export function SourceLink({ href, children = '원문 자료 보기', basisDate,
         href={href}
         target="_blank"
         rel="noreferrer noopener"
-        className="inline-flex items-center gap-1 border border-hair px-2 py-1 text-cyan transition-colors hover:bg-cyan/10"
+        className="label-ko inline-flex items-center gap-1 border border-hair px-2.5 py-1.5 text-cyan transition-colors hover:bg-cyan/10"
       >
         <span>{children}</span>
         <ExternalLink className="h-3 w-3" aria-hidden />
         <span className="sr-only">(새 창)</span>
       </a>
       {basisDate ? (
-        <span className="mono mono-10 text-dim">· {basisDate}</span>
+        <span className="label-ko text-dim">· {basisDate}</span>
       ) : null}
     </span>
   );

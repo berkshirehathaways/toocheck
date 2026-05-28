@@ -26,7 +26,7 @@ const body = Space_Grotesk({
   variable: '--font-body',
 });
 
-const TITLE = `${SITE.nameKo} · ${SITE.nameEn}`;
+const TITLE = `${SITE.nameKo} · ${SITE.nameShort}`;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),

@@ -178,3 +178,24 @@
     background-image: none !important;
   }
 }
+
+
+@layer components {
+  /* Korean-friendly small label — Pretendard, 11px, no upper/tracking */
+  .label-ko {
+    font-family: 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+    font-size: 11px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 500;
+  }
+  .label-ko-lg {
+    font-family: 'Pretendard Variable', Pretendard, system-ui, sans-serif;
+    font-size: 12px;
+    line-height: 1.2;
+    letter-spacing: 0;
+    text-transform: none;
+    font-weight: 600;
+  }
+}

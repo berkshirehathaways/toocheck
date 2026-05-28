@@ -53,10 +53,10 @@ export function CorrectionForm() {
 
   return (
     <form onSubmit={onSubmit} className="space-y-6">
-      <Field label="요청자 유형" en="REQUESTER" required>
+      <Field label="요청자 유형" required>
         <div className="flex flex-wrap gap-2">
           {REQUESTER_OPTIONS.map((o) => (
-            <label key={o.value} className="mono mono-10 inline-flex cursor-pointer items-center gap-2 border border-hair bg-bg-elev px-3 py-2 has-[:checked]:border-lime has-[:checked]:bg-lime has-[:checked]:text-bg">
+            <label key={o.value} className="label-ko inline-flex cursor-pointer items-center gap-2 border border-hair bg-bg-elev px-3 py-2 has-[:checked]:border-lime has-[:checked]:bg-lime has-[:checked]:text-bg">
               <input
                 type="radio"
                 name="requesterType"
@@ -65,33 +65,33 @@ export function CorrectionForm() {
                 required
                 className="sr-only"
               />
-              <span className="normal-case tracking-normal" style={{ letterSpacing: 0 }}>{o.label}</span>
+              <span>{o.label}</span>
             </label>
           ))}
         </div>
       </Field>
 
-      <Field label="대상 후보 ID" en="TARGET.CAND_ID">
-        <input id="targetCandidateId" name="targetCandidateId" type="text" defaultValue={prefilledCandidateId} placeholder="cand_002" className="mono mono-10 w-full border border-hair bg-bg px-3 py-2 text-ink" />
+      <Field label="대상 후보 ID (선택)">
+        <input id="targetCandidateId" name="targetCandidateId" type="text" defaultValue={prefilledCandidateId} placeholder="예: cand_002" className="label-ko w-full border border-hair bg-bg px-3 py-2 text-ink placeholder:text-dim" />
       </Field>
 
-      <Field label="대상 항목" en="TARGET.FIELD">
+      <Field label="대상 항목 (선택)">
         <input id="targetField" name="targetField" type="text" placeholder="예: 재산총액, 전과 기록, 공약 본문" className="w-full border border-hair bg-bg px-3 py-2 text-sm text-ink placeholder:text-dim" />
       </Field>
 
-      <Field label="사실관계" en="FACTUAL.CLAIM" required>
+      <Field label="사실관계" required>
         <textarea id="factualClaim" name="factualClaim" required minLength={5} rows={5} placeholder="정정이 필요한 항목과 사실관계를 차분히 적어주세요. 추정·평가·인격적 표현은 검수에서 제외될 수 있습니다." className="w-full border border-hair bg-bg px-3 py-2 text-sm text-ink placeholder:text-dim" />
       </Field>
 
-      <Field label="근거 링크" en="EVIDENCE.URL">
-        <input id="evidenceUrl" name="evidenceUrl" type="url" placeholder="https://..." className="mono mono-10 w-full border border-hair bg-bg px-3 py-2 text-ink placeholder:text-dim" />
-        <p className="mono mono-10 mt-1 text-dim">
-          <span className="normal-case tracking-normal" style={{ letterSpacing: 0 }}>현재 첨부는 지원하지 않습니다. 근거 링크를 활용해주세요.</span>
+      <Field label="근거 링크 (권장)">
+        <input id="evidenceUrl" name="evidenceUrl" type="url" placeholder="https://..." className="label-ko w-full border border-hair bg-bg px-3 py-2 text-ink placeholder:text-dim" />
+        <p className="label-ko mt-1 text-dim">
+          현재 첨부는 지원하지 않습니다. 근거 링크를 활용해 주세요.
         </p>
       </Field>
 
-      <Field label="회신용 이메일" en="EMAIL">
-        <input id="email" name="email" type="email" placeholder="me@example.com" className="mono mono-10 w-full border border-hair bg-bg px-3 py-2 text-ink placeholder:text-dim" />
+      <Field label="회신용 이메일 (선택)">
+        <input id="email" name="email" type="email" placeholder="me@example.com" className="label-ko w-full border border-hair bg-bg px-3 py-2 text-ink placeholder:text-dim" />
       </Field>
 
       <fieldset className="border border-lime/40 bg-lime/[0.06] p-4 text-sm">
@@ -102,19 +102,19 @@ export function CorrectionForm() {
       </fieldset>
 
       {state.status === 'error' ? (
-        <p className="mono mono-10 border border-[#5b2424] bg-[#2a1414] px-3 py-2 text-[#e09b9b]">
-          <span className="normal-case tracking-normal" style={{ letterSpacing: 0 }}>■ ERROR // {state.error}</span>
+        <p className="label-ko border border-[#5b2424] bg-[#2a1414] px-3 py-2 text-[#e09b9b]">
+          오류 · {state.error}
         </p>
       ) : null}
 
       <div className="flex items-center justify-between gap-3 border-t border-hair pt-5">
-        <p className="mono mono-10 text-dim">
-          <span className="normal-case tracking-normal" style={{ letterSpacing: 0 }}>접수 후 자동 응답은 보내지 않습니다. 처리 결과는 자료 갱신으로 반영됩니다.</span>
+        <p className="label-ko text-dim">
+          접수 후 자동 응답은 보내지 않습니다. 처리 결과는 자료 갱신으로 반영됩니다.
         </p>
         <button
           type="submit"
           disabled={state.status === 'submitting'}
-          className="mono mono-10 inline-flex items-center gap-2 border border-ink bg-ink px-4 py-2.5 text-bg transition-colors hover:bg-cyan hover:border-cyan disabled:opacity-40"
+          className="label-ko-lg inline-flex items-center gap-2 border border-ink bg-ink px-4 py-2.5 text-bg transition-colors hover:bg-cyan hover:border-cyan disabled:opacity-40"
         >
           {state.status === 'submitting' ? '제출 중…' : '정정 요청 보내기 →'}
         </button>
@@ -123,13 +123,12 @@ export function CorrectionForm() {
   );
 }
 
-function Field({ label, en, required, children }: { label: string; en: string; required?: boolean; children: React.ReactNode }) {
+function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div className="space-y-2">
       <div className="flex items-baseline gap-2">
-        <span className="mono mono-10 text-cyan">// {en}</span>
-        <span className="font-ko text-sm font-medium text-ink/90">{label}</span>
-        {required ? <span className="mono mono-10 text-[#e09b9b]">REQUIRED</span> : null}
+        <span className="font-ko text-sm font-semibold text-ink">{label}</span>
+        {required ? <span className="label-ko text-[#e09b9b]">필수</span> : null}
       </div>
       {children}
     </div>

@@ -22,13 +22,13 @@ export function SortSelector({ basePath, current }: SortSelectorProps) {
   };
 
   return (
-    <label className="mono mono-10 inline-flex items-center gap-2 text-dim">
-      <span aria-hidden>정렬 //</span>
+    <label className="label-ko inline-flex items-center gap-2 text-dim">
+      <span>정렬</span>
       <select
         value={current}
         onChange={onChange}
-        className="mono mono-10 border border-hair bg-bg px-2 py-1 text-ink focus:outline-none focus:ring-1 focus:ring-cyan"
-        aria-label="정렬"
+        className="label-ko border border-hair bg-bg px-2 py-1 text-ink focus:outline-none focus:ring-1 focus:ring-cyan"
+        aria-label="정렬 기준"
       >
         {SORT_KEYS.map((k) => (
           <option key={k} value={k}>

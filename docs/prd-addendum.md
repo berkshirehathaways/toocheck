@@ -10,9 +10,9 @@
 | 서비스명 (한글) | **투표 전 체크** |
 | 서비스명 (영문 보조) | **Toocheck** |
 | 도메인 | **toocheck.site** |
-| 운영주체 표기 | **토체크팀** |
+| 운영주체 표기 | **투체크팀** |
 | 운영 이메일 | **contact@alphaview.kr** |
-| 푸터 운영주체 라인 | `토체크팀 · contact@alphaview.kr` |
+| 푸터 운영주체 라인 | `투체크팀 · contact@alphaview.kr` |
 | 연락처 노출 방식 | `mailto:contact@alphaview.kr` 버튼 (텍스트: "운영자에게 문의") |
 | 로고 | 텍스트 워드마크 (Pretendard Bold), 심볼 발주 없음 (MVP) |
 | 레포 라이선스 | **보류** (private 유지, public 전환 시점에 MIT vs 비공개 재검토) |
@@ -56,7 +56,7 @@
 
 ```
 2026-05-27 · A1 · "투표 전 체크" + Toocheck (도메인 toocheck.site) · shaun0927
-2026-05-27 · A2 · 토체크팀 · contact@alphaview.kr · shaun0927
+2026-05-27 · A2 · 투체크팀 · contact@alphaview.kr · shaun0927
 2026-05-27 · A3 · 푸터 긴 버전 / 공유 카드 짧은 버전 분리 채택 · shaun0927
 2026-05-27 · A5 · 보류 (레포 public 전환 시점 재검토) · shaun0927
 2026-05-27 · B4 · 기호만 노출 채택 · shaun0927

@@ -15,10 +15,10 @@ export function SiteFooter() {
       </div>
 
       <div className="mx-auto mt-6 max-w-7xl px-6 pb-10">
-        <p className="mono mono-10 flex flex-wrap items-center gap-x-3 gap-y-1 text-dim">
-          <span>© {SITE.team} // 2026</span>
+        <p className="label-ko flex flex-wrap items-center gap-x-3 gap-y-1 text-dim">
+          <span>© {SITE.team} · 2026</span>
           <span aria-hidden>·</span>
-          <span>BUILT FROM PUBLIC SOURCES</span>
+          <span>공개자료 기반 운영</span>
           <span aria-hidden>·</span>
           <span>{SITE.domain}</span>
           <span aria-hidden>·</span>

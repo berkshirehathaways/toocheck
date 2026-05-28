@@ -23,7 +23,7 @@ export function CompareTable({ rows }: CompareTableProps) {
               <th
                 key={c}
                 scope="col"
-                className="mono mono-10 px-3 py-3 text-left text-dim"
+                className="label-ko px-3 py-3 text-left text-dim"
               >
                 {c}
               </th>
@@ -41,8 +41,8 @@ export function CompareTable({ rows }: CompareTableProps) {
                   (i % 2 === 1 ? 'bg-white/[0.015]' : '')
                 }
               >
-                <td className="mono mono-10 px-3 py-3 text-cyan">
-                  [{String(r.candidate.ballotNumber).padStart(2, '0')}]
+                <td className="label-ko px-3 py-3 text-cyan tabular-nums">
+                  기호 {r.candidate.ballotNumber}
                 </td>
                 <td className="px-3 py-3 font-ko font-medium">
                   <Link
@@ -56,14 +56,14 @@ export function CompareTable({ rows }: CompareTableProps) {
                 <td className="px-3 py-3 tabular-nums text-ink/85">
                   {pending ? '—' : formatKrwShort(r.disclosure?.assetTotal ?? null)}
                 </td>
-                <td className="mono mono-10 px-3 py-3">
-                  {pending ? '—' : r.assetInTopQuintile ? <span className="text-[#e0b075]">TOP_20%</span> : '—'}
+                <td className="label-ko px-3 py-3">
+                  {pending ? '—' : r.assetInTopQuintile ? <span className="text-[#e0b075]">상위 20%</span> : '—'}
                 </td>
-                <td className="mono mono-10 px-3 py-3">
-                  {pending ? '—' : (r.disclosure?.criminalRecords.length ?? 0) > 0 ? <span className="text-[#e0b075]">YES</span> : <span className="text-dim">NO</span>}
+                <td className="label-ko px-3 py-3">
+                  {pending ? '—' : (r.disclosure?.criminalRecords.length ?? 0) > 0 ? <span className="text-[#e0b075]">있음</span> : <span className="text-dim">없음</span>}
                 </td>
-                <td className="mono mono-10 px-3 py-3">
-                  {pending ? '—' : (r.disclosure?.taxArrears.length ?? 0) > 0 ? <span className="text-[#e0b075]">YES</span> : <span className="text-dim">NO</span>}
+                <td className="label-ko px-3 py-3">
+                  {pending ? '—' : (r.disclosure?.taxArrears.length ?? 0) > 0 ? <span className="text-[#e0b075]">있음</span> : <span className="text-dim">없음</span>}
                 </td>
                 <td className="px-3 py-3 text-xs text-dim">
                   {pending ? '—' : r.disclosure?.militarySummary ?? '공개자료'}
@@ -73,7 +73,7 @@ export function CompareTable({ rows }: CompareTableProps) {
                   {pending ? '—' : `${r.avgSpecificity.toFixed(1)} · ${specificityLabel(Math.round(r.avgSpecificity))}`}
                 </td>
                 <td className="px-3 py-3 text-xs text-dim">
-                  {pending ? <NeutralBadge tone="muted">DATA.PENDING</NeutralBadge> : r.checkPriorityLabel}
+                  {pending ? <NeutralBadge tone="muted">자료 확인 중</NeutralBadge> : r.checkPriorityLabel}
                 </td>
               </tr>
             );

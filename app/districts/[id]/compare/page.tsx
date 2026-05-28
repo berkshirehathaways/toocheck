@@ -36,16 +36,16 @@ export default async function ComparePage({ params, searchParams }: PageProps) {
     <main className="mx-auto max-w-6xl px-6 py-6">
       <header className="mb-6 space-y-3">
         <StatusChip tone="live">
-          <span>COMPARE</span><ChipDivider /><span>SAMPLE_GA</span><ChipDivider /><span>BASIS / {basis}</span>
+          <span>비교</span><ChipDivider /><span>{district.name}</span><ChipDivider /><span>기준일 · {basis}</span>
         </StatusChip>
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
-            <HudLabel tone="cyan">COMPARE // 11_COLS</HudLabel>
+            <HudLabel tone="cyan">후보 비교표 · 11항목</HudLabel>
             <h1 className="display-ko mt-2 text-2xl font-bold text-ink">
               {district.name} · 후보 비교표
             </h1>
           </div>
-          <div className="mono mono-10 flex flex-wrap items-center gap-3 print:hidden">
+          <div className="flex flex-wrap items-center gap-3 print:hidden">
             <SortSelector basePath={`/districts/${id}/compare`} current={sort} />
           </div>
         </div>
@@ -54,15 +54,13 @@ export default async function ComparePage({ params, searchParams }: PageProps) {
       <div className="hidden md:block"><CompareTable rows={rows} /></div>
       <div className="md:hidden"><CompareMobile rows={rows} /></div>
 
-      <div className="mono mono-10 mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-hair pt-5 text-dim print:hidden">
+      <div className="label-ko mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-hair pt-5 text-dim print:hidden">
         <Link href={`/districts/${id}`} className="hover:text-cyan">← 후보 목록</Link>
         <Link href="/correction" className="text-cyan hover:underline">정정 요청 →</Link>
       </div>
 
-      <p className="mono mono-10 mt-4 text-dim">
-        <span className="normal-case tracking-normal" style={{ letterSpacing: 0 }}>
-          본 비교표의 모든 정보는 공개자료 기준이며, 자료가 비어 있는 항목은 빈칸으로 둡니다.
-        </span>
+      <p className="label-ko mt-4 text-dim">
+        본 비교표의 모든 정보는 공개자료 기준이며, 자료가 비어 있는 항목은 빈칸으로 둡니다.
       </p>
     </main>
   );

@@ -40,9 +40,9 @@ export function Frame({
 export function Wordmark() {
   return (
     <div style={{ display: 'flex', alignItems: 'baseline', gap: 12 }}>
-      <span style={{ fontSize: 28, fontWeight: 700, letterSpacing: -0.5 }}>{SITE.nameKo}</span>
-      <span style={{ fontSize: 16, color: COLORS.muted, letterSpacing: 4, textTransform: 'uppercase' }}>
-        {SITE.nameEn}
+      <span style={{ fontSize: 32, fontWeight: 700, letterSpacing: -0.8 }}>{SITE.nameShort}</span>
+      <span style={{ fontSize: 16, color: COLORS.muted, letterSpacing: 0 }}>
+        {SITE.nameKo}
       </span>
     </div>
   );

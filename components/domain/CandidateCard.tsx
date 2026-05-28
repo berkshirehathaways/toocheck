@@ -51,29 +51,25 @@ export function CandidateCard({ candidate, row, topPromises, basisDate, classNam
     >
       <RegistrationMarks size={10} inset={6} color="cyan" />
       <header className="mb-3 flex items-baseline justify-between gap-3">
-        <div className="flex items-baseline gap-2">
-          <span className="mono mono-10 text-cyan">[기호 {candidate.ballotNumber}]</span>
-        </div>
-        <span className="mono mono-10 text-dim">
-          {pending ? 'DATA.PENDING' : basisDate ? `BASIS / ${basisDate}` : ''}
+        <span className="label-ko text-cyan">기호 {candidate.ballotNumber}</span>
+        <span className="label-ko text-dim">
+          {pending ? '자료 확인 중' : basisDate ? `기준일 · ${basisDate}` : ''}
         </span>
       </header>
 
       <div className="mb-3">
         <h3 className="font-ko text-2xl font-bold tracking-tight text-ink">{candidate.name}</h3>
-        <p className="mono mono-10 mt-1 text-dim">· <span className="normal-case tracking-normal" style={{ letterSpacing: 0 }}>{candidate.party}</span></p>
+        <p className="label-ko mt-1 text-dim">· {candidate.party}</p>
       </div>
 
       {pending ? (
-        <p className="mono mono-10 text-dim">
-          <span className="normal-case tracking-normal text-ink/70" style={{ letterSpacing: 0 }}>
-            자료 입력 전입니다. 원문 확인 후 반영됩니다.
-          </span>
+        <p className="label-ko text-ink/70">
+          자료 입력 전입니다. 원문 확인 후 반영됩니다.
         </p>
       ) : (
         <>
           {row.disclosure ? (
-            <p className="mono mono-10 mb-3 text-dim">
+            <p className="label-ko mb-3 text-dim">
               재산 <span className="text-ink/85 tabular-nums">{formatKrwShort(row.disclosure.assetTotal)}</span>
             </p>
           ) : null}
@@ -83,13 +79,13 @@ export function CandidateCard({ candidate, row, topPromises, basisDate, classNam
                 {BADGE_LABEL[b].label}
               </NeutralBadge>
             ))}
-            {rest > 0 ? <NeutralBadge tone="muted">+{rest}</NeutralBadge> : null}
+            {rest > 0 ? <NeutralBadge tone="muted">+{rest}건 더</NeutralBadge> : null}
           </div>
           {topPromises.length > 0 ? (
             <ul className="space-y-1.5 text-[13.5px] text-ink/85">
               {topPromises.map((p, i) => (
                 <li key={p.id} className="flex gap-2">
-                  <span className="mono mono-10 shrink-0 text-cyan">[{String(i + 1).padStart(2, '0')}]</span>
+                  <span className="label-ko shrink-0 text-cyan tabular-nums">{i + 1}.</span>
                   <span className="line-clamp-1">{p.title}</span>
                 </li>
               ))}
@@ -99,10 +95,10 @@ export function CandidateCard({ candidate, row, topPromises, basisDate, classNam
       )}
 
       <footer className="mt-4 flex items-center justify-between border-t border-hair-soft pt-3">
-        <span className="mono mono-10 text-dim">
-          {pending ? '확인 필요도 — DATA.PENDING' : row.checkPriorityLabel}
+        <span className="label-ko text-dim">
+          {pending ? '확인 필요도 — 자료 확인 중' : row.checkPriorityLabel}
         </span>
-        <span className="mono mono-10 text-cyan group-hover:underline">자세히 →</span>
+        <span className="label-ko text-cyan group-hover:underline">자세히 →</span>
       </footer>
 
       {pending ? (

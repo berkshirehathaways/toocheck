@@ -11,9 +11,3 @@ export const SEVERITY_LABEL: Record<Severity, string> = {
   check: '확인 권장',
   high_attention: '주의 깊게 확인',
 };
-
-export const SEVERITY_MONO_TOKEN: Record<Severity, string> = {
-  info: 'SIGNAL.INFO',
-  check: 'SIGNAL.CHECK',
-  high_attention: 'SIGNAL.ATTENTION',
-};

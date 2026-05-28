@@ -3,7 +3,7 @@
 공개자료를 바탕으로 후보자 정보를 비교해 보여주는 비당파 도구. mock-first localhost MVP.
 
 - 서비스: <https://toocheck.site>
-- 운영: 토체크팀 · <contact@alphaview.kr>
+- 운영: 투체크팀 · <contact@alphaview.kr>
 - 결정 동결: [`docs/prd-addendum.md`](./docs/prd-addendum.md), [이슈 #13](https://github.com/shaun0927/toocheck/issues/13)
 
 ## 실행

@@ -1,12 +1,12 @@
-// 결정 동결 (PRD addendum)
+// 결정 동결 (PRD addendum). 브랜드 단일 진실 공급원.
 export const SITE = {
   nameKo: '투표 전 체크',
-  nameEn: 'Toocheck',
+  nameShort: '투체크',
+  nameEn: 'Toocheck', // OG 메타 + 영문 alias 용도로만 유지
   domain: 'toocheck.site',
   url: 'https://toocheck.site',
-  team: '토체크팀',
+  team: '투체크팀',
   contactEmail: 'contact@alphaview.kr',
-  // 결정 A3
   disclaimerLong:
     '본 서비스는 공개자료를 바탕으로 후보자 정보를 비교해 보여줍니다. 후보 지지·반대 의도가 없습니다. 자료에 오류가 있다면 정정 요청을 보내주세요.',
   disclaimerShort:

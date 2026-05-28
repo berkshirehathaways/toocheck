@@ -20,10 +20,6 @@ const CATEGORY_LABEL: Record<CandidatePromise['category'], string> = {
   housing: '주거', tax: '조세', integrity: '청렴', transport: '교통',
   welfare: '복지', education: '교육', environment: '환경', safety: '안전', other: '기타',
 };
-const CATEGORY_EN: Record<CandidatePromise['category'], string> = {
-  housing: 'HOUSING', tax: 'TAX', integrity: 'INTEGRITY', transport: 'TRANSPORT',
-  welfare: 'WELFARE', education: 'EDUCATION', environment: 'ENVIRONMENT', safety: 'SAFETY', other: 'OTHER',
-};
 
 export function PromiseCard({ promise, index, defaultExpanded = true, className }: PromiseCardProps) {
   const [expanded, setExpanded] = React.useState(defaultExpanded);
@@ -34,12 +30,9 @@ export function PromiseCard({ promise, index, defaultExpanded = true, className 
       <RegistrationMarks size={10} inset={6} color="dim" />
       <header className="mb-2 flex flex-wrap items-center gap-2">
         {index != null ? (
-          <span className="mono mono-10 text-cyan">[{String(index).padStart(2, '0')}]</span>
+          <span className="label-ko text-cyan tabular-nums">공약 {String(index).padStart(2, '0')}</span>
         ) : null}
-        <NeutralBadge tone="muted">
-          <span className="mono mono-10">{CATEGORY_EN[promise.category]}</span>
-          <span className="ml-1 normal-case tracking-normal" style={{ letterSpacing: 0 }}>· {CATEGORY_LABEL[promise.category]}</span>
-        </NeutralBadge>
+        <NeutralBadge tone="muted">{CATEGORY_LABEL[promise.category]}</NeutralBadge>
         <NeutralBadge tone={promise.specificityScore >= 4 ? 'lime' : promise.specificityScore <= 1 ? 'attention' : 'neutral'}>
           구체성 {specificityLabel(promise.specificityScore)}
         </NeutralBadge>
@@ -50,7 +43,7 @@ export function PromiseCard({ promise, index, defaultExpanded = true, className 
         <button
           type="button"
           onClick={() => setExpanded((v) => !v)}
-          className="mono mono-10 mt-2 text-cyan hover:underline"
+          className="label-ko mt-2 text-cyan hover:underline"
         >
           {expanded ? '접기 ▲' : '더보기 ▼'}
         </button>

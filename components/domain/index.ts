@@ -6,7 +6,7 @@ export { CandidateCard } from './CandidateCard';
 export { SourceLink } from './SourceLink';
 export { DataPendingNote, DATA_PENDING_MESSAGE } from './DataPendingNote';
 export { AssetBreakdownBar } from './AssetBreakdownBar';
-export { SEVERITY_COLORS, SEVERITY_LABEL, SEVERITY_MONO_TOKEN } from './severity';
+export { SEVERITY_COLORS, SEVERITY_LABEL } from './severity';
 export { HudLabel } from './HudLabel';
 export { StatusChip, ChipDivider } from './StatusChip';
 export { LimeStamp } from './LimeStamp';

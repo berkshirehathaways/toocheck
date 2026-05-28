@@ -34,7 +34,7 @@ export function AssetBreakdownBar({ breakdown, className }: AssetBreakdownBarPro
           );
         })}
       </div>
-      <ul className="mono mono-10 flex flex-wrap gap-x-3 gap-y-1 text-dim">
+      <ul className="label-ko flex flex-wrap gap-x-3 gap-y-1 text-dim">
         {SEGMENTS.map((s) => (
           <li key={s.key} className="inline-flex items-center gap-1.5">
             <span className={cn('block h-1.5 w-1.5', s.cls)} aria-hidden />

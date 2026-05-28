@@ -3,6 +3,7 @@ import { cn } from '@/lib/utils';
 interface StatusChipProps {
   children: React.ReactNode;
   tone?: 'live' | 'pending' | 'neutral';
+  lang?: 'ko' | 'en';
   className?: string;
 }
 
@@ -12,21 +13,23 @@ const LEAD: Record<NonNullable<StatusChipProps['tone']>, string> = {
   neutral: 'bg-cyan',
 };
 
-/** mono 10px hairline chip with leading colored square + slash-separated fragments. */
-export function StatusChip({ children, tone = 'neutral', className }: StatusChipProps) {
+/** 가운뎃점(·) 또는 / 로 구분된 작은 상태 칩. */
+export function StatusChip({ children, tone = 'neutral', lang = 'ko', className }: StatusChipProps) {
+  const text = lang === 'en' ? 'mono mono-10' : 'label-ko';
   return (
     <span
       className={cn(
-        'mono mono-10 inline-flex items-center gap-2 border border-hair px-2.5 py-1 text-ink/85',
+        'inline-flex items-center gap-2 border border-hair px-3 py-1.5 text-ink/85',
+        text,
         className
       )}
     >
       <span aria-hidden className={cn('block h-1.5 w-1.5', LEAD[tone])} />
-      <span className="flex flex-wrap items-center gap-1">{children}</span>
+      <span className="flex flex-wrap items-center gap-1.5">{children}</span>
     </span>
   );
 }
 
 export function ChipDivider() {
-  return <span aria-hidden className="text-ink/20">/</span>;
+  return <span aria-hidden className="text-ink/25">·</span>;
 }

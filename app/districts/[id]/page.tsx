@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation';
 import {
   CandidateCard,
   ChipDivider,
-  HudLabel,
   StatusChip,
 } from '@/components/domain';
 import { SortSelector } from '@/components/domain/SortSelector';
@@ -50,15 +49,15 @@ export default async function DistrictPage({ params, searchParams }: PageProps) 
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div className="space-y-2">
             <StatusChip tone="live">
-              <span>DISTRICT</span>
+              <span>지역</span>
               <ChipDivider />
-              <span>SAMPLE_GA</span>
+              <span>{district.name}</span>
               <ChipDivider />
-              <span>BASIS / {basis}</span>
+              <span>기준일 · {basis}</span>
             </StatusChip>
             <h1 className="font-ko text-2xl font-bold text-ink">
               {district.name}
-              <span className="mono mono-10 ml-3 text-dim">
+              <span className="label-ko ml-3 text-dim">
                 · {election?.name}
               </span>
             </h1>
@@ -67,10 +66,8 @@ export default async function DistrictPage({ params, searchParams }: PageProps) 
         </div>
       </div>
 
-      <p className="mono mono-10 mb-5 text-dim">
-        <span className="normal-case tracking-normal" style={{ letterSpacing: 0 }}>
-          {district.description ?? '본 화면의 모든 정보는 공개자료 기준이며, 자료가 비어 있는 항목은 빈칸으로 둡니다.'}
-        </span>
+      <p className="label-ko mb-5 text-dim">
+        {district.description ?? '본 화면의 모든 정보는 공개자료 기준이며, 자료가 비어 있는 항목은 빈칸으로 둡니다.'}
       </p>
 
       <div className="grid gap-px bg-hair sm:grid-cols-2 lg:grid-cols-3">
@@ -92,7 +89,7 @@ export default async function DistrictPage({ params, searchParams }: PageProps) 
         })}
       </div>
 
-      <div className="mono mono-10 mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-hair pt-6 text-dim">
+      <div className="label-ko mt-10 flex flex-wrap items-center justify-between gap-3 border-t border-hair pt-6 text-dim">
         <Link href="/districts" className="hover:text-cyan">← 다른 지역 선택</Link>
         <Link href={`/districts/${id}/compare`} className="text-cyan hover:underline">
           후보 비교표 보기 →
