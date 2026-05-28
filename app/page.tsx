@@ -41,7 +41,7 @@ export default function HomePage() {
               <span>지역 01곳</span>
             </StatusChip>
 
-            <h1 className="mt-8 display-ko text-[clamp(48px,8.5vw,108px)] font-extrabold leading-[1.04] tracking-tight text-ink">
+            <h1 className="mt-8 display-ko text-[clamp(44px,7vw,92px)] font-extrabold leading-[1.05] tracking-tight text-ink">
               당신의 후보는,
               <br />
               어떤{' '}
@@ -49,7 +49,7 @@ export default function HomePage() {
                 <span className="relative z-10">사람</span>
                 <span
                   aria-hidden
-                  className="absolute inset-x-0 bottom-[0.08em] z-0 h-[0.14em] bg-cyan"
+                  className="absolute inset-x-0 -bottom-1 z-0 h-[0.12em] bg-cyan"
                 />
               </span>
               입니까?
@@ -61,10 +61,9 @@ export default function HomePage() {
                 aria-hidden
                 className="block h-1.5 w-1.5 bg-lime shadow-[0_0_8px_rgba(190,242,100,0.7)]"
               />
-              <p className="display-ko text-lg font-bold tracking-tight text-ink/85 sm:text-xl">
+              <p className="display-ko text-lg font-bold tracking-tight text-ink/90 sm:text-xl">
                 투표 전 체크, 투체크
               </p>
-              <span aria-hidden className="ml-1 h-px flex-1 max-w-32 bg-hair" />
             </div>
 
             <p className="mt-6 max-w-md text-[15px] leading-relaxed text-ink/70">
@@ -95,7 +94,7 @@ export default function HomePage() {
 
           {/* RIGHT — live sample data instrument */}
           <div className="relative">
-            <div className="relative flex aspect-[4/5] flex-col hud-panel overflow-hidden p-6">
+            <div className="relative flex h-full flex-col hud-panel p-6">
               <RegistrationMarks color="cyan" size={14} inset={12} />
 
               <header className="flex items-baseline justify-between">
@@ -103,46 +102,52 @@ export default function HomePage() {
                 <span className="label-ko text-dim">{basis}</span>
               </header>
 
-              <p className="display-ko mt-3 text-2xl font-bold leading-tight text-ink">
+              <p className="display-ko mt-3 text-3xl font-bold leading-tight text-ink">
                 샘플 시 가나구청장
               </p>
-              <p className="label-ko text-dim">{election?.name}</p>
+              <p className="label-ko mt-1 text-dim">{election?.name} · 후보 {rows.length}명</p>
 
-              <ul className="mt-6 space-y-3 border-t border-hair-soft pt-5">
+              <ul className="mt-6 divide-y divide-hair-soft border-y border-hair-soft">
                 {rows.map((r) => {
                   const pending = r.candidate.reviewStatus !== 'reviewed';
                   const hasCrime = (r.disclosure?.criminalRecords.length ?? 0) > 0;
                   const hasTax = (r.disclosure?.taxArrears.length ?? 0) > 0;
+                  const sigs = [hasCrime ? '전과 공개' : null, hasTax ? '체납 공개' : null].filter(Boolean);
                   return (
-                    <li
-                      key={r.candidate.id}
-                      className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm"
-                    >
-                      <span className="label-ko shrink-0 text-cyan">
-                        기호 {r.candidate.ballotNumber}
-                      </span>
-                      {pending ? (
-                        <span className="label-ko text-dim">자료 확인 중</span>
-                      ) : (
-                        <>
-                          <span className="font-ko font-semibold text-ink">{r.candidate.name}</span>
-                          <span className="label-ko text-dim">{r.candidate.party}</span>
-                          <span className="ml-auto label-ko tabular-nums text-ink/85">
-                            재산 {formatKrwShort(r.disclosure?.assetTotal ?? null)}
-                          </span>
-                        </>
-                      )}
-                      {(hasCrime || hasTax) && !pending ? (
-                        <span className="basis-full label-ko text-[#e0b075]">
-                          {hasCrime ? '전과 공개 · ' : ''}{hasTax ? '체납 공개' : ''}
+                    <li key={r.candidate.id} className="py-3">
+                      <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm">
+                        <span className="label-ko shrink-0 text-cyan">
+                          기호 {r.candidate.ballotNumber}
                         </span>
+                        {pending ? (
+                          <span className="label-ko text-dim">자료 확인 중 — 라후보 · 무소속</span>
+                        ) : (
+                          <>
+                            <span className="font-ko font-semibold text-ink">{r.candidate.name}</span>
+                            <span className="label-ko text-dim">· {r.candidate.party}</span>
+                            <span className="ml-auto label-ko tabular-nums text-ink/85">
+                              재산 {formatKrwShort(r.disclosure?.assetTotal ?? null)}
+                            </span>
+                          </>
+                        )}
+                      </div>
+                      {sigs.length > 0 && !pending ? (
+                        <p className="label-ko mt-1 text-[#e0b075]">{sigs.join(' · ')}</p>
                       ) : null}
                     </li>
                   );
                 })}
               </ul>
 
-              <footer className="mt-auto space-y-1 border-t border-hair-soft pt-4">
+              <Link
+                href={`/districts/${SITE.testDistrictId}`}
+                className="label-ko-lg mt-6 inline-flex items-center justify-between border border-cyan/50 px-4 py-3 text-cyan transition-colors hover:bg-cyan hover:text-bg"
+              >
+                <span>이 지역 전체 자료 보기</span>
+                <span aria-hidden>→</span>
+              </Link>
+
+              <footer className="mt-6 space-y-1 border-t border-hair-soft pt-4">
                 <p className="label-ko text-dim">
                   {SITE.team} ·{' '}
                   <a href={`mailto:${SITE.contactEmail}`} className="text-cyan hover:underline">

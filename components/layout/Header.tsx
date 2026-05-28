@@ -35,7 +35,6 @@ export function SiteHeader() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
-          <span className="label-ko text-dim">지금 위치 · 홈</span>
           <Link
             href="/correction"
             className="label-ko-lg inline-flex items-center gap-1 border border-cyan/50 px-3 py-1.5 text-cyan transition-colors hover:bg-cyan hover:text-bg"
