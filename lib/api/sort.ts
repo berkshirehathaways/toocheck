@@ -1,6 +1,7 @@
 // 결정 F13: sort 처리 위치 = API 측 (?sort= query, URL 공유 시 정렬 상태 유지)
 import type { Candidate, CompareRow } from '@/types/domain';
 
+// 공약 구체성 정렬 옵션은 자동 판정 결과 노출 위험으로 제거 (정치적 중립)
 export const SORT_KEYS = [
   'ballot', // 기호순
   'name', // 이름순
@@ -8,7 +9,6 @@ export const SORT_KEYS = [
   'asset_asc', // 재산↓
   'criminal_first', // 전과 공개 우선
   'tax_first', // 체납 공개 우선
-  'specificity_desc', // 공약 구체성↑
 ] as const;
 
 export type SortKey = (typeof SORT_KEYS)[number];
@@ -20,7 +20,6 @@ export const SORT_LABEL: Record<SortKey, string> = {
   asset_asc: '재산신고액 낮은 순',
   criminal_first: '전과기록 공개자료 있음 우선',
   tax_first: '체납기록 공개자료 있음 우선',
-  specificity_desc: '공약 구체성 높은 순',
 };
 
 export function isSortKey(s: string | null | undefined): s is SortKey {
@@ -66,8 +65,6 @@ export function sortCompareRows(rows: CompareRow[], key: SortKey): CompareRow[] 
         if (av !== bv) return bv - av;
         return a.candidate.ballotNumber - b.candidate.ballotNumber;
       }
-      case 'specificity_desc':
-        return b.avgSpecificity - a.avgSpecificity;
       default:
         return 0;
     }

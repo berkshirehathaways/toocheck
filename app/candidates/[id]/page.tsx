@@ -1,8 +1,8 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 
 import {
-  CheckCard,
   DataPendingNote,
   DisclosureCard,
   HudLabel,
@@ -15,24 +15,23 @@ import {
   ChipDivider,
 } from '@/components/domain';
 import { buildCrossCheckPoints } from '@/lib/cross-check';
-import { avgSpecificity, specificityLabel } from '@/lib/promise-specificity';
 import { formatSourceBasis } from '@/lib/format-date';
 import {
   getCandidate,
   getCompareData,
   getDisclosure,
   getDistrict,
-  listCheckCards,
   listPromises,
 } from '@/mocks/loader';
 
 interface PageProps { params: Promise<{ id: string }>; }
 
 const ANCHORS = [
+  { id: 'profile', label: '인적사항' },
   { id: 'disclosure', label: '공개 자료' },
   { id: 'promises', label: '공약' },
-  { id: 'check-cards', label: '확인 필요도' },
   { id: 'military', label: '병역' },
+  { id: 'past', label: '과거 출마' },
   { id: 'cross-check', label: '함께 확인할 지점' },
 ] as const;
 
@@ -42,7 +41,7 @@ export async function generateMetadata({ params }: PageProps) {
   if (!c) return { title: '후보를 찾을 수 없음' };
   return {
     title: `기호 ${c.ballotNumber} ${c.name} (${c.party})`,
-    description: `${c.name} 후보의 공개자료·공약·확인 필요도 — 정치 중립 비교 자료`,
+    description: `${c.name} 후보의 공개자료·공약 — 정치적으로 중립적인 비교 자료`,
   };
 }
 
@@ -54,13 +53,11 @@ export default async function CandidatePage({ params }: PageProps) {
   const district = getDistrict(candidate.districtId);
   const disclosure = getDisclosure(id);
   const allPromises = listPromises(id);
-  const checkCards = listCheckCards(id);
   const districtRows = getCompareData(candidate.districtId);
   const row = districtRows.find((r) => r.candidate.id === id);
   const crossPoints = row ? buildCrossCheckPoints(row, allPromises) : [];
   const isPending = candidate.reviewStatus !== 'reviewed';
   const basis = formatSourceBasis(disclosure?.sourceCheckedAt ?? null);
-  const avg = avgSpecificity(allPromises.map((p) => p.specificityScore));
 
   return (
     <main className="mx-auto max-w-5xl px-6 py-6">
@@ -88,20 +85,39 @@ export default async function CandidatePage({ params }: PageProps) {
           </LimeStamp>
         </div>
         <div className="mt-6 grid gap-6 sm:grid-cols-[160px_1fr]">
-          <div className="relative aspect-[4/5] hud-panel striped-placeholder">
+          <div className="relative aspect-[4/5] hud-panel striped-placeholder overflow-hidden">
             <RegistrationMarks color="cyan" size={10} inset={6} />
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="label-ko text-dim">후보 사진 · 시연용</span>
-            </div>
+            {disclosure?.photoUrl ? (
+              // NEC CDN deep-link (선거기간 동안 안전, 선거 후 자체 미러 검토)
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                src={disclosure.photoUrl}
+                alt={`${candidate.name} 후보 사진 (NEC 공개자료)`}
+                className="absolute inset-0 h-full w-full object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <span className="label-ko text-dim">후보 사진 · 시연용</span>
+              </div>
+            )}
           </div>
           <div>
             <p className="label-ko text-cyan">기호 {candidate.ballotNumber}</p>
             <h1 className="display-ko mt-1 text-5xl font-extrabold tracking-tight text-ink">
               {candidate.name}
+              {candidate.nameHanja ? (
+                <span className="ml-2 align-baseline font-ko text-2xl font-normal text-dim">
+                  ({candidate.nameHanja})
+                </span>
+              ) : null}
             </h1>
             <p className="label-ko mt-2 text-dim">
               {candidate.party}
-              {candidate.birthYear ? ` · ${candidate.birthYear}년생` : ''} · 본 정보는 공개자료 기준
+              {candidate.birthDate
+                ? ` · ${candidate.birthDate.replace(/-/g, '.')}생`
+                : candidate.birthYear ? ` · ${candidate.birthYear}년생` : ''}
+              {candidate.gender === 'M' ? ' · 남' : candidate.gender === 'F' ? ' · 여' : ''}
+              {' '}· 본 정보는 공개자료 기준
             </p>
             {district ? (
               <Link
@@ -113,17 +129,46 @@ export default async function CandidatePage({ params }: PageProps) {
               </Link>
             ) : null}
             <div className="mt-4 flex flex-wrap gap-2">
-              {row ? (
-                <NeutralBadge tone={row.checkPriorityScore >= 71 ? 'attention' : row.checkPriorityScore >= 31 ? 'check' : 'info'}>
-                  {row.checkPriorityLabel} · 점수 {String(row.checkPriorityScore).padStart(3, '0')}/160
-                </NeutralBadge>
+              {candidate.electionRunCount ? (
+                <NeutralBadge tone="muted">입후보 {candidate.electionRunCount}회</NeutralBadge>
               ) : null}
-              <NeutralBadge tone="muted">검수자 admin</NeutralBadge>
               <NeutralBadge tone="muted">출처 {String(disclosure?.sourceUrls.length ?? 0).padStart(2, '0')}건</NeutralBadge>
             </div>
           </div>
         </div>
       </section>
+
+      {/* 인적사항 (NEC info.nec 등록자료 — 직업·학력·경력) */}
+      {(candidate.occupation || candidate.education || (candidate.career && candidate.career.length > 0)) ? (
+        <section id="profile" className="mb-10 scroll-mt-32">
+          <HudLabel tone="cyan">인적사항</HudLabel>
+          <article className="hud-panel relative mt-3 grid gap-4 p-5 sm:grid-cols-3">
+            <RegistrationMarks color="dim" size={10} inset={6} />
+            {candidate.occupation ? (
+              <div>
+                <p className="label-ko text-dim">직업</p>
+                <p className="mt-1 text-ink/85">{candidate.occupation}</p>
+              </div>
+            ) : null}
+            {candidate.education ? (
+              <div>
+                <p className="label-ko text-dim">학력</p>
+                <p className="mt-1 leading-relaxed text-ink/85">{candidate.education}</p>
+              </div>
+            ) : null}
+            {candidate.career && candidate.career.length > 0 ? (
+              <div className="sm:col-span-3">
+                <p className="label-ko text-dim">경력</p>
+                <ul className="mt-1 list-inside list-disc space-y-0.5 text-ink/85">
+                  {candidate.career.map((c, i) => (
+                    <li key={i} className="leading-relaxed">{c}</li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </article>
+        </section>
+      ) : null}
 
       <section id="disclosure" className="mb-10 scroll-mt-32">
         {disclosure ? <DisclosureCard disclosure={disclosure} /> : <DataPendingNote />}
@@ -132,44 +177,12 @@ export default async function CandidatePage({ params }: PageProps) {
       <section id="promises" className="mb-10 scroll-mt-32">
         <header className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
           <HudLabel tone="cyan">공약 {String(allPromises.length).padStart(2, '0')}건</HudLabel>
-          {allPromises.length > 0 ? (
-            <p className="label-ko text-dim">
-              평균 구체성 <span className="tabular-nums text-ink/85">{avg.toFixed(1)}</span> · {specificityLabel(Math.round(avg))}
-            </p>
-          ) : null}
         </header>
         {allPromises.length === 0 ? (
           <DataPendingNote />
         ) : (
           <div className="grid gap-3 sm:grid-cols-2">
             {allPromises.map((p, i) => <PromiseCard key={p.id} promise={p} index={i + 1} />)}
-          </div>
-        )}
-      </section>
-
-      <section id="check-cards" className="mb-10 scroll-mt-32">
-        <header className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
-          <HudLabel tone="cyan">확인 필요도</HudLabel>
-          {row ? (
-            <span className="label-ko text-dim">
-              점수 <span className="text-ink/85 tabular-nums">{String(row.checkPriorityScore).padStart(3, '0')}</span> / 160
-            </span>
-          ) : null}
-        </header>
-        {checkCards.length === 0 ? (
-          <DataPendingNote />
-        ) : (
-          <div className="grid gap-3 sm:grid-cols-2">
-            {checkCards.map((c) => (
-              <CheckCard
-                key={c.id}
-                severity={c.severity}
-                title={c.title}
-                body={c.body}
-                sourceUrl={c.sourceUrl}
-                basisDate={basis}
-              />
-            ))}
           </div>
         )}
       </section>
@@ -191,6 +204,50 @@ export default async function CandidatePage({ params }: PageProps) {
           </article>
         ) : <DataPendingNote className="mt-3" />}
       </section>
+
+      {/* 과거 출마 결과 (위키 CC BY-SA 4.0 출처) */}
+      {candidate.pastElections && candidate.pastElections.length > 0 ? (
+        <section id="past" className="mb-10 scroll-mt-32">
+          <HudLabel tone="cyan">과거 출마 이력</HudLabel>
+          <p className="label-ko mt-2 text-dim">
+            본 항목은 <a className="text-cyan hover:underline" href="https://ko.wikipedia.org/" target="_blank" rel="noreferrer noopener">위키백과</a> 출처입니다.{' '}
+            <span className="text-ink/70">CC BY-SA 4.0 라이선스</span>에 따라 인용했습니다.
+          </p>
+          <div className="hud-panel relative mt-3 overflow-x-auto p-5">
+            <RegistrationMarks color="dim" size={10} inset={6} />
+            <table className="w-full text-left text-sm">
+              <thead>
+                <tr className="label-ko border-b border-hair text-dim">
+                  <th className="py-2 pr-3">연도</th>
+                  <th className="py-2 pr-3">선거</th>
+                  <th className="py-2 pr-3">선거구</th>
+                  <th className="py-2 pr-3">정당</th>
+                  <th className="py-2 pr-3 text-right">득표율</th>
+                  <th className="py-2 pr-3 text-right">순위</th>
+                  <th className="py-2">결과</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-hair text-ink/85">
+                {candidate.pastElections.map((p, i) => (
+                  <tr key={i}>
+                    <td className="py-2 pr-3 tabular-nums">{p.year}</td>
+                    <td className="py-2 pr-3">{p.electionName}</td>
+                    <td className="py-2 pr-3">{p.district}</td>
+                    <td className="py-2 pr-3">{p.party}</td>
+                    <td className="py-2 pr-3 text-right tabular-nums">{p.votePct.toFixed(2)}%</td>
+                    <td className="py-2 pr-3 text-right tabular-nums">{p.rank}위</td>
+                    <td className="py-2">
+                      <NeutralBadge tone={p.result === '당선' ? 'info' : 'muted'}>
+                        {p.result}{p.note ? ` · ${p.note}` : ''}
+                      </NeutralBadge>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </section>
+      ) : null}
 
       <section id="cross-check" className="mb-10 scroll-mt-32">
         <HudLabel tone="lime">함께 확인할 지점</HudLabel>

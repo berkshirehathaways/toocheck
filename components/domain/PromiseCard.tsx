@@ -2,7 +2,6 @@
 
 import * as React from 'react';
 import { cn } from '@/lib/utils';
-import { specificityLabel } from '@/lib/promise-specificity';
 import type { CandidatePromise } from '@/types/domain';
 
 import { NeutralBadge } from './NeutralBadge';
@@ -33,9 +32,6 @@ export function PromiseCard({ promise, index, defaultExpanded = true, className 
           <span className="label-ko text-cyan tabular-nums">공약 {String(index).padStart(2, '0')}</span>
         ) : null}
         <NeutralBadge tone="muted">{CATEGORY_LABEL[promise.category]}</NeutralBadge>
-        <NeutralBadge tone={promise.specificityScore >= 4 ? 'lime' : promise.specificityScore <= 1 ? 'attention' : 'neutral'}>
-          구체성 {specificityLabel(promise.specificityScore)}
-        </NeutralBadge>
       </header>
       <h4 className="mb-2 font-ko text-base font-bold leading-snug text-ink">{promise.title}</h4>
       <p className="text-[14px] leading-relaxed text-ink/80">{visibleBody}</p>

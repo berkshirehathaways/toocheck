@@ -4,7 +4,6 @@ import * as React from 'react';
 import Link from 'next/link';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { formatKrwShort } from '@/lib/format-krw';
-import { specificityLabel } from '@/lib/promise-specificity';
 import type { CompareRow } from '@/types/domain';
 import { RegistrationMarks } from './RegistrationMarks';
 
@@ -75,8 +74,6 @@ export function CompareMobile({ rows }: CompareMobileProps) {
                 <Row k="체납 공개" v={pending ? '—' : (r.disclosure?.taxArrears.length ?? 0) > 0 ? '있음' : '없음'} />
                 <Row k="병역" v={pending ? '—' : r.disclosure?.militarySummary ?? '공개자료'} />
                 <Row k="공약 수" v={pending ? '—' : String(r.promiseCount)} />
-                <Row k="공약 구체성" v={pending ? '—' : `${r.avgSpecificity.toFixed(1)} · ${specificityLabel(Math.round(r.avgSpecificity))}`} />
-                <Row k="확인 필요도" v={pending ? '자료 확인 중' : r.checkPriorityLabel} />
               </dl>
               <div className="mt-3 border-t border-hair-soft pt-3">
                 <Link href={`/candidates/${r.candidate.id}`} className="label-ko text-cyan hover:underline">

@@ -12,7 +12,7 @@ const BADGE_LABEL: Record<BadgeKind, { label: string; tone: 'attention' | 'check
   tax_arrears_present: { label: '체납 공개', tone: 'check' },
   asset_top_quintile: { label: '재산 상위', tone: 'check' },
   military_disclosed: { label: '병역 공개', tone: 'info' },
-  promise_specificity_high: { label: '구체성 높음', tone: 'lime' },
+  promise_specificity_high: { label: '', tone: 'lime' }, // 비노출 (자동 판정 라벨은 비당파성 위험)
   data_pending: { label: '자료 확인 중', tone: 'muted' },
 };
 
@@ -20,7 +20,6 @@ const BADGE_PRIORITY: BadgeKind[] = [
   'criminal_record_present',
   'tax_arrears_present',
   'asset_top_quintile',
-  'promise_specificity_high',
   'military_disclosed',
   'data_pending',
 ];
@@ -96,11 +95,12 @@ export function CandidateCard({ candidate, row, topPromises, basisDate, classNam
         </>
       )}
 
-      <footer className="mt-4 flex items-center justify-between border-t border-hair-soft pt-3">
-        <span className="label-ko text-dim">
-          {pending ? '확인 필요도 — 자료 확인 중' : row.checkPriorityLabel}
-        </span>
-        <span className="label-ko text-cyan group-hover:underline">자세히 →</span>
+      <footer className="mt-4 flex items-center justify-end border-t border-hair-soft pt-3">
+        {pending ? (
+          <span className="label-ko text-dim">자료 확인 중</span>
+        ) : (
+          <span className="label-ko text-cyan group-hover:underline">자세히 →</span>
+        )}
       </footer>
 
       {pending ? (

@@ -31,6 +31,15 @@ export const districts: District[] = [
     positionTitle: '구청장',
     description: '본 지역 및 후보 정보는 시연용 가상 데이터입니다.',
   },
+  // ─── 실데이터 (2026-05-28 수집, NEC info.nec.go.kr / policy.nec.go.kr 출처) ───
+  {
+    id: 'district_seoul_jongno',
+    electionId: 'election_2026_local',
+    name: '서울특별시 종로구청장',
+    region: '서울특별시',
+    positionTitle: '구청장',
+    description: '제9회 전국동시지방선거 구·시·군의 장선거. NEC 공개자료 기준.',
+  },
 ];
 
 const REVIEWED_BY = 'admin';
@@ -82,6 +91,60 @@ export const candidates: Candidate[] = [
     birthYear: 1980,
     status: 'active',
     reviewStatus: 'needs_check', // 결정 E16: 표시되되 '자료 확인 중'
+    reviewedBy: REVIEWED_BY,
+  },
+  // ─── 실데이터: 서울 종로구청장 (2026-05-28 수집) ───
+  {
+    id: 'cand_jongno_1',
+    districtId: 'district_seoul_jongno',
+    electionId: 'election_2026_local',
+    ballotNumber: 1,
+    name: '유찬종',
+    nameHanja: '劉燦鍾',
+    party: '더불어민주당',
+    birthYear: 1959,
+    birthDate: '1959-11-20',
+    gender: 'M',
+    occupation: '정당인',
+    education: '연세대학교 경법대학 법학 졸업',
+    career: [
+      '(전)종로구청장 후보',
+      '(전)제20-21대 이재명 대통령후보 종로구 공동상임 선대위원장',
+    ],
+    electionRunCount: 5,
+    pastElections: [
+      { year: 1998, electionName: '제2회 전국동시지방선거', district: '서울 종로 교남동', party: '무소속', votes: 1954, votePct: 50.24, rank: 1, result: '당선', note: '초선', sourceUrl: 'https://ko.wikipedia.org/wiki/유찬종', sourceLicense: 'CC BY-SA 4.0' },
+      { year: 2002, electionName: '제3회 전국동시지방선거', district: '서울 종로 교남동', party: '무소속', votes: 1931, votePct: 52.27, rank: 1, result: '당선', note: '재선', sourceUrl: 'https://ko.wikipedia.org/wiki/유찬종', sourceLicense: 'CC BY-SA 4.0' },
+      { year: 2006, electionName: '제4회 전국동시지방선거', district: '서울 종로 가', party: '민주당', votes: 2527, votePct: 14.30, rank: 4, result: '낙선', sourceUrl: 'https://ko.wikipedia.org/wiki/유찬종', sourceLicense: 'CC BY-SA 4.0' },
+      { year: 2014, electionName: '제6회 전국동시지방선거', district: '서울 종로 제2선거구', party: '새정치민주연합', votes: 20630, votePct: 52.09, rank: 1, result: '당선', note: '초선 9대 시의원', sourceUrl: 'https://ko.wikipedia.org/wiki/유찬종', sourceLicense: 'CC BY-SA 4.0' },
+      { year: 2022, electionName: '제8회 전국동시지방선거', district: '서울 종로구청장', party: '더불어민주당', votes: 32857, votePct: 47.09, rank: 2, result: '낙선', sourceUrl: 'https://ko.wikipedia.org/wiki/유찬종', sourceLicense: 'CC BY-SA 4.0' },
+    ],
+    necId: '100154016',
+    status: 'active',
+    reviewStatus: 'reviewed',
+    reviewedBy: REVIEWED_BY,
+  },
+  {
+    id: 'cand_jongno_2',
+    districtId: 'district_seoul_jongno',
+    electionId: 'election_2026_local',
+    ballotNumber: 2,
+    name: '정문헌',
+    nameHanja: '鄭文憲',
+    party: '국민의힘',
+    birthYear: 1966,
+    birthDate: '1966-05-04',
+    gender: 'M',
+    occupation: '종로구청장',
+    education: '고려대학교 대학원 정치외교학과 졸업(정치학 박사)',
+    career: [
+      '(전)17대,19대 국회의원',
+      '(전)청와대 통일비서관',
+    ],
+    electionRunCount: 3,
+    necId: '100163635',
+    status: 'active',
+    reviewStatus: 'reviewed',
     reviewedBy: REVIEWED_BY,
   },
 ];
@@ -144,6 +207,48 @@ export const disclosures: CandidateDisclosure[] = [
     sourceCheckedAt: '2026-05-18',
   },
   // 4번 — needs_check: disclosure 없음 (시연용)
+
+  // ─── 실데이터: 서울 종로구청장 후보 2명 (2026-05-28 NEC info.nec 수집) ───
+  // assetBreakdown 비율은 TIF 스캔 OCR 필요 — 현재는 보수적 placeholder (0,0,0,100=기타)
+  // 추후 운영자 검수 후 실제 비율 입력 (#13 §8-3 Phase B)
+  {
+    candidateId: 'cand_jongno_1',
+    assetTotal: 4_060_212_000, // 4,060,212천원 → 원 단위 환산
+    assetBreakdown: { realEstate: 0, deposit: 0, securities: 0, other: 0 }, // 분해 비율 미수집 — 등록서류 OCR 검수 후 표시
+    criminalRecords: [],
+    criminalRecordCountSummary: 0,
+    taxArrears: [],
+    fiveYearTaxPaidKrw: 848_620_000,
+    fiveYearTaxArrearsKrw: 0,
+    currentTaxArrearsKrw: 0,
+    militaryRecord: '군복무를 마친사람',
+    militarySummary: '군복무 완료 (육군 병장 만기전역 — 나무위키 보조)',
+    photoUrl: 'http://cdn.nec.go.kr/photo_20260603/Gsg1101/Hb100154016/gicho/100154016.JPG',
+    sourceUrls: [
+      'http://info.nec.go.kr/electioninfo/candidate_detail_info.xhtml?electionId=0020260603&huboId=100154016',
+    ],
+    sourcePublishedAt: '2026-05-13',
+    sourceCheckedAt: '2026-05-28',
+  },
+  {
+    candidateId: 'cand_jongno_2',
+    assetTotal: 2_625_265_000, // 2,625,265천원 → 원 단위
+    assetBreakdown: { realEstate: 0, deposit: 0, securities: 0, other: 0 }, // 분해 비율 미수집 — 등록서류 OCR 검수 후 표시
+    criminalRecords: [], // 1건 있으나 detail은 TIF 필요 — 요약 수치만 표시
+    criminalRecordCountSummary: 1, // info.nec 요약 ("전과기록유무: 1건")
+    taxArrears: [],
+    fiveYearTaxPaidKrw: 642_082_000,
+    fiveYearTaxArrearsKrw: 0,
+    currentTaxArrearsKrw: 0,
+    militaryRecord: '군복무를 마친사람',
+    militarySummary: '군복무 완료',
+    photoUrl: 'http://cdn.nec.go.kr/photo_20260603/Gsg1101/Hb100163635/gicho/100163635.JPG',
+    sourceUrls: [
+      'http://info.nec.go.kr/electioninfo/candidate_detail_info.xhtml?electionId=0020260603&huboId=100163635',
+    ],
+    sourcePublishedAt: '2026-05-13',
+    sourceCheckedAt: '2026-05-28',
+  },
 ];
 
 export const promises: CandidatePromise[] = [
@@ -317,6 +422,127 @@ export const promises: CandidatePromise[] = [
     specificityScore: 1,
     source: 'manual',
   },
+
+  // ─── 실데이터: 유찬종 (서울 종로구청장, 더민주 기호 1) 5대공약 ───
+  // NEC OCR 텍스트 수집 (UELPromisePopupView.do, ocrCnvrSeqNo=11610)
+  // NEC 4요소(목표·이행방법·이행기간·재원조달) 모두 명시, 지표는 본문 없음 → score 4점 상한
+  {
+    id: 'pr_jongno_1_1',
+    candidateId: 'cand_jongno_1',
+    orderNo: 1,
+    title: '생활경제·일자리 회복 프로젝트, 다시 살아나는 종로경제',
+    body: '종로형 공공·민간 협력 일자리 확대, 골목상권·전통시장·로컬경제 회복, 주민이 직접 체감하는 지역순환경제 구축. 주민채용 유지지원금 제도, 도시형 제조특구, 백년이음 청년명장 육성. 임기 즉시 추진 ~ 임기 내 단계별 확대. 재원: 구비·시비·국비 및 중앙정부 공모사업.',
+    category: 'welfare',
+    specificityScore: 4,
+    necElements: { goal: true, method: true, period: true, funding: true, indicator: false },
+    source: 'nec_policy',
+    sourceUrl: 'https://policy.nec.go.kr/plc/commiment/UELPromisePopup.do',
+  },
+  {
+    id: 'pr_jongno_1_2',
+    candidateId: 'cand_jongno_1',
+    orderNo: 2,
+    title: '아이부터 어르신까지 누구나 안심하는 종로',
+    body: '24시 안심돌봄센터 설치, 영유아·초등 온종일 돌봄 확대, 창신·숭인 우리동네 보건소, 어르신 데이케어센터 건립, 1인가구 고독사 예방 안전망. 임기 내 단계별 시행. 재원: 구비·시비·국비.',
+    category: 'welfare',
+    specificityScore: 4,
+    necElements: { goal: true, method: true, period: true, funding: true, indicator: false },
+    source: 'nec_policy',
+    sourceUrl: 'https://policy.nec.go.kr/plc/commiment/UELPromisePopup.do',
+  },
+  {
+    id: 'pr_jongno_1_3',
+    candidateId: 'cand_jongno_1',
+    orderNo: 3,
+    title: '미래를 배우고 세계가 찾는 문화도시 종로',
+    body: '교육지원예산 100억원 확대, 학교시설 지역개방, AI·미래교육 환경 조성, 구립 AI센터 및 AI 도서관, K-컬처 글로벌 콘텐츠, 대학로 글로벌 퍼포먼스 위크. 임기 내 단계별 시행.',
+    category: 'education',
+    specificityScore: 4,
+    necElements: { goal: true, method: true, period: true, funding: true, indicator: false },
+    source: 'nec_policy',
+    sourceUrl: 'https://policy.nec.go.kr/plc/commiment/UELPromisePopup.do',
+  },
+  {
+    id: 'pr_jongno_1_4',
+    candidateId: 'cand_jongno_1',
+    orderNo: 4,
+    title: '더 살기 좋은 종로, 삶이 편안한 생활환경',
+    body: '창신·숭인동 주민 중심 개발, 이화동 성곽마을 정주환경, 빈집 공공활용·노후주택 집수리, 그린 종로·청정 숨 프로젝트(도심 미니숲·옥상녹화), 골목 화재안전 개선. 임기 내 단계별 시행.',
+    category: 'housing',
+    specificityScore: 4,
+    necElements: { goal: true, method: true, period: true, funding: true, indicator: false },
+    source: 'nec_policy',
+    sourceUrl: 'https://policy.nec.go.kr/plc/commiment/UELPromisePopup.do',
+  },
+  {
+    id: 'pr_jongno_1_5',
+    candidateId: 'cand_jongno_1',
+    orderNo: 5,
+    title: '교통 불편은 줄이고, 주민과 더 가까운 종로',
+    body: '강북횡단선 재추진 건의, 골목길·고지대 생활교통 개선(도로열선·스마트 주차안내), AI 통학로·신호체계, 찾아가는 구청장실 및 종로에 답하다 주민소통 플랫폼, 주민참여예산 확대. 임기 내 단계별 시행.',
+    category: 'transport',
+    specificityScore: 4,
+    necElements: { goal: true, method: true, period: true, funding: true, indicator: false },
+    source: 'nec_policy',
+    sourceUrl: 'https://policy.nec.go.kr/plc/commiment/UELPromisePopup.do',
+  },
+
+  // ─── 실데이터: 정문헌 (서울 종로구청장, 국민의힘 기호 2) 5대공약 — 제목만 보존, body는 추후 수집 ───
+  {
+    id: 'pr_jongno_2_1',
+    candidateId: 'cand_jongno_2',
+    orderNo: 1,
+    title: '살수록 좋아지는 종로, 재개발에 속도를 주거에 품격을',
+    body: '재개발·재정비 가속화, 노후 주거지 정비. (본문 OCR 추가 수집 대상)',
+    category: 'housing',
+    specificityScore: 3,
+    source: 'nec_policy',
+    sourceUrl: 'https://policy.nec.go.kr/plc/commiment/UELPromisePopup.do',
+  },
+  {
+    id: 'pr_jongno_2_2',
+    candidateId: 'cand_jongno_2',
+    orderNo: 2,
+    title: '지갑이 두꺼워지는 종로, 골목에서 글로벌까지 경제 체력 강화',
+    body: '골목상권·소상공인 지원, 글로벌 경쟁력 강화. (본문 OCR 추가 수집 대상)',
+    category: 'welfare',
+    specificityScore: 3,
+    source: 'nec_policy',
+    sourceUrl: 'https://policy.nec.go.kr/plc/commiment/UELPromisePopup.do',
+  },
+  {
+    id: 'pr_jongno_2_3',
+    candidateId: 'cand_jongno_2',
+    orderNo: 3,
+    title: '오늘이 편한 종로, 길도 안전도 새로고침',
+    body: '교통·생활안전 인프라 개선. (본문 OCR 추가 수집 대상)',
+    category: 'safety',
+    specificityScore: 3,
+    source: 'nec_policy',
+    sourceUrl: 'https://policy.nec.go.kr/plc/commiment/UELPromisePopup.do',
+  },
+  {
+    id: 'pr_jongno_2_4',
+    candidateId: 'cand_jongno_2',
+    orderNo: 4,
+    title: '곁에 있는 종로, 돌봄·복지·건강 사각지대 제로',
+    body: '돌봄·복지·건강 사각지대 해소. (본문 OCR 추가 수집 대상)',
+    category: 'welfare',
+    specificityScore: 3,
+    source: 'nec_policy',
+    sourceUrl: 'https://policy.nec.go.kr/plc/commiment/UELPromisePopup.do',
+  },
+  {
+    id: 'pr_jongno_2_5',
+    candidateId: 'cand_jongno_2',
+    orderNo: 5,
+    title: '아이 키우고 싶은 종로, 미래형 맞춤 교육',
+    body: '미래형 교육 환경 조성, 보육 인프라 확충. (본문 OCR 추가 수집 대상)',
+    category: 'education',
+    specificityScore: 3,
+    source: 'nec_policy',
+    sourceUrl: 'https://policy.nec.go.kr/plc/commiment/UELPromisePopup.do',
+  },
 ];
 
 export const checkCards: CandidateCheckCard[] = [
@@ -337,14 +563,6 @@ export const checkCards: CandidateCheckCard[] = [
     title: '공개된 체납 기록 없음',
     body: '공개된 공식 자료에 기재된 체납 기록이 없습니다.',
   },
-  {
-    id: 'cc_001_3',
-    candidateId: 'cand_001',
-    type: 'promise_specificity',
-    severity: 'info',
-    title: '공약 구체성 높음',
-    body: '본 후보 공약 5건의 평균 구체성 점수가 4점 이상으로, 5요소(목표·예산·기간·주체·지표)를 대부분 명시합니다.',
-  },
   // 2번 나후보 — 전과 공개 + 청렴 공약
   {
     id: 'cc_002_1',
@@ -354,14 +572,6 @@ export const checkCards: CandidateCheckCard[] = [
     title: '공개된 전과 1건 (도로교통법 위반)',
     body: '2014년 도로교통법 위반으로 벌금 100만원 처분 기록이 공개되어 있습니다. 본 정보는 공개 자료를 그대로 인용한 것입니다.',
     sourceUrl: 'https://example.test/disclosure/cand_002#criminal',
-  },
-  {
-    id: 'cc_002_2',
-    candidateId: 'cand_002',
-    type: 'promise_specificity',
-    severity: 'check',
-    title: '공약 구체성 보통',
-    body: '본 후보 공약 평균 구체성 점수가 2점대로, 예산·기간·지표 등 일부 항목이 누락된 공약이 있습니다.',
   },
   {
     id: 'cc_002_3',
@@ -390,14 +600,6 @@ export const checkCards: CandidateCheckCard[] = [
     body: '지역 내 후보 중 부동산 비중 상위 분위에 해당합니다. 자산 구성은 공개 자료 기준입니다.',
     sourceUrl: 'https://example.test/disclosure/cand_003#asset',
   },
-  {
-    id: 'cc_003_3',
-    candidateId: 'cand_003',
-    type: 'promise_specificity',
-    severity: 'high_attention',
-    title: '공약 구체성 낮음',
-    body: '본 후보 공약 평균 구체성 점수가 1점 미만으로, 예산·기간·주체·지표 항목이 대부분 명시되지 않습니다.',
-  },
   // 4번 라후보 — needs_check
   {
     id: 'cc_004_1',
@@ -406,5 +608,45 @@ export const checkCards: CandidateCheckCard[] = [
     severity: 'info',
     title: '자료 확인 중',
     body: '자료 입력 전입니다. 원문 확인 후 반영됩니다.',
+  },
+
+  // ─── 실데이터: 유찬종 (info 카드 위주, NEC 요약 인용) ───
+  {
+    id: 'cc_jongno_1_1',
+    candidateId: 'cand_jongno_1',
+    type: 'criminal_record',
+    severity: 'info',
+    title: '공개된 전과 기록 없음',
+    body: 'NEC 후보자정보공개 자료에 기재된 전과 기록이 없습니다 (요약 수치 기준).',
+    sourceUrl: 'http://info.nec.go.kr/electioninfo/candidate_detail_info.xhtml?electionId=0020260603&huboId=100154016',
+  },
+  {
+    id: 'cc_jongno_1_2',
+    candidateId: 'cand_jongno_1',
+    type: 'tax_arrears',
+    severity: 'info',
+    title: '공개된 체납 기록 없음',
+    body: '최근 5년간 체납액 0원, 현체납액 0원으로 공개되어 있습니다.',
+    sourceUrl: 'http://info.nec.go.kr/electioninfo/candidate_detail_info.xhtml?electionId=0020260603&huboId=100154016',
+  },
+
+  // ─── 실데이터: 정문헌 (전과 1건 요약, detail은 TIF 필요) ───
+  {
+    id: 'cc_jongno_2_1',
+    candidateId: 'cand_jongno_2',
+    type: 'criminal_record',
+    severity: 'check',
+    title: '공개된 전과 1건 (NEC 요약, 상세 검수 대기)',
+    body: 'NEC 후보자정보공개 자료에 전과 1건이 공개되어 있습니다. 죄명·연도·결과 등 상세 내역은 NEC 등록서류 스캔 자료에 있으며 운영자 검수 후 추가 공개 예정입니다.',
+    sourceUrl: 'http://info.nec.go.kr/electioninfo/candidate_detail_info.xhtml?electionId=0020260603&huboId=100163635',
+  },
+  {
+    id: 'cc_jongno_2_2',
+    candidateId: 'cand_jongno_2',
+    type: 'tax_arrears',
+    severity: 'info',
+    title: '공개된 체납 기록 없음',
+    body: '최근 5년간 체납액 0원, 현체납액 0원으로 공개되어 있습니다.',
+    sourceUrl: 'http://info.nec.go.kr/electioninfo/candidate_detail_info.xhtml?electionId=0020260603&huboId=100163635',
   },
 ];

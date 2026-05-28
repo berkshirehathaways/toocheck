@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import { formatKrwShort } from '@/lib/format-krw';
-import { specificityLabel } from '@/lib/promise-specificity';
 import type { CompareRow } from '@/types/domain';
-import { NeutralBadge } from './NeutralBadge';
 
 export interface CompareTableProps {
   rows: CompareRow[];
@@ -10,7 +8,7 @@ export interface CompareTableProps {
 
 const COLS = [
   '기호', '이름', '정당', '재산총액', '재산 상위', '전과 공개',
-  '체납 공개', '병역', '공약 수', '구체성 평균', '확인 필요도',
+  '체납 공개', '병역', '공약 수',
 ] as const;
 
 export function CompareTable({ rows }: CompareTableProps) {
@@ -69,12 +67,6 @@ export function CompareTable({ rows }: CompareTableProps) {
                   {pending ? '—' : r.disclosure?.militarySummary ?? '공개자료'}
                 </td>
                 <td className="px-3 py-3 tabular-nums">{pending ? '—' : r.promiseCount}</td>
-                <td className="px-3 py-3 text-xs">
-                  {pending ? '—' : `${r.avgSpecificity.toFixed(1)} · ${specificityLabel(Math.round(r.avgSpecificity))}`}
-                </td>
-                <td className="px-3 py-3 text-xs text-dim">
-                  {pending ? <NeutralBadge tone="muted">자료 확인 중</NeutralBadge> : r.checkPriorityLabel}
-                </td>
               </tr>
             );
           })}

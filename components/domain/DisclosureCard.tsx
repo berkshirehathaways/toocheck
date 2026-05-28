@@ -67,6 +67,53 @@ export function DisclosureCard({ disclosure, className }: DisclosureCardProps) {
               </ul>
             )}
           </div>
+
+          {/* 5년 납세 요약 (NEC 정형 자료) */}
+          {typeof disclosure.fiveYearTaxPaidKrw === 'number'
+            || typeof disclosure.currentTaxArrearsKrw === 'number'
+            || typeof disclosure.fiveYearTaxArrearsKrw === 'number' ? (
+            <div>
+              <p className="label-ko text-dim">최근 5년 납세 (NEC 요약)</p>
+              <ul className="mt-1 space-y-1 text-ink/85">
+                {typeof disclosure.fiveYearTaxPaidKrw === 'number' ? (
+                  <li className="tabular-nums">
+                    5년 납부액 · <span className="text-ink">{formatKrwShort(disclosure.fiveYearTaxPaidKrw)}</span>
+                  </li>
+                ) : null}
+                {typeof disclosure.fiveYearTaxArrearsKrw === 'number' ? (
+                  <li className="tabular-nums">
+                    5년 체납액 ·{' '}
+                    <span className={disclosure.fiveYearTaxArrearsKrw === 0 ? 'text-ink/70' : 'text-ink'}>
+                      {formatKrwShort(disclosure.fiveYearTaxArrearsKrw)}
+                    </span>
+                  </li>
+                ) : null}
+                {typeof disclosure.currentTaxArrearsKrw === 'number' ? (
+                  <li className="tabular-nums">
+                    현체납액 ·{' '}
+                    <span className={disclosure.currentTaxArrearsKrw === 0 ? 'text-ink/70' : 'text-ink'}>
+                      {formatKrwShort(disclosure.currentTaxArrearsKrw)}
+                    </span>
+                  </li>
+                ) : null}
+              </ul>
+            </div>
+          ) : null}
+
+          {/* 전과 요약 (TIF detail 미수집 시) */}
+          {disclosure.criminalRecords.length === 0
+            && typeof disclosure.criminalRecordCountSummary === 'number'
+            && disclosure.criminalRecordCountSummary > 0 ? (
+            <div>
+              <p className="label-ko text-dim">전과 요약 (NEC)</p>
+              <p className="text-ink/85">
+                전과기록 <span className="tabular-nums text-ink">{disclosure.criminalRecordCountSummary}건</span> 공개됨
+              </p>
+              <p className="label-ko mt-0.5 text-dim">
+                상세(연도·죄명·결과)는 NEC 등록서류 스캔 자료에 있으며, 운영자 검수 후 추가 표시됩니다.
+              </p>
+            </div>
+          ) : null}
           <div>
             <p className="label-ko text-dim">병역</p>
             <p className="leading-relaxed text-ink/85">{disclosure.militaryRecord}</p>

@@ -17,6 +17,21 @@ const SEGMENTS: Array<{
 ];
 
 export function AssetBreakdownBar({ breakdown, className }: AssetBreakdownBarProps) {
+  // 구체 분해 데이터(부동산·예금·증권)가 하나라도 없으면 그래프 자체를 비표시.
+  // (NEC 요약 페이지엔 총액만, 분해 %는 등록서류 스캔 OCR 후에만 채워짐 — #13 §8-3)
+  const hasBreakdown =
+    (breakdown.realEstate ?? 0) > 0 ||
+    (breakdown.deposit ?? 0) > 0 ||
+    (breakdown.securities ?? 0) > 0;
+
+  if (!hasBreakdown) {
+    return (
+      <p className={cn('label-ko text-dim', className)}>
+        구성 비율은 등록서류 검수 후 표시됩니다.
+      </p>
+    );
+  }
+
   const total = SEGMENTS.reduce((a, s) => a + (breakdown[s.key] ?? 0), 0) || 1;
   return (
     <div className={cn('space-y-2', className)}>

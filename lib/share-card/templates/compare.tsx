@@ -39,7 +39,6 @@ export function CompareTemplate({ district, rows, basisDate }: CompareTemplatePr
             asset={formatKrwShort(r.disclosure?.assetTotal ?? null)}
             criminal={(r.disclosure?.criminalRecords.length ?? 0) > 0 ? '있음' : '없음'}
             tax={(r.disclosure?.taxArrears.length ?? 0) > 0 ? '있음' : '없음'}
-            specificity={r.avgSpecificity.toFixed(1)}
             zebra={i % 2 === 1}
           />
         ))}
@@ -65,7 +64,6 @@ function Header() {
       <Cell w={240}>재산총액</Cell>
       <Cell w={160}>전과 공개</Cell>
       <Cell w={160}>체납 공개</Cell>
-      <Cell w={240}>구체성 평균</Cell>
     </div>
   );
 }
@@ -75,14 +73,12 @@ function Row({
   asset,
   criminal,
   tax,
-  specificity,
   zebra,
 }: {
   ballotNumber: number;
   asset: string;
   criminal: string;
   tax: string;
-  specificity: string;
   zebra: boolean;
 }) {
   return (
@@ -100,7 +96,6 @@ function Row({
       <Cell w={240}>{asset}</Cell>
       <Cell w={160}>{criminal}</Cell>
       <Cell w={160}>{tax}</Cell>
-      <Cell w={240}>{specificity}</Cell>
     </div>
   );
 }

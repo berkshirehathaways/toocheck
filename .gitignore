@@ -43,6 +43,10 @@ next-env.d.ts
 .omc/
 .openchrome/
 
+# raw 수집 자료 (실데이터 수집 워킹 폴더 — git 추적 안 함; 재수집 가능)
+# 실제 사용되는 curated 데이터는 data/curated/ 또는 mocks/seed.ts 에 둠
+/data/raw/
+
 # Playwright
 /playwright-report/
 /test-results/

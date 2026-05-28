@@ -148,8 +148,7 @@ function collectBadges(
   if (hasTax) badges.push('tax_arrears_present');
   if (assetInTopQuintile) badges.push('asset_top_quintile');
   if (disclosure?.militaryRecord) badges.push('military_disclosed');
-  const avg = avgSpecificity(promises);
-  if (avg >= 4) badges.push('promise_specificity_high');
+  // promise_specificity_high 자동 배지는 비당파성 위험으로 노출하지 않음
   return badges;
 }
 
