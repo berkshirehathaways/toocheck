@@ -113,17 +113,15 @@ export default function HomePage() {
                         <span className="label-ko shrink-0 text-cyan">
                           기호 {r.candidate.ballotNumber}
                         </span>
-                        {pending ? (
-                          <span className="label-ko text-dim">자료 확인 중 — 라후보 · 무소속</span>
-                        ) : (
-                          <>
-                            <span className="font-ko font-semibold text-ink">{r.candidate.name}</span>
-                            <span className="label-ko text-dim">{r.candidate.party}</span>
-                            <span className="ml-auto label-ko tabular-nums text-ink/85">
-                              재산 {formatKrwShort(r.disclosure?.assetTotal ?? null)}
-                            </span>
-                          </>
-                        )}
+                        <span className="font-ko font-semibold text-ink">{r.candidate.name}</span>
+                        <span className="label-ko text-dim">{r.candidate.party}</span>
+                        <span className="ml-auto label-ko tabular-nums text-ink/85">
+                          {pending ? (
+                            <span className="text-dim">자료 확인 중</span>
+                          ) : (
+                            <>재산 {formatKrwShort(r.disclosure?.assetTotal ?? null)}</>
+                          )}
+                        </span>
                       </div>
                       {sigs.length > 0 && !pending ? (
                         <p className="label-ko mt-1 text-[#e0b075]">{sigs.join(' · ')}</p>
@@ -161,13 +159,10 @@ export default function HomePage() {
             <RegistrationMarks color="cyan" inset={10} />
             <HudLabel tone="cyan">서비스 원칙 · 5가지</HudLabel>
             <div className="mt-4 flex flex-col gap-1 display-ko text-[clamp(28px,5vw,52px)] font-extrabold leading-tight text-ink">
-              <span>공개자료 우선.</span>
-              <span className="text-ink/75">출처·기준일 명시.</span>
-              <span>
-                <span className="underline decoration-lime decoration-[0.14em] underline-offset-[0.15em]">
-                  비당파
-                </span>
-                .
+              <span>공개자료 우선</span>
+              <span className="text-ink/75">출처·기준일 명시</span>
+              <span className="underline decoration-lime decoration-[0.14em] underline-offset-[0.15em] w-fit">
+                비당파
               </span>
             </div>
             <p className="label-ko mt-6 text-dim">
