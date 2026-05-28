@@ -104,11 +104,13 @@ export default async function CandidatePage({ params }: PageProps) {
               {candidate.birthYear ? ` · ${candidate.birthYear}년생` : ''} · 본 정보는 공개자료 기준
             </p>
             {district ? (
-              <p className="label-ko mt-1 text-dim">
-                ← <Link href={`/districts/${district.id}`} className="text-cyan hover:underline">
-                  {district.name}
-                </Link>
-              </p>
+              <Link
+                href={`/districts/${district.id}`}
+                className="label-ko mt-3 inline-flex items-center gap-1.5 border border-hair px-2.5 py-1 text-ink/80 transition-colors hover:border-cyan hover:text-cyan"
+              >
+                <span aria-hidden>←</span>
+                <span>{district.name} 후보 목록</span>
+              </Link>
             ) : null}
             <div className="mt-4 flex flex-wrap gap-2">
               {row ? (
