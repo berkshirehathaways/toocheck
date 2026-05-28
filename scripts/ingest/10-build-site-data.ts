@@ -137,6 +137,29 @@ function positionTitle(kind: OfficeKind, guName: string): string {
   }
 }
 
+/**
+ * HTML 숫자 엔티티 디코딩 — info.nec 한자 표기가 일부 글자를 &#NNNN; 로 내보냄.
+ * 예: "吳世&#21234;" → "吳世勳". 정상 텍스트엔 엔티티가 없어 no-op.
+ */
+function decodeEntities(s: string | undefined): string | undefined {
+  if (!s) return s;
+  return s
+    .replace(/&#(\d+);/g, (m, n) => {
+      try {
+        return String.fromCodePoint(Number(n));
+      } catch {
+        return m;
+      }
+    })
+    .replace(/&#x([0-9a-fA-F]+);/g, (m, n) => {
+      try {
+        return String.fromCodePoint(parseInt(n, 16));
+      } catch {
+        return m;
+      }
+    });
+}
+
 /** District 식별자 — 선거 단위(sgTypecode + 선거구). */
 function districtId(e: RosterEntry): string {
   const unit = e.sggId || e.guCode || e.sidoCode;
@@ -236,12 +259,12 @@ function main() {
       proportionalRank: profile.isProportional ? e.ballotNumber : undefined,
       ...(detail
         ? {
-            nameHanja: detail.nameHanja,
+            nameHanja: decodeEntities(detail.nameHanja),
             birthDate: detail.birthDate,
             gender: detail.gender,
-            occupation: detail.occupation,
-            education: detail.education,
-            career: detail.career,
+            occupation: decodeEntities(detail.occupation),
+            education: decodeEntities(detail.education),
+            career: detail.career?.map((c) => decodeEntities(c) ?? c),
             electionRunCount: detail.electionRunCount,
           }
         : {}),
