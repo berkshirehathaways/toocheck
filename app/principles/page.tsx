@@ -4,7 +4,7 @@ import { SITE } from '@/lib/site/config';
 
 export const metadata = {
   title: '서비스 원칙',
-  description: `${SITE.nameKo}의 5대 원칙.`,
+  description: `${SITE.nameKo}의 3가지 운영 원칙.`,
 };
 
 const PRINCIPLES = [
