@@ -1,4 +1,8 @@
+'use client';
+
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { cn } from '@/lib/utils';
 import { SITE } from '@/lib/site/config';
 
 const NAV = [
@@ -8,6 +12,12 @@ const NAV = [
 ];
 
 export function SiteHeader() {
+  const pathname = usePathname() ?? '/';
+  const isActive = (href: string) => {
+    if (href === '/') return pathname === '/';
+    return pathname === href || pathname.startsWith(`${href}/`);
+  };
+
   return (
     <header className="sticky top-0 z-40 border-b border-hair bg-bg/85 backdrop-blur">
       <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
@@ -21,16 +31,29 @@ export function SiteHeader() {
 
         <nav aria-label="주요 메뉴">
           <ul className="flex items-center gap-5">
-            {NAV.map((n) => (
-              <li key={n.href}>
-                <Link
-                  href={n.href}
-                  className="label-ko text-ink/70 transition-colors hover:text-cyan"
-                >
-                  {n.label}
-                </Link>
-              </li>
-            ))}
+            {NAV.map((n) => {
+              const active = isActive(n.href);
+              return (
+                <li key={n.href}>
+                  <Link
+                    href={n.href}
+                    aria-current={active ? 'page' : undefined}
+                    className={cn(
+                      'label-ko relative transition-colors',
+                      active ? 'text-cyan' : 'text-ink/70 hover:text-cyan'
+                    )}
+                  >
+                    {n.label}
+                    {active ? (
+                      <span
+                        aria-hidden
+                        className="absolute -bottom-[18px] left-0 right-0 h-0.5 bg-cyan"
+                      />
+                    ) : null}
+                  </Link>
+                </li>
+              );
+            })}
           </ul>
         </nav>
 
