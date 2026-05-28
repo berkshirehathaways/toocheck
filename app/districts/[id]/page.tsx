@@ -67,7 +67,7 @@ export default async function DistrictPage({ params, searchParams }: PageProps) 
         {district.description ?? '본 화면의 모든 정보는 공개자료 기준이며, 자료가 비어 있는 항목은 빈칸으로 둡니다.'}
       </p>
 
-      <div className="grid gap-px bg-hair sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-px bg-hair sm:grid-cols-2">
         {rows.map((row) => {
           const top = listPromises(row.candidate.id)
             .slice()
@@ -79,7 +79,6 @@ export default async function DistrictPage({ params, searchParams }: PageProps) 
               candidate={row.candidate}
               row={row}
               topPromises={top}
-              basisDate={basis}
               className="border-0"
             />
           );

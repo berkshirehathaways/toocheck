@@ -194,7 +194,7 @@ export default function HomePage() {
             </span>
           </header>
 
-          <div className="grid gap-px bg-hair sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid gap-px bg-hair sm:grid-cols-2">
             {rows.map((row) => {
               const top = listPromises(row.candidate.id)
                 .slice()
@@ -209,7 +209,6 @@ export default function HomePage() {
                   candidate={row.candidate}
                   row={row}
                   topPromises={top}
-                  basisDate={basis}
                   className="border-0"
                 />
               );

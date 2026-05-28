@@ -12,7 +12,7 @@ const BADGE_LABEL: Record<BadgeKind, { label: string; tone: 'attention' | 'check
   tax_arrears_present: { label: '체납 공개', tone: 'check' },
   asset_top_quintile: { label: '재산 상위', tone: 'check' },
   military_disclosed: { label: '병역 공개', tone: 'info' },
-  promise_specificity_high: { label: '공약 구체성 ↑', tone: 'lime' },
+  promise_specificity_high: { label: '구체성 높음', tone: 'lime' },
   data_pending: { label: '자료 확인 중', tone: 'muted' },
 };
 
@@ -52,9 +52,11 @@ export function CandidateCard({ candidate, row, topPromises, basisDate, classNam
       <RegistrationMarks size={10} inset={6} color="cyan" />
       <header className="mb-3 flex items-baseline justify-between gap-3">
         <span className="label-ko text-cyan">기호 {candidate.ballotNumber}</span>
-        <span className="label-ko text-dim">
-          {pending ? '자료 확인 중' : basisDate ? `기준일 · ${basisDate}` : ''}
-        </span>
+        {basisDate ? (
+          <span className="label-ko text-dim">기준일 · {basisDate}</span>
+        ) : pending ? (
+          <span className="label-ko text-dim">자료 확인 중</span>
+        ) : null}
       </header>
 
       <div className="mb-3">
