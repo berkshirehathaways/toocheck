@@ -1,5 +1,11 @@
 import Link from 'next/link';
-import { HudLabel, LimeStamp, RegistrationMarks } from '@/components/domain';
+import {
+  DistrictLookupPanel,
+  HudLabel,
+  LimeStamp,
+  RegionSearch,
+  RegistrationMarks,
+} from '@/components/domain';
 import { SITE } from '@/lib/site/config';
 import { listCandidates, listDistricts, listElections } from '@/mocks/loader';
 
@@ -17,38 +23,24 @@ export default function DistrictListPage() {
   return (
     <main className="mx-auto max-w-3xl space-y-8 px-6 py-12">
       <header className="space-y-2">
-        <HudLabel tone="cyan">{totalDistricts}개 지역 등록 · 정식 베타 준비 중</HudLabel>
+        <HudLabel tone="cyan">전국 시·군·구 검색 지원</HudLabel>
         <h1 className="display-ko text-4xl font-bold text-ink">지역 선택</h1>
         <p className="text-sm text-ink/75">
-          정식 베타 단계에서는 우편번호·주소 검색으로 지역구를 안내합니다.
-          현재는 아래 테스트 지역을 이용해 주세요.
+          시·군·구만 입력하면 시·도지사·교육감·구청장·시·도의원·구의원 후보를 한 번에 보여줍니다.
+          정확한 시·도의원·구의원 선거구까지 좁히려면 아래에서 주소로 검색하세요.
         </p>
       </header>
 
-      <section className="relative hud-panel p-5">
-        <RegistrationMarks color="dim" inset={8} />
-        <HudLabel tone="dim">정식 베타 단계에 활성화 예정</HudLabel>
-        <h2 className="mt-2 font-ko text-base font-bold text-ink/80">우편번호로 지역 찾기</h2>
-        <div aria-disabled className="mt-3 flex flex-col gap-2 sm:flex-row">
-          <input
-            type="text"
-            inputMode="numeric"
-            placeholder="우편번호 5자리"
-            disabled
-            className="label-ko flex-1 border border-hair bg-bg px-3 py-2 text-ink disabled:cursor-not-allowed disabled:opacity-40"
-          />
-          <button
-            type="button"
-            disabled
-            className="label-ko-lg border border-hair px-4 py-2 text-dim disabled:cursor-not-allowed"
-          >
-            검색
-          </button>
+      <RegionSearch />
+
+      <details className="hud-panel p-5">
+        <summary className="label-ko cursor-pointer text-cyan">
+          주소로 정확한 선거구까지 찾기 (선택)
+        </summary>
+        <div className="mt-4">
+          <DistrictLookupPanel />
         </div>
-        <p className="label-ko mt-3 text-dim">
-          실 데이터 단계에서 도로명·우편번호 기반 매칭으로 연결됩니다.
-        </p>
-      </section>
+      </details>
 
       <section className="relative hud-panel p-6">
         <RegistrationMarks color="cyan" inset={8} />

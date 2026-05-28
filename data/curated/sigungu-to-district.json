@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "generatedAt": "2026-05-28",
+  "notes": [
+    "행안부 시군구 5자리 코드(kakao sigunguCode)로 지역구를 찾기 위한 매핑.",
+    "키는 `${sidoName}|${sigunguName}` 형태. 카카오 우편번호 응답의 sido/sigungu 문자열과 직접 매칭.",
+    "districtIds[]는 mocks/seed.ts 의 District.id 와 일치해야 함.",
+    "값이 없는 (sido, sigungu) 조합은 lookup 시 'NEC 등록 후보 N명, 자료 보강 중' fallback 안내.",
+    "Phase 3에서 동(행정동) 단위 정밀 매칭이 추가되면 metropolitan_member/basic_member 항목이 같은 키 하위로 누적."
+  ],
+  "sidoMap": {
+    "서울특별시": {
+      "sidoCode4": "1100",
+      "districtIds": []
+    }
+  },
+  "sigunguMap": {
+    "서울특별시|종로구": {
+      "sidoCode4": "1100",
+      "guCode4": "1101",
+      "sigunguCode5": "11110",
+      "districtIds": [
+        { "officeKind": "basic_governor", "districtId": "district_seoul_jongno" }
+      ]
+    }
+  }
+}
