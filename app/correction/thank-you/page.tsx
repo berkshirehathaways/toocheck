@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { HudLabel, LimeStamp, RegistrationMarks } from '@/components/domain';
 import { SITE } from '@/lib/site/config';
 
-export const metadata = { title: '정정 요청 접수 완료' };
+export const metadata = { title: '수정 요청 접수 완료' };
 
 interface PageProps { searchParams: Promise<{ id?: string }>; }
 

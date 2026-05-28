@@ -235,7 +235,7 @@ export default async function CandidatePage({ params }: PageProps) {
           </Link>
         ) : <span />}
         <Link href={`/correction?candidateId=${candidate.id}`} className="text-cyan hover:underline">
-          정정 요청 →
+          수정 요청 →
         </Link>
       </div>
     </main>

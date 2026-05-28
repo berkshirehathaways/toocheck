@@ -56,7 +56,7 @@ export default async function ComparePage({ params, searchParams }: PageProps) {
 
       <div className="label-ko mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-hair pt-5 text-dim print:hidden">
         <Link href={`/districts/${id}`} className="hover:text-cyan">← 후보 목록</Link>
-        <Link href="/correction" className="text-cyan hover:underline">정정 요청 →</Link>
+        <Link href="/correction" className="text-cyan hover:underline">수정 요청 →</Link>
       </div>
 
       <p className="label-ko mt-4 text-dim">

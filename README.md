@@ -41,7 +41,7 @@ toocheck/
 
 - `pnpm test` — vitest 단위테스트 (lib/* + loader + sort)
 - `pnpm check:forbidden` — 시드 텍스트가 forbidden-words 사전 통과 확인
-- `pnpm e2e` — Playwright 골든 패스 (랜딩 → 후보 목록 → 상세 → 비교 → 정정 요청)
+- `pnpm e2e` — Playwright 골든 패스 (랜딩 → 후보 목록 → 상세 → 비교 → 수정 요청)
   - 최초 1회 `pnpm exec playwright install --with-deps chromium` 필요
 - Lighthouse 목표 (모바일): **Performance 80 / Accessibility 90**
 

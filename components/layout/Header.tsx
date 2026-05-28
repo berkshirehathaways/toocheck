@@ -8,7 +8,7 @@ import { SITE } from '@/lib/site/config';
 const NAV = [
   { href: '/districts', label: '지역 선택' },
   { href: '/principles', label: '서비스 원칙' },
-  { href: '/correction', label: '정정 요청' },
+  { href: '/correction', label: '수정 요청' },
 ];
 
 export function SiteHeader() {
@@ -62,7 +62,7 @@ export function SiteHeader() {
             href="/correction"
             className="label-ko-lg inline-flex items-center gap-1 border border-cyan/50 px-3 py-1.5 text-cyan transition-colors hover:bg-cyan hover:text-bg"
           >
-            정정 요청 →
+            수정 요청 →
           </Link>
         </div>
       </div>

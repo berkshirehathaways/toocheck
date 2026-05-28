@@ -165,7 +165,7 @@ export default function HomePage() {
             </div>
             <div className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-2">
               <p className="label-ko text-dim">
-                <span className="text-ink/70">+ 자료 빈칸 보존 · 정정 가능</span>
+                <span className="text-ink/70">+ 자료 빈칸 보존 · 수정 가능</span>
               </p>
               <Link
                 href="/principles"
@@ -176,7 +176,7 @@ export default function HomePage() {
               </Link>
             </div>
             <p className="label-ko mt-3 text-dim">
-              → 자료의 빈칸은 빈칸으로 둡니다. 잘못된 자료는 누구나 정정 요청할 수 있습니다.
+              → 자료의 빈칸은 빈칸으로 둡니다. 잘못된 자료는 누구나 수정 요청할 수 있습니다.
             </p>
           </div>
         </div>
@@ -242,7 +242,7 @@ export default function HomePage() {
                 하세요
               </h3>
               <p className="mt-4 max-w-md text-[14.5px] leading-relaxed text-ink/75">
-                공약과 공개자료를 함께 살펴봤을 때 잘못된 부분이 보인다면 누구나 정정 요청을
+                공약과 공개자료를 함께 살펴봤을 때 잘못된 부분이 보인다면 누구나 수정 요청을
                 보낼 수 있습니다. 모든 신고는 자료 검수 단서로 활용됩니다.
               </p>
             </div>
@@ -258,7 +258,7 @@ export default function HomePage() {
                 href="/correction"
                 className="label-ko-lg group inline-flex items-center justify-between border border-lime/40 bg-lime/10 px-4 py-3 text-lime transition-colors hover:bg-lime hover:text-bg"
               >
-                <span>정정 요청 보내기</span>
+                <span>수정 요청 보내기</span>
                 <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
               </Link>
               <p className="label-ko text-dim">

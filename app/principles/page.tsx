@@ -34,9 +34,9 @@ const PRINCIPLES = [
   },
   {
     id: 'correctable',
-    title: '정정 가능',
-    summary: '잘못된 자료는 정정 요청 폼으로 누구나 보고할 수 있습니다.',
-    body: '접수 시 반드시 회신할 수는 없지만, 모든 정정 요청은 검수 단서로 활용됩니다. 운영자에게 이메일로도 연락하실 수 있습니다.',
+    title: '수정 가능',
+    summary: '잘못된 자료는 수정 요청 폼으로 누구나 보고할 수 있습니다.',
+    body: '접수 시 반드시 회신할 수는 없지만, 모든 수정 요청은 검수 단서로 활용됩니다. 운영자에게 이메일로도 연락하실 수 있습니다.',
   },
 ];
 
@@ -44,7 +44,7 @@ export default function PrinciplesPage() {
   return (
     <main className="mx-auto max-w-3xl space-y-8 px-6 py-12">
       <header className="space-y-3">
-        <HudLabel tone="cyan">모든 화면·시드·정정 처리에 일관 적용</HudLabel>
+        <HudLabel tone="cyan">모든 화면·시드·수정 처리에 일관 적용</HudLabel>
         <h1 className="display-ko text-4xl font-bold text-ink">서비스 원칙</h1>
         <p className="text-[14.5px] text-ink/75">
           {SITE.nameKo}는 다음 {PRINCIPLES.length}가지 원칙 아래에서 운영됩니다.
@@ -75,9 +75,9 @@ export default function PrinciplesPage() {
       <aside className="hud-panel p-5">
         <HudLabel tone="lime">운영 연락처</HudLabel>
         <p className="mt-3 text-sm text-ink/85">
-          정정 요청은{' '}
+          수정 요청은{' '}
           <Link href="/correction" className="text-cyan underline-offset-2 hover:underline">
-            정정 요청 폼
+            수정 요청 폼
           </Link>
           으로, 운영자에게는{' '}
           <a href={`mailto:${SITE.contactEmail}`} className="text-cyan underline-offset-2 hover:underline">

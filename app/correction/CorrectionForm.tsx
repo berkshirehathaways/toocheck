@@ -11,7 +11,7 @@ const REQUESTER_OPTIONS = [
 ] as const;
 
 const CONSENT_TEXT =
-  '정정 요청 처리 목적으로 입력하신 내용과 (선택 입력 시) 이메일을 보관·이용합니다. 보관 기간은 처리 완료 후 30일 이내이며, 그 이후 자동 파기됩니다.';
+  '수정 요청 처리 목적으로 입력하신 내용과 (선택 입력 시) 이메일을 보관·이용합니다. 보관 기간은 처리 완료 후 30일 이내이며, 그 이후 자동 파기됩니다.';
 
 interface SubmitState { status: 'idle' | 'submitting' | 'error'; error?: string }
 
@@ -80,7 +80,7 @@ export function CorrectionForm() {
       </Field>
 
       <Field label="사실관계" required>
-        <textarea id="factualClaim" name="factualClaim" required minLength={5} rows={5} placeholder="정정이 필요한 항목과 사실관계를 차분히 적어주세요. 추정·평가·인격적 표현은 검수에서 제외될 수 있습니다." className="w-full border border-hair bg-bg px-3 py-2 text-sm text-ink placeholder:text-dim" />
+        <textarea id="factualClaim" name="factualClaim" required minLength={5} rows={5} placeholder="수정이 필요한 항목과 사실관계를 차분히 적어주세요. 추정·평가·인격적 표현은 검수에서 제외될 수 있습니다." className="w-full border border-hair bg-bg px-3 py-2 text-sm text-ink placeholder:text-dim" />
       </Field>
 
       <Field label="근거 링크 (권장)">
@@ -116,7 +116,7 @@ export function CorrectionForm() {
           disabled={state.status === 'submitting'}
           className="label-ko-lg inline-flex items-center gap-2 border border-ink bg-ink px-4 py-2.5 text-bg transition-colors hover:bg-cyan hover:border-cyan disabled:opacity-40"
         >
-          {state.status === 'submitting' ? '제출 중…' : '정정 요청 보내기 →'}
+          {state.status === 'submitting' ? '제출 중…' : '수정 요청 보내기 →'}
         </button>
       </div>
     </form>

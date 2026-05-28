@@ -14,11 +14,11 @@ mock 단계 시드 데이터 + in-memory loader. 모든 시드는 가상이며, 
 3. `promises` / `checkCards` 배열에 후보 ID로 묶인 항목 추가
 4. `pnpm typecheck` 확인
 
-## 정정 후 시드 업데이트 절차
+## 수정 후 시드 업데이트 절차
 
-1. 정정 요청 받은 항목의 원문 출처 확인
+1. 수정 요청 받은 항목의 원문 출처 확인
 2. 해당 후보의 `disclosure`/`promise`/`checkCard` 객체 수정
-3. `sourceCheckedAt` 을 정정 반영 일자로 업데이트
+3. `sourceCheckedAt` 을 수정 반영 일자로 업데이트
 4. 커밋 메시지에 `data: update cand_XXX (sourceCheckedAt=YYYY-MM-DD)` 형식 권장
 
 ## 규약 (결정 동결 사항)

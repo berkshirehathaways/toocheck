@@ -6,7 +6,7 @@ interface LimeStampProps {
   className?: string;
 }
 
-/** Tilted lime stamp — used for operational status (검수, 출처, 정정), never to praise a candidate. */
+/** Tilted lime stamp — used for operational status (검수, 출처, 수정), never to praise a candidate. */
 export function LimeStamp({ children, rotate = -4, className }: LimeStampProps) {
   return (
     <span

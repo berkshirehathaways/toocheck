@@ -4,8 +4,8 @@ import { SITE } from '@/lib/site/config';
 import { CorrectionForm } from './CorrectionForm';
 
 export const metadata = {
-  title: '정정 요청',
-  description: '공개자료에 오류가 있을 경우 정정 요청을 보내주세요.',
+  title: '수정 요청',
+  description: '공개자료에 오류가 있을 경우 수정 요청을 보내주세요.',
 };
 
 export default function CorrectionPage() {
@@ -13,7 +13,7 @@ export default function CorrectionPage() {
     <main className="mx-auto max-w-2xl px-6 py-12">
       <header className="mb-8 space-y-3">
         <HudLabel tone="cyan">처리 결과는 자료 갱신으로 반영됩니다</HudLabel>
-        <h1 className="display-ko text-4xl font-bold text-ink">정정 요청</h1>
+        <h1 className="display-ko text-4xl font-bold text-ink">수정 요청</h1>
         <p className="text-sm text-ink/75">
           공개자료 기준으로 표시된 항목에 오류가 있다면 알려주세요.
           운영자에게는{' '}

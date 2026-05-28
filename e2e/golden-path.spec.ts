@@ -22,14 +22,14 @@ test('golden path: landing → district → candidate → compare → correction
   await page.goto('/districts/district_sample_ga/compare');
   await expect(page.getByText('후보 비교표')).toBeVisible();
 
-  // 6) 정정 요청 폼 제출
+  // 6) 수정 요청 폼 제출
   await page.goto('/correction');
   await page.getByLabel('일반 시민').check();
   await page
     .getByLabel('사실관계', { exact: false })
     .fill('샘플 시 가나구청장 1번 가후보의 재산 항목에 누락이 있어 보입니다.');
   await page.getByRole('checkbox').check();
-  await page.getByRole('button', { name: /정정 요청 보내기/ }).click();
+  await page.getByRole('button', { name: /수정 요청 보내기/ }).click();
   await expect(page).toHaveURL(/\/correction\/thank-you/);
   await expect(page.getByText(/접수 번호/)).toBeVisible();
 });

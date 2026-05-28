@@ -90,7 +90,7 @@ export default async function DistrictPage({ params, searchParams }: PageProps) 
         <Link href={`/districts/${id}/compare`} className="text-cyan hover:underline">
           후보 비교표 보기 →
         </Link>
-        <Link href="/correction" className="hover:text-cyan">정정 요청 →</Link>
+        <Link href="/correction" className="hover:text-cyan">수정 요청 →</Link>
       </div>
     </main>
   );
