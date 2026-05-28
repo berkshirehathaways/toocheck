@@ -26,6 +26,9 @@
 11. [#11 Mock API routes](./11-mock-api.md)
 12. [#12 출시 전 QA 체크리스트 & 자동화 테스트](./12-qa-checklist.md)
 
+### Phase 3 — 실데이터 수집 (mock → real 전환)
+13. [#13 실데이터 수집 파이프라인 — 소스 매핑 & 갭 트래커](./13-data-ingestion.md)
+
 ## 의존 그래프
 
 ```

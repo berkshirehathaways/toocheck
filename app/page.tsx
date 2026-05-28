@@ -159,8 +159,8 @@ export default function HomePage() {
             <div className="mt-4 flex flex-col gap-1 display-ko text-[clamp(28px,5vw,52px)] font-extrabold leading-tight text-ink">
               <span>공개자료 우선</span>
               <span className="text-ink/75">출처·기준일 명시</span>
-              <span className="underline decoration-lime decoration-[0.14em] underline-offset-[0.15em] w-fit">
-                비당파
+              <span>
+                정치적 <span className="lime-block">중립</span>
               </span>
             </div>
             <div className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-2">
@@ -235,15 +235,15 @@ export default function HomePage() {
             <div>
               <HudLabel tone="lime">공약과 공개자료가 만나는 자리</HudLabel>
               <h3 className="mt-2 display-ko text-3xl font-bold leading-tight text-ink">
-                함께{' '}
+                자료 수정을{' '}
                 <span className="underline decoration-cyan decoration-[0.085em] underline-offset-[0.18em]">
-                  확인
+                  요청
                 </span>
-                할 지점
+                하세요
               </h3>
               <p className="mt-4 max-w-md text-[14.5px] leading-relaxed text-ink/75">
-                공개자료와 공약을 함께 살펴볼 때 도움이 될 만한 항목을 운영자가 작성하거나
-                자동 매칭으로 찾아 표시합니다. 서비스가 의혹을 만들지 않습니다.
+                공약과 공개자료를 함께 살펴봤을 때 잘못된 부분이 보인다면 누구나 정정 요청을
+                보낼 수 있습니다. 모든 신고는 자료 검수 단서로 활용됩니다.
               </p>
             </div>
             <div className="flex flex-col justify-end gap-3">
