@@ -52,3 +52,12 @@ next-env.d.ts
 /test-results/
 /blob-report/
 /playwright/.cache/
+
+# 수집 중간 산출물 (빌드 불필요 — 최종본 site-data.json 등만 추적)
+# 개별 후보 JSON 2만+개 / roster 원본 / batch 에러로그는 재생성 가능
+/data/curated/*_detail.json
+/data/curated/*_promise.json
+/data/curated/*_wiki.json
+/data/curated/roster-2026.json
+/data/curated/batch-*-errors.json
+.claude/

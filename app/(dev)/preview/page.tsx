@@ -19,16 +19,20 @@ import { formatSourceBasis } from '@/lib/format-date';
 export const metadata = { title: '디자인 시스템 카탈로그 (개발용)' };
 
 export default function PreviewPage() {
-  const candidates = listCandidates('district_sample_ga');
-  const rows = getCompareData('district_sample_ga');
-  const cand1 = candidates.find((c) => c.id === 'cand_001');
-  const cand3 = candidates.find((c) => c.id === 'cand_003');
-  const row1 = rows.find((r) => r.candidate.id === 'cand_001');
-  const row3 = rows.find((r) => r.candidate.id === 'cand_003');
-  const disc1 = getDisclosure('cand_001');
-  const disc3 = getDisclosure('cand_003');
-  const promises1 = listPromises('cand_001');
-  const promises3 = listPromises('cand_003');
+  // 디자인 카탈로그 — 서울시장 실데이터(정원오·오세훈)로 컴포넌트 상태 검수.
+  const FEATURED = 'dist_3_3110000';
+  const ID_A = '100157144'; // 정원오
+  const ID_B = '100162984'; // 오세훈
+  const candidates = listCandidates(FEATURED);
+  const rows = getCompareData(FEATURED);
+  const cand1 = candidates.find((c) => c.id === ID_A);
+  const cand3 = candidates.find((c) => c.id === ID_B);
+  const row1 = rows.find((r) => r.candidate.id === ID_A);
+  const row3 = rows.find((r) => r.candidate.id === ID_B);
+  const disc1 = getDisclosure(ID_A);
+  const disc3 = getDisclosure(ID_B);
+  const promises1 = listPromises(ID_A);
+  const promises3 = listPromises(ID_B);
   const basis = formatSourceBasis('2026-05-20');
 
   return (
@@ -76,8 +80,8 @@ export default function PreviewPage() {
         <div className="hud-panel relative p-4"><RegistrationMarks color="dim" size={10} inset={6} /><AssetBreakdownBar breakdown={{ realEstate: 60, deposit: 25, securities: 12, other: 3 }} /></div>
       </Section>
 
-      {disc1 ? (<Section title="공개 자료 카드 — 1번 후보"><DisclosureCard disclosure={disc1} /></Section>) : null}
-      {disc3 ? (<Section title="공개 자료 카드 — 3번 후보 (체납 · 부동산 상위)"><DisclosureCard disclosure={disc3} /></Section>) : null}
+      {disc1 ? (<Section title="공개 자료 카드 — 기호 1번"><DisclosureCard disclosure={disc1} /></Section>) : null}
+      {disc3 ? (<Section title="공개 자료 카드 — 기호 2번"><DisclosureCard disclosure={disc3} /></Section>) : null}
 
       <Section title="공약 카드">
         <div className="grid gap-3 sm:grid-cols-2">

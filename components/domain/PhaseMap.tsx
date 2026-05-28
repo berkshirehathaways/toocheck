@@ -4,8 +4,8 @@ import { cn } from '@/lib/utils';
 // '수정 요청'은 별도 행동이므로 단계가 아닌 CTA 셀로 분리
 const PHASES = [
   { label: '공개 자료', helper: '후보별 디스클로저', href: '/districts' },
-  { label: '비교', helper: '같은 지역 나란히', href: '/districts/district_sample_ga/compare' },
-  { label: '함께 확인', helper: '교차 점검 메모', href: '/candidates/cand_003' },
+  { label: '비교', helper: '같은 지역 나란히', href: '/districts/dist_3_3110000/compare' },
+  { label: '함께 확인', helper: '교차 점검 메모', href: '/candidates/100162984' },
 ] as const;
 
 export function PhaseMap() {

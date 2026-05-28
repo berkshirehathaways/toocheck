@@ -14,13 +14,18 @@ import type {
 } from '@/types/domain';
 
 import {
-  candidates as seedCandidates,
   checkCards as seedCheckCards,
-  disclosures as seedDisclosures,
-  districts as seedDistricts,
   elections as seedElections,
-  promises as seedPromises,
 } from './seed';
+
+// 전국 수집 데이터 (scripts/ingest/10-build-site-data.ts 산출).
+// 13MB+ — 서버 모듈에서만 import. 빌드 시 번들에 포함.
+import siteData from '@/data/curated/site-data.json';
+
+const allCandidates = siteData.candidates as unknown as Candidate[];
+const allDistricts = siteData.districts as unknown as District[];
+const allDisclosures = siteData.disclosures as unknown as CandidateDisclosure[];
+const allPromises = siteData.promises as unknown as CandidatePromise[];
 
 function clone<T>(v: T): T {
   return structuredClone(v);
@@ -39,11 +44,11 @@ export function getElection(id: string): Election | null {
 }
 
 export function listDistricts(electionId: string): District[] {
-  return clone(seedDistricts.filter((d) => d.electionId === electionId));
+  return clone(allDistricts.filter((d) => d.electionId === electionId));
 }
 
 export function getDistrict(id: string): District | null {
-  const found = seedDistricts.find((d) => d.id === id);
+  const found = allDistricts.find((d) => d.id === id);
   return found ? clone(found) : null;
 }
 
@@ -53,7 +58,7 @@ export function listCandidates(
 ): Candidate[] {
   const includeUnreviewed = opts?.includeUnreviewed ?? true; // 결정 E16: 표시
   return clone(
-    seedCandidates.filter((c) => {
+    allCandidates.filter((c) => {
       if (c.districtId !== districtId) return false;
       if (!includeUnreviewed && c.reviewStatus !== 'reviewed') return false;
       return true;
@@ -62,18 +67,18 @@ export function listCandidates(
 }
 
 export function getCandidate(id: string): Candidate | null {
-  const found = seedCandidates.find((c) => c.id === id);
+  const found = allCandidates.find((c) => c.id === id);
   return found ? clone(found) : null;
 }
 
 export function getDisclosure(candidateId: string): CandidateDisclosure | null {
-  const found = seedDisclosures.find((d) => d.candidateId === candidateId);
+  const found = allDisclosures.find((d) => d.candidateId === candidateId);
   return found ? clone(found) : null;
 }
 
 export function listPromises(candidateId: string): CandidatePromise[] {
   return clone(
-    seedPromises
+    allPromises
       .filter((p) => p.candidateId === candidateId)
       .sort((a, b) => a.orderNo - b.orderNo)
   );
@@ -179,16 +184,16 @@ function computeAssetRanks(
 }
 
 export function getCompareData(districtId: string): CompareRow[] {
-  const cs = seedCandidates.filter((c) => c.districtId === districtId);
+  const cs = allCandidates.filter((c) => c.districtId === districtId);
   const getDisc = (id: string): CandidateDisclosure | null => {
-    const d = seedDisclosures.find((x) => x.candidateId === id);
+    const d = allDisclosures.find((x) => x.candidateId === id);
     return d ? clone(d) : null;
   };
   const assetRanks = computeAssetRanks(cs, getDisc);
 
   const rows: CompareRow[] = cs.map((cand) => {
     const disclosure = getDisc(cand.id);
-    const promisesForCand = seedPromises.filter((p) => p.candidateId === cand.id);
+    const promisesForCand = allPromises.filter((p) => p.candidateId === cand.id);
     const cardsForCand = seedCheckCards.filter((c) => c.candidateId === cand.id);
     const rankInfo = assetRanks.get(cand.id) ?? null;
     const assetInTopQuintile = rankInfo?.topQuintile ?? false;
@@ -218,11 +223,11 @@ export function getCompareData(districtId: string): CompareRow[] {
 // ===== District 자료 기준일 (결정 C6: needs_check 제외, 최소값) =====
 
 export function getDistrictSourceCheckedAt(districtId: string): string | null {
-  const cs = seedCandidates.filter(
+  const cs = allCandidates.filter(
     (c) => c.districtId === districtId && c.reviewStatus === 'reviewed'
   );
   const dates = cs
-    .map((c) => seedDisclosures.find((d) => d.candidateId === c.id)?.sourceCheckedAt)
+    .map((c) => allDisclosures.find((d) => d.candidateId === c.id)?.sourceCheckedAt)
     .filter((d): d is string => Boolean(d));
   if (dates.length === 0) return null;
   return dates.sort()[0] ?? null;

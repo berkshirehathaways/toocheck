@@ -1,13 +1,9 @@
-import Link from 'next/link';
 import {
   DistrictLookupPanel,
   HudLabel,
-  LimeStamp,
   RegionSearch,
-  RegistrationMarks,
 } from '@/components/domain';
-import { SITE } from '@/lib/site/config';
-import { listCandidates, listDistricts, listElections } from '@/mocks/loader';
+import { listDistricts, listElections } from '@/mocks/loader';
 
 export const metadata = {
   title: '지역 선택',
@@ -17,8 +13,6 @@ export const metadata = {
 export default function DistrictListPage() {
   const elections = listElections();
   const lookups = elections.map((e) => ({ election: e, districts: listDistricts(e.id) }));
-  const totalDistricts = lookups.reduce((a, x) => a + x.districts.length, 0);
-  const sampleCandCount = listCandidates(SITE.testDistrictId).length;
 
   return (
     <main className="mx-auto max-w-3xl space-y-8 px-6 py-12">
@@ -41,27 +35,6 @@ export default function DistrictListPage() {
           <DistrictLookupPanel />
         </div>
       </details>
-
-      <section className="relative hud-panel p-6">
-        <RegistrationMarks color="cyan" inset={8} />
-        <div className="absolute -top-3 left-6">
-          <LimeStamp rotate={-4}>시연용 가상 데이터</LimeStamp>
-        </div>
-        <HudLabel tone="cyan">후보 {sampleCandCount}명 등록 · 2026 지방선거</HudLabel>
-        <h2 className="mt-3 font-ko text-2xl font-bold text-ink">샘플 시 가나구청장</h2>
-        <p className="label-ko mt-1 text-dim">
-          공약 비교 · 공개자료 · 함께 확인할 지점까지 한 화면에서 살펴봅니다.
-        </p>
-        <Link
-          href={`/districts/${SITE.testDistrictId}`}
-          className="label-ko-lg mt-5 inline-flex items-center gap-2 border border-cyan bg-cyan px-5 py-3 text-bg transition-colors hover:bg-ink hover:border-ink"
-        >
-          살펴보기 →
-        </Link>
-        <p className="mt-4 text-xs text-ink/60">
-          본 지역 및 후보 정보는 시연용 가상 데이터입니다. 실제 지역구·후보·정당과 무관합니다.
-        </p>
-      </section>
 
       <section className="space-y-2">
         <HudLabel tone="dim">등록된 선거 {elections.length}건</HudLabel>

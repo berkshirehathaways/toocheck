@@ -33,7 +33,15 @@ async function wbSearchEntities(name: string): Promise<string[]> {
   url.searchParams.set('language', 'ko');
   url.searchParams.set('format', 'json');
   url.searchParams.set('limit', '10');
-  const res = await fetch(url);
+  const res = await fetch(url, {
+    headers: {
+      Accept: 'application/json',
+      'User-Agent': 'toocheck/0.1 (support@omofictions.com)',
+    },
+  });
+  if (!res.ok) {
+    throw new Error(`wbsearchentities ${res.status}: ${(await res.text()).slice(0, 80)}`);
+  }
   const d = await res.json();
   return (d.search ?? []).map((s: { id: string }) => s.id);
 }

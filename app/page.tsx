@@ -11,6 +11,8 @@ import {
 import { SITE } from '@/lib/site/config';
 import {
   getCompareData,
+  getDistrict,
+  listDistricts,
   listElections,
   listPromises,
   getDistrictSourceCheckedAt,
@@ -21,8 +23,12 @@ import { formatKrwShort } from '@/lib/format-krw';
 export default function HomePage() {
   const elections = listElections();
   const election = elections[0];
-  const rows = getCompareData(SITE.testDistrictId);
-  const basis = formatSourceBasis(getDistrictSourceCheckedAt(SITE.testDistrictId));
+  const featuredId = SITE.featuredDistrictId;
+  const featured = getDistrict(featuredId);
+  const featuredName = featured?.name ?? '대표 선거구';
+  const districtCount = election ? listDistricts(election.id).length : 0;
+  const rows = getCompareData(featuredId);
+  const basis = formatSourceBasis(getDistrictSourceCheckedAt(featuredId));
 
   return (
     <main className="relative overflow-hidden">
@@ -34,11 +40,11 @@ export default function HomePage() {
           {/* LEFT — headline */}
           <div className="flex flex-col">
             <StatusChip tone="live">
-              <span>검수 완료</span>
+              <span>NEC 공개자료</span>
               <ChipDivider />
               <span>{election?.name ?? '2026 지방선거'}</span>
               <ChipDivider />
-              <span>지역 1곳</span>
+              <span>전국 {districtCount.toLocaleString()}곳</span>
             </StatusChip>
 
             <h1 className="mt-8 display-ko text-[clamp(44px,7vw,88px)] font-extrabold leading-[1.05] tracking-tight text-ink">
@@ -72,15 +78,15 @@ export default function HomePage() {
                 내 지역 후보 확인하기 →
               </Link>
               <Link
-                href={`/districts/${SITE.testDistrictId}`}
+                href={`/districts/${featuredId}`}
                 className="label-ko-lg inline-flex items-center justify-center gap-2 border border-hair px-5 py-3 text-ink/85 transition-colors hover:border-cyan hover:text-cyan"
               >
-                테스트 지역으로 보기 ►
+                {featuredName} 미리보기 ►
               </Link>
             </div>
 
             <p className="label-ko mt-6 text-dim">
-              지금 보이는 모든 후보 정보는 시연용 가상 데이터입니다.
+              모든 후보 정보는 중앙선거관리위원회 공개자료에 기반합니다.
             </p>
           </div>
 
@@ -90,12 +96,12 @@ export default function HomePage() {
               <RegistrationMarks color="cyan" size={14} inset={12} />
 
               <header className="flex items-baseline justify-between">
-                <HudLabel tone="cyan">샘플 미리보기</HudLabel>
+                <HudLabel tone="cyan">미리보기</HudLabel>
                 <span className="label-ko text-dim">{basis}</span>
               </header>
 
               <p className="display-ko mt-3 text-3xl font-bold leading-tight text-ink">
-                샘플 시 가나구청장
+                {featuredName}
               </p>
               <p className="label-ko mt-1 text-dim">{election?.name} · 후보 {rows.length}명</p>
 
@@ -130,7 +136,7 @@ export default function HomePage() {
               </ul>
 
               <Link
-                href={`/districts/${SITE.testDistrictId}`}
+                href={`/districts/${featuredId}`}
                 className="label-ko-lg group mt-6 inline-flex items-center justify-between border border-cyan bg-cyan/10 px-4 py-3 text-cyan transition-colors hover:bg-cyan hover:text-bg"
               >
                 <span>이 지역 전체 자료 보기</span>
@@ -184,16 +190,16 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-6 py-14">
           <header className="mb-6 flex flex-wrap items-end justify-between gap-3">
             <div>
-              <HudLabel tone="cyan">최근 검수 항목</HudLabel>
+              <HudLabel tone="cyan">대표 선거구</HudLabel>
               <h2 className="mt-2 display-ko text-3xl font-bold text-ink">
-                샘플 시 가나구청장
+                {featuredName}
               </h2>
             </div>
             <span className="label-ko text-dim">
               표시 {String(rows.length).padStart(2, '0')}건 / 전체{' '}
               {String(rows.length).padStart(2, '0')}건 ·{' '}
               <Link
-                href={`/districts/${SITE.testDistrictId}`}
+                href={`/districts/${featuredId}`}
                 className="text-cyan hover:underline"
               >
                 모두 보기 →
