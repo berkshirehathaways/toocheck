@@ -45,7 +45,15 @@ export default function HomePage() {
               당신의 후보는,
               <br />
               어떤{' '}
-              <span className="underline decoration-cyan decoration-[0.085em] underline-offset-[0.18em]">
+              <span
+                className="relative inline-block whitespace-nowrap px-[0.08em] text-ink"
+                style={{
+                  backgroundImage:
+                    'linear-gradient(transparent 58%, #bef264 58%, #bef264 92%, transparent 92%)',
+                  transform: 'rotate(-1.6deg)',
+                  transformOrigin: 'bottom left',
+                }}
+              >
                 사람
               </span>
               입니까?
