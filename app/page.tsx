@@ -223,7 +223,7 @@ export default function HomePage() {
           <div className="hud-panel relative grid gap-8 p-6 sm:p-10 lg:grid-cols-2">
             <RegistrationMarks color="lime" inset={10} />
             <div>
-              <HudLabel tone="lime">함께 확인할 지점</HudLabel>
+              <HudLabel tone="lime">공약과 공개자료가 만나는 자리</HudLabel>
               <h3 className="mt-2 display-ko text-3xl font-bold leading-tight text-ink">
                 함께{' '}
                 <span className="underline decoration-cyan decoration-[0.085em] underline-offset-[0.18em]">
