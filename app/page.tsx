@@ -3,15 +3,20 @@ import {
   CandidateCard,
   ChipDivider,
   HudLabel,
-  LimeStamp,
   NeutralBadge,
   RegistrationMarks,
   SpeedLines,
   StatusChip,
 } from '@/components/domain';
 import { SITE } from '@/lib/site/config';
-import { getCompareData, listElections, listPromises, getDistrictSourceCheckedAt } from '@/mocks/loader';
+import {
+  getCompareData,
+  listElections,
+  listPromises,
+  getDistrictSourceCheckedAt,
+} from '@/mocks/loader';
 import { formatSourceBasis } from '@/lib/format-date';
+import { formatKrwShort } from '@/lib/format-krw';
 
 export default function HomePage() {
   const elections = listElections();
@@ -23,30 +28,49 @@ export default function HomePage() {
     <main className="relative overflow-hidden">
       {/* ===== HERO ===== */}
       <section className="relative border-b border-hair bg-bg">
-        <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-60" />
+        <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-50" />
         <SpeedLines />
-        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-16 sm:py-24 lg:grid-cols-[1.2fr_1fr]">
-          {/* LEFT */}
-          <div>
+        <div className="relative mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-[1.15fr_1fr] lg:py-28">
+          {/* LEFT — headline */}
+          <div className="flex flex-col">
             <StatusChip tone="live">
-              <span>검수 완료</span><ChipDivider /><span>{election?.name ?? '2026 지방선거'}</span><ChipDivider /><span>지역 01곳</span>
+              <span>검수 완료</span>
+              <ChipDivider />
+              <span>{election?.name ?? '2026 지방선거'}</span>
+              <ChipDivider />
+              <span>지역 01곳</span>
             </StatusChip>
-            <div className="mt-5 inline-block">
-              <LimeStamp rotate={-4}>검수 완료 · {SITE.team}</LimeStamp>
-            </div>
-            <h1 className="mt-6 display-ko text-[clamp(44px,8vw,96px)] text-ink">
+
+            <h1 className="mt-8 display-ko text-[clamp(48px,8.5vw,108px)] font-extrabold leading-[1.04] tracking-tight text-ink">
               당신의 후보는,
               <br />
-              <span className="stroke-cyan">어떤 </span>
-              <span className="lime-block">사람</span>
-              <span className="stroke-cyan">입니까?</span>
+              어떤{' '}
+              <span className="relative inline-block">
+                <span className="relative z-10">사람</span>
+                <span
+                  aria-hidden
+                  className="absolute inset-x-0 bottom-[0.08em] z-0 h-[0.14em] bg-cyan"
+                />
+              </span>
+              입니까?
             </h1>
-            <p className="mt-6 display-ko text-2xl font-bold tracking-tight text-ink sm:text-3xl">
-              투표 전 체크, 투<span className="text-cyan">체크</span>
-            </p>
+
+            {/* Brand signature */}
+            <div className="mt-8 flex items-center gap-3">
+              <span
+                aria-hidden
+                className="block h-1.5 w-1.5 bg-lime shadow-[0_0_8px_rgba(190,242,100,0.7)]"
+              />
+              <p className="display-ko text-lg font-bold tracking-tight text-ink/85 sm:text-xl">
+                투표 전 체크, 투체크
+              </p>
+              <span aria-hidden className="ml-1 h-px flex-1 max-w-32 bg-hair" />
+            </div>
+
             <p className="mt-6 max-w-md text-[15px] leading-relaxed text-ink/70">
               {SITE.disclaimerLong}
             </p>
+
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
               <Link
                 href="/districts"
@@ -62,29 +86,70 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-2">
-              <NeutralBadge tone="cyan">준비 완료</NeutralBadge>
-              <NeutralBadge tone="lime">버전 2026.05</NeutralBadge>
-              <NeutralBadge tone="muted">시연용 가상 데이터</NeutralBadge>
-            </div>
+            <p className="mono mono-10 mt-6 text-dim">
+              <span className="normal-case tracking-normal" style={{ letterSpacing: 0 }}>
+                지금 보이는 모든 후보 정보는 시연용 가상 데이터입니다.
+              </span>
+            </p>
           </div>
 
-          {/* RIGHT — instrument card */}
+          {/* RIGHT — live sample data instrument */}
           <div className="relative">
-            <div className="relative aspect-[4/5] hud-panel striped-placeholder">
-              <RegistrationMarks color="cyan" size={16} inset={16} />
-              <div className="absolute right-4 top-4 flex flex-col items-end gap-1 text-right">
-                <HudLabel tone="cyan">준비 완료</HudLabel>
-                <span className="label-ko text-dim">버전 2026.05</span>
-              </div>
-              <div className="absolute bottom-5 left-5 right-5 space-y-2">
-                <HudLabel tone="lime">{SITE.team} · 연락처</HudLabel>
-                <p className="label-ko text-ink/70">{SITE.contactEmail}</p>
-                <p className="label-ko text-dim">{basis}</p>
-              </div>
-              <div className="absolute inset-0 flex items-center justify-center">
-                <span className="label-ko text-dim">계기판 시연 화면</span>
-              </div>
+            <div className="relative flex aspect-[4/5] flex-col hud-panel overflow-hidden p-6">
+              <RegistrationMarks color="cyan" size={14} inset={12} />
+
+              <header className="flex items-baseline justify-between">
+                <HudLabel tone="cyan">샘플 미리보기</HudLabel>
+                <span className="label-ko text-dim">{basis}</span>
+              </header>
+
+              <p className="display-ko mt-3 text-2xl font-bold leading-tight text-ink">
+                샘플 시 가나구청장
+              </p>
+              <p className="label-ko text-dim">{election?.name}</p>
+
+              <ul className="mt-6 space-y-3 border-t border-hair-soft pt-5">
+                {rows.map((r) => {
+                  const pending = r.candidate.reviewStatus !== 'reviewed';
+                  const hasCrime = (r.disclosure?.criminalRecords.length ?? 0) > 0;
+                  const hasTax = (r.disclosure?.taxArrears.length ?? 0) > 0;
+                  return (
+                    <li
+                      key={r.candidate.id}
+                      className="flex flex-wrap items-baseline gap-x-3 gap-y-1 text-sm"
+                    >
+                      <span className="label-ko shrink-0 text-cyan">
+                        기호 {r.candidate.ballotNumber}
+                      </span>
+                      {pending ? (
+                        <span className="label-ko text-dim">자료 확인 중</span>
+                      ) : (
+                        <>
+                          <span className="font-ko font-semibold text-ink">{r.candidate.name}</span>
+                          <span className="label-ko text-dim">{r.candidate.party}</span>
+                          <span className="ml-auto label-ko tabular-nums text-ink/85">
+                            재산 {formatKrwShort(r.disclosure?.assetTotal ?? null)}
+                          </span>
+                        </>
+                      )}
+                      {(hasCrime || hasTax) && !pending ? (
+                        <span className="basis-full label-ko text-[#e0b075]">
+                          {hasCrime ? '전과 공개 · ' : ''}{hasTax ? '체납 공개' : ''}
+                        </span>
+                      ) : null}
+                    </li>
+                  );
+                })}
+              </ul>
+
+              <footer className="mt-auto space-y-1 border-t border-hair-soft pt-4">
+                <p className="label-ko text-dim">
+                  {SITE.team} ·{' '}
+                  <a href={`mailto:${SITE.contactEmail}`} className="text-cyan hover:underline">
+                    {SITE.contactEmail}
+                  </a>
+                </p>
+              </footer>
             </div>
           </div>
         </div>
@@ -92,16 +157,22 @@ export default function HomePage() {
 
       {/* ===== PRINCIPLES BAR ===== */}
       <section className="border-b border-hair">
-        <div className="mx-auto max-w-7xl px-6 py-12">
+        <div className="mx-auto max-w-7xl px-6 py-14">
           <div className="hud-panel relative px-6 py-8 sm:px-10">
             <RegistrationMarks color="cyan" inset={10} />
             <HudLabel tone="cyan">서비스 원칙 · 5가지</HudLabel>
-            <div className="mt-4 flex flex-col gap-1 display-ko text-[clamp(28px,5vw,52px)]">
-              <span className="text-ink">공개자료 우선.</span>
-              <span className="stroke-cyan">출처·기준일 명시.</span>
+            <div className="mt-4 flex flex-col gap-1 display-ko text-[clamp(28px,5vw,52px)] font-extrabold leading-tight text-ink">
+              <span>공개자료 우선.</span>
+              <span className="text-ink/75">출처·기준일 명시.</span>
               <span>
-                <span className="lime-block">비당파</span>
-                <span className="text-ink">.</span>
+                <span className="relative inline-block">
+                  <span className="relative z-10">비당파</span>
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-0 bottom-[0.08em] z-0 h-[0.14em] bg-lime"
+                  />
+                </span>
+                <span>.</span>
               </span>
             </div>
             <p className="label-ko mt-6 text-dim">
@@ -113,15 +184,21 @@ export default function HomePage() {
 
       {/* ===== LATEST CANDIDATES ===== */}
       <section className="border-b border-hair">
-        <div className="mx-auto max-w-7xl px-6 py-12">
+        <div className="mx-auto max-w-7xl px-6 py-14">
           <header className="mb-6 flex flex-wrap items-end justify-between gap-3">
             <div>
               <HudLabel tone="cyan">최근 검수 항목</HudLabel>
-              <h2 className="mt-2 display-ko text-3xl font-bold text-ink">샘플 시 가나구청장</h2>
+              <h2 className="mt-2 display-ko text-3xl font-bold text-ink">
+                샘플 시 가나구청장
+              </h2>
             </div>
             <span className="label-ko text-dim">
-              표시 {String(rows.length).padStart(2, '0')}건 / 전체 {String(rows.length).padStart(2, '0')}건 ·{' '}
-              <Link href={`/districts/${SITE.testDistrictId}`} className="text-cyan hover:underline">
+              표시 {String(rows.length).padStart(2, '0')}건 / 전체{' '}
+              {String(rows.length).padStart(2, '0')}건 ·{' '}
+              <Link
+                href={`/districts/${SITE.testDistrictId}`}
+                className="text-cyan hover:underline"
+              >
                 모두 보기 →
               </Link>
             </span>
@@ -131,7 +208,10 @@ export default function HomePage() {
             {rows.map((row) => {
               const top = listPromises(row.candidate.id)
                 .slice()
-                .sort((a, b) => b.specificityScore - a.specificityScore || a.orderNo - b.orderNo)
+                .sort(
+                  (a, b) =>
+                    b.specificityScore - a.specificityScore || a.orderNo - b.orderNo
+                )
                 .slice(0, 2);
               return (
                 <CandidateCard
@@ -150,17 +230,25 @@ export default function HomePage() {
 
       {/* ===== CROSS-CHECK TEASER ===== */}
       <section>
-        <div className="mx-auto max-w-7xl px-6 py-12">
+        <div className="mx-auto max-w-7xl px-6 py-14">
           <div className="hud-panel relative grid gap-8 p-6 sm:p-10 lg:grid-cols-2">
             <RegistrationMarks color="lime" inset={10} />
             <div>
               <HudLabel tone="lime">함께 확인할 지점</HudLabel>
-              <h3 className="mt-2 display-ko text-3xl font-bold text-ink">
-                함께 <span className="stroke-cyan">확인</span>할 지점
+              <h3 className="mt-2 display-ko text-3xl font-bold leading-tight text-ink">
+                함께{' '}
+                <span className="relative inline-block">
+                  <span className="relative z-10">확인</span>
+                  <span
+                    aria-hidden
+                    className="absolute inset-x-0 bottom-[0.08em] z-0 h-[0.14em] bg-cyan"
+                  />
+                </span>
+                할 지점
               </h3>
               <p className="mt-4 max-w-md text-[14.5px] leading-relaxed text-ink/75">
-                공개자료와 공약을 함께 살펴볼 때 도움이 될 만한 항목을 운영자가
-                작성하거나 자동 매칭으로 찾아 표시합니다. 서비스가 의혹을 만들지 않습니다.
+                공개자료와 공약을 함께 살펴볼 때 도움이 될 만한 항목을 운영자가 작성하거나
+                자동 매칭으로 찾아 표시합니다. 서비스가 의혹을 만들지 않습니다.
               </p>
             </div>
             <div className="flex flex-col justify-end gap-3">
@@ -180,7 +268,10 @@ export default function HomePage() {
               </Link>
               <p className="label-ko text-dim">
                 회신은 자료 갱신으로 진행됩니다 ·{' '}
-                <a href={`mailto:${SITE.contactEmail}`} className="text-cyan hover:underline">
+                <a
+                  href={`mailto:${SITE.contactEmail}`}
+                  className="text-cyan hover:underline"
+                >
                   {SITE.contactEmail}
                 </a>
               </p>
