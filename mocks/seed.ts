@@ -29,7 +29,7 @@ export const districts: District[] = [
     name: '샘플 시 가나구청장',
     region: '샘플 시',
     positionTitle: '구청장',
-    description: '본 District 및 후보 정보는 시연용 가상 데이터입니다.',
+    description: '본 지역 및 후보 정보는 시연용 가상 데이터입니다.',
   },
 ];
 
@@ -273,7 +273,7 @@ export const promises: CandidatePromise[] = [
     specificityScore: 1,
     source: 'manual',
     crossCheckText:
-      '본 후보는 부동산 비중이 District 내 상위 분위에 해당하는 공개 자료가 있습니다. 주거 분야 공약의 영향 범위(임대·매매·재건축 등)를 함께 살펴보는 것이 좋습니다.',
+      '본 후보는 부동산 비중이 지역 내 상위 분위에 해당하는 공개 자료가 있습니다. 주거 분야 공약의 영향 범위(임대·매매·재건축 등)를 함께 살펴보는 것이 좋습니다.',
   },
   {
     id: 'pr_003_2',
@@ -387,7 +387,7 @@ export const checkCards: CandidateCheckCard[] = [
     type: 'asset',
     severity: 'check',
     title: '재산 분야 부동산 비중 상위',
-    body: 'District 내 후보 중 부동산 비중 상위 분위에 해당합니다. 자산 구성은 공개 자료 기준입니다.',
+    body: '지역 내 후보 중 부동산 비중 상위 분위에 해당합니다. 자산 구성은 공개 자료 기준입니다.',
     sourceUrl: 'https://example.test/disclosure/cand_003#asset',
   },
   {

@@ -100,7 +100,7 @@ export default async function CandidatePage({ params }: PageProps) {
               {candidate.name}
             </h1>
             <p className="label-ko mt-2 text-dim">
-              · {candidate.party}
+              {candidate.party}
               {candidate.birthYear ? ` · ${candidate.birthYear}년생` : ''} · 본 정보는 공개자료 기준
             </p>
             {district ? (
