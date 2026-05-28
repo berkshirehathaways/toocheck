@@ -72,7 +72,7 @@ function CandidateChip({ c }: { c: CandidateLite }) {
       <span className={ps.text}>{c.party}</span>
     </>
   );
-  const base = `label-ko flex items-baseline gap-1.5 border border-hair border-l-2 px-2.5 py-1.5 ${ps.accent}`;
+  const base = `label-ko flex min-h-[40px] items-center gap-1.5 border border-hair border-l-2 px-2.5 py-2 ${ps.accent}`;
 
   if (!c.id) {
     return <span className={`${base} bg-white/[0.02] text-ink/70`}>{inner}</span>;
