@@ -163,7 +163,19 @@ export default function HomePage() {
                 비당파
               </span>
             </div>
-            <p className="label-ko mt-6 text-dim">
+            <div className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-2">
+              <p className="label-ko text-dim">
+                <span className="text-ink/70">+ 자료 빈칸 보존 · 정정 가능</span>
+              </p>
+              <Link
+                href="/principles"
+                className="label-ko group inline-flex items-center gap-1 text-cyan hover:underline"
+              >
+                전체 원칙 보기{' '}
+                <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
+              </Link>
+            </div>
+            <p className="label-ko mt-3 text-dim">
               → 자료의 빈칸은 빈칸으로 둡니다. 잘못된 자료는 누구나 정정 요청할 수 있습니다.
             </p>
           </div>
