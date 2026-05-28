@@ -1,6 +1,6 @@
 # 투표 전 체크 · Toocheck
 
-공개자료를 바탕으로 후보자 정보를 비교해 보여주는 비당파 도구. mock-first localhost MVP.
+공개자료를 바탕으로 후보자 정보를 비교해 보여주는 정치 중립 비교 도구. mock-first localhost MVP.
 
 - 서비스: <https://toocheck.site>
 - 운영: 투체크팀 · <contact@alphaview.kr>

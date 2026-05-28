@@ -39,7 +39,7 @@ export async function POST(req: Request) {
   }
   const hits = findForbiddenWords(body.factualClaim);
   if (hits.length > 0) {
-    return apiError('forbidden_words', '본문에 비당파성 정책에 어긋나는 표현이 포함되어 있습니다.', {
+    return apiError('forbidden_words', '본문에 정치 중립성 정책에 어긋나는 표현이 포함되어 있습니다.', {
       details: { words: hits.map((h) => h.word) },
     });
   }

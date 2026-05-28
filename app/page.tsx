@@ -155,7 +155,7 @@ export default function HomePage() {
         <div className="mx-auto max-w-7xl px-6 py-14">
           <div className="hud-panel relative px-6 py-8 sm:px-10">
             <RegistrationMarks color="cyan" inset={10} />
-            <HudLabel tone="cyan">서비스 원칙 · 5가지</HudLabel>
+            <HudLabel tone="cyan">서비스 원칙 · 3가지</HudLabel>
             <div className="mt-4 flex flex-col gap-1 display-ko text-[clamp(28px,5vw,52px)] font-extrabold leading-tight text-ink">
               <span>공개자료 우선</span>
               <span className="text-ink/75">출처·기준일 명시</span>
@@ -163,15 +163,12 @@ export default function HomePage() {
                 정치적 <span className="lime-block">중립</span>
               </span>
             </div>
-            <div className="mt-6 flex flex-wrap items-baseline gap-x-3 gap-y-2">
-              <p className="label-ko text-dim">
-                <span className="text-ink/70">+ 자료 빈칸 보존 · 수정 가능</span>
-              </p>
+            <div className="mt-6">
               <Link
                 href="/principles"
                 className="label-ko group inline-flex items-center gap-1 text-cyan hover:underline"
               >
-                전체 원칙 보기{' '}
+                각 원칙 자세히 보기{' '}
                 <span aria-hidden className="transition-transform group-hover:translate-x-0.5">→</span>
               </Link>
             </div>
@@ -235,10 +232,8 @@ export default function HomePage() {
             <div>
               <HudLabel tone="lime">공약과 공개자료가 만나는 자리</HudLabel>
               <h3 className="mt-2 display-ko text-3xl font-bold leading-tight text-ink">
-                자료 수정을{' '}
-                <span className="underline decoration-cyan decoration-[0.085em] underline-offset-[0.18em]">
-                  요청
-                </span>
+                자료가 틀렸다면,{' '}
+                <span className="lime-block">수정</span>
                 하세요
               </h3>
               <p className="mt-4 max-w-md text-[14.5px] leading-relaxed text-ink/75">
@@ -251,7 +246,7 @@ export default function HomePage() {
                 href="/principles"
                 className="label-ko-lg group inline-flex items-center justify-between border border-hair px-4 py-3 text-ink/85 transition-colors hover:border-cyan hover:text-cyan"
               >
-                <span>서비스 원칙 5가지 살펴보기</span>
+                <span>서비스 원칙 3가지 살펴보기</span>
                 <span aria-hidden className="transition-transform group-hover:translate-x-1">→</span>
               </Link>
               <Link

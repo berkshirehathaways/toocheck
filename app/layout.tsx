@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   description: SITE.disclaimerLong,
   applicationName: SITE.nameKo,
-  keywords: ['선거', '후보자', '공개자료', '비당파', '비교'],
+  keywords: ['선거', '후보자', '공개자료', '정치적 중립', '비교'],
   openGraph: {
     type: 'website',
     locale: 'ko_KR',

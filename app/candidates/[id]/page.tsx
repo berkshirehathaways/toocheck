@@ -42,7 +42,7 @@ export async function generateMetadata({ params }: PageProps) {
   if (!c) return { title: '후보를 찾을 수 없음' };
   return {
     title: `기호 ${c.ballotNumber} ${c.name} (${c.party})`,
-    description: `${c.name} 후보의 공개자료·공약·확인 필요도 — 비당파 비교 자료`,
+    description: `${c.name} 후보의 공개자료·공약·확인 필요도 — 정치 중립 비교 자료`,
   };
 }
 
