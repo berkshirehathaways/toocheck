@@ -14,3 +14,7 @@ export { StrokeEcho } from './StrokeEcho';
 export { RegistrationMarks } from './RegistrationMarks';
 export { PhaseMap } from './PhaseMap';
 export { SpeedLines } from './SpeedLines';
+export { AddressSearch } from './AddressSearch';
+export type { AddressSearchResult, AddressSearchProps } from './AddressSearch';
+export { DistrictLookupPanel } from './DistrictLookupPanel';
+export { RegionSearch } from './RegionSearch';
