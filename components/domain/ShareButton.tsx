@@ -37,6 +37,8 @@ export interface ShareButtonProps {
   size?: 'sm' | 'md';
 }
 
+const MENU_WIDTH = 176; // w-44
+
 function ShareIcon() {
   return (
     <svg aria-hidden viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" strokeWidth="1.8">
@@ -51,7 +53,20 @@ export function ShareButton({ path, title, description, imagePath, className, si
   const [copied, setCopied] = React.useState(false);
   const [kakaoReady, setKakaoReady] = React.useState(false);
   const [canNativeShare, setCanNativeShare] = React.useState(false);
+  // 팝오버가 오른쪽으로 넘치면 왼쪽 기준으로 뒤집어 화면 밖 잘림을 막는다.
+  const [align, setAlign] = React.useState<'start' | 'end'>('start');
   const boxRef = React.useRef<HTMLDivElement>(null);
+
+  const toggleOpen = React.useCallback(() => {
+    setOpen((prev) => {
+      const next = !prev;
+      if (next && boxRef.current) {
+        const rect = boxRef.current.getBoundingClientRect();
+        setAlign(rect.left + MENU_WIDTH <= window.innerWidth - 8 ? 'start' : 'end');
+      }
+      return next;
+    });
+  }, []);
 
   React.useEffect(() => {
     setKakaoReady(Boolean(window.Kakao?.isInitialized?.()));
@@ -117,7 +132,7 @@ export function ShareButton({ path, title, description, imagePath, className, si
     <div ref={boxRef} className={cn('relative inline-block', className)}>
       <button
         type="button"
-        onClick={() => setOpen((v) => !v)}
+        onClick={toggleOpen}
         aria-haspopup="menu"
         aria-expanded={open}
         className={cn(
@@ -131,7 +146,10 @@ export function ShareButton({ path, title, description, imagePath, className, si
       {open ? (
         <div
           role="menu"
-          className="absolute right-0 z-20 mt-1 w-44 border border-hair bg-bg shadow-lg"
+          className={cn(
+            'absolute z-20 mt-1 w-44 border border-hair bg-bg shadow-lg',
+            align === 'end' ? 'right-0' : 'left-0'
+          )}
         >
           {kakaoReady ? (
             <button type="button" role="menuitem" onClick={doKakao} className={itemCls}>
