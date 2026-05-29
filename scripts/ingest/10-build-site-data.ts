@@ -312,7 +312,9 @@ function main() {
           category: 'other' as PromiseCategory, // 중립성 — 자동 분류 안 함
           specificityScore: score,
           source: 'nec_policy',
-          sourceUrl: detail?.sourceUrl,
+          // 출처 deep link 미설정: info.nec 상세는 인적사항만(공약 없음),
+          // policy.nec 공약 뷰어는 외부 직접 접근 차단(세션 필요).
+          // 공약 본문(body)은 본 사이트에 수집·표시되며 출처는 PromiseCard가 텍스트로 명시.
           necElements: elems,
         });
       }

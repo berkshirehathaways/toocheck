@@ -104,7 +104,11 @@ export function PromiseCard({ promise, index, defaultExpanded = false, className
         <div className="mt-3">
           <SourceLink href={promise.sourceUrl}>공약 원문</SourceLink>
         </div>
-      ) : null}
+      ) : (
+        <p className="label-ko mt-3 text-dim">
+          출처 · 중앙선거관리위원회 정책공약마당 (5대공약)
+        </p>
+      )}
     </article>
   );
 }
