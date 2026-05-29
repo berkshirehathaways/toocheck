@@ -4,6 +4,7 @@ import {
   ChipDivider,
   HudLabel,
   NeutralBadge,
+  RegionSearch,
   RegistrationMarks,
   SpeedLines,
   StatusChip,
@@ -153,6 +154,13 @@ export default function HomePage() {
               </footer>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ===== REGION SEARCH ===== */}
+      <section className="border-b border-hair">
+        <div className="mx-auto max-w-5xl px-6 py-14">
+          <RegionSearch />
         </div>
       </section>
 
