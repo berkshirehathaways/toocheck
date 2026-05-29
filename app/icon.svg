@@ -1,0 +1,7 @@
+<svg width="100" height="100" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="투체크">
+  <!-- 시안 8 — 사이언/라임 대각 스플릿(비교의 은유) + 라임 체크 -->
+  <rect width="100" height="100" fill="#0c0d10"/>
+  <path d="M0 0 H100 V100 Z" fill="#06b6d4"/>
+  <path d="M0 0 V100 H100 Z" fill="#bef264"/>
+  <path d="M28 50 L44 66 L74 32" fill="none" stroke="#050505" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

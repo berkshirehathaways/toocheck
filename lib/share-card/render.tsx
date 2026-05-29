@@ -4,12 +4,14 @@ import type * as React from 'react';
 
 import { SATORI_FONTS } from './fonts';
 
-export type ShareCardSize = 'square' | 'story' | 'wide';
+export type ShareCardSize = 'square' | 'story' | 'wide' | 'og';
 
 const SIZES: Record<ShareCardSize, { width: number; height: number }> = {
   square: { width: 1080, height: 1080 },
   story: { width: 1080, height: 1920 },
   wide: { width: 1080, height: 566 },
+  // 사이트 대표 OG / 카카오 링크 썸네일 (2:1 큰 이미지)
+  og: { width: 1200, height: 630 },
 };
 
 export async function renderShareCardPng(

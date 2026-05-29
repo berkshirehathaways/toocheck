@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>투체크 · 파비콘 시안 10종</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@500;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<style>
+  :root{
+    --bg:#050505; --bg-elev:#0c0d10; --ink:#F3F4F6;
+    --cyan:#06b6d4; --lime:#bef264;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',sans-serif;
+    background:#16171a; color:#e7e7e7; padding:48px 32px 120px; line-height:1.6;
+  }
+  .head{max-width:1180px; margin:0 auto 40px;}
+  .head h1{font-size:28px; font-weight:800; letter-spacing:-.02em; color:#fff; margin-bottom:10px;}
+  .head p{color:#a7a7a7; font-size:15px; max-width:780px;}
+  .head .meta{margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#7a7a7a; letter-spacing:.06em;}
+
+  .grid{max-width:1180px; margin:0 auto; display:grid; grid-template-columns:repeat(2,1fr); gap:24px;}
+  .card{background:#1f2125; border:1px solid #2c2f35; border-radius:14px; padding:24px;}
+  .card .cap{display:flex; align-items:baseline; gap:12px; margin-bottom:20px;}
+  .card .cap .no{font-family:'Bebas Neue',sans-serif; font-size:26px; color:var(--cyan); line-height:1;}
+  .card .cap .name{font-size:16px; font-weight:700; color:#fff;}
+  .card .cap .desc{font-size:12.5px; color:#9a9a9a; margin-top:2px;}
+
+  .specimens{display:flex; align-items:center; gap:26px; flex-wrap:wrap;}
+  .big{width:104px; height:104px; flex:none;}
+  .big svg{display:block; width:104px; height:104px; border-radius:24px;}
+  .sizes{display:flex; align-items:flex-end; gap:16px;}
+  .sz{display:flex; flex-direction:column; align-items:center; gap:6px;}
+  .sz svg{display:block; border-radius:7px;}
+  .sz .s32 svg, .sz svg.s32{border-radius:7px;}
+  .sz label{font-family:'JetBrains Mono',monospace; font-size:10px; color:#7a7a7a; letter-spacing:.05em;}
+
+  /* 실제 브라우저 탭 미리보기 */
+  .tabrow{margin-top:22px; background:#dfe1e5; border-radius:9px 9px 0 0; padding:8px 8px 0; }
+  .tab{display:inline-flex; align-items:center; gap:8px; background:#fff; border-radius:9px 9px 0 0;
+    padding:8px 12px; max-width:230px; box-shadow:0 -1px 0 rgba(0,0,0,.05);}
+  .tab svg{width:16px; height:16px; border-radius:4px; flex:none;}
+  .tab .t{font-size:12.5px; color:#3c4043; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;}
+  .tab .x{margin-left:4px; color:#80868b; font-size:14px;}
+  .tabdark{background:#2b2d30;}
+  .tabdark .tab{background:#3c3f43;}
+  .tabdark .tab .t{color:#e3e3e3;}
+
+  .foot{max-width:1180px; margin:40px auto 0; color:#7a7a7a; font-size:13px; line-height:1.7;}
+  .foot code{background:#000; padding:2px 7px; border-radius:4px; color:var(--lime); font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+
+<div class="head">
+  <h1>투체크 · 파비콘 시안 10종</h1>
+  <p>브라우저 탭·북마크에 쓰일 아이콘 시안입니다. 브랜드 컬러(다크 <b>#050505</b> / 사이언 <b>#06b6d4</b> / 라임 <b>#bef264</b>)와 서비스명의 '체크' 의미를 활용했습니다. 각 시안은 앱 아이콘(104px) + 실제 노출 크기(32 / 16px) + 라이트·다크 탭 미리보기로 <b>작은 크기 가독성</b>까지 확인하도록 구성했습니다.</p>
+  <div class="meta">FORMAT SVG (벡터 · 무손실 스케일) · TARGET app/icon.svg + app/icon.tsx · SHAPE 정사각 라운드</div>
+</div>
+
+<div class="grid" id="grid"></div>
+
+<div class="foot">
+  <p><b>사용 안내</b> — 마음에 드는 시안을 고르면 <code>app/icon.svg</code>(정적) 또는 <code>app/icon.tsx</code>(satori 동적 생성)로 옮겨 브라우저 탭 아이콘으로 적용합니다. <code>app/apple-icon.tsx</code>(홈 화면 추가용)도 같은 디자인으로 함께 만들 수 있습니다.</p>
+  <p style="margin-top:8px;">16px에서 가장 안정적인 건 <b>01·02·05·07</b>(단순 도형/체크), 브랜드 각인은 <b>03·04·09</b>(글자/모노그램)입니다.</p>
+</div>
+
+<script>
+// 아이콘은 viewBox 0 0 100 100 기준 SVG 내부 마크업으로 정의 → 여러 크기로 재사용.
+const BG='#050505', ELEV='#0c0d10', CYAN='#06b6d4', LIME='#bef264', INK='#F3F4F6';
+
+const ICONS = [
+  {
+    name:'라임 도트 (헤더 일치)',
+    desc:'헤더의 라임 사각 마커를 그대로. 가장 단순·확실하게 식별.',
+    dark:true,
+    svg:`<rect width="100" height="100" fill="${BG}"/>
+         <rect x="34" y="34" width="32" height="32" rx="3" fill="${LIME}"/>`
+  },
+  {
+    name:'체크마크 ✓',
+    desc:"서비스명 '체크'를 직관적으로. 16px에서도 또렷.",
+    dark:true,
+    svg:`<rect width="100" height="100" fill="${BG}"/>
+         <path d="M26 52 L44 70 L76 30" fill="none" stroke="${LIME}" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>`
+  },
+  {
+    name:"'체' 글자",
+    desc:"브랜드 한글 이니셜. 라임 배경 + 다크 글자로 가독성↑.",
+    dark:false,
+    svg:`<rect width="100" height="100" fill="${LIME}"/>
+         <text x="50" y="50" fill="${BG}" font-family="Pretendard Variable,Pretendard,sans-serif" font-weight="800" font-size="68" text-anchor="middle" dominant-baseline="central" letter-spacing="-2">체</text>`
+  },
+  {
+    name:"'투' 글자",
+    desc:"'투표'의 첫 글자. 다크 배경 + 라임 글자.",
+    dark:true,
+    svg:`<rect width="100" height="100" fill="${BG}"/>
+         <text x="50" y="50" fill="${LIME}" font-family="Pretendard Variable,Pretendard,sans-serif" font-weight="800" font-size="68" text-anchor="middle" dominant-baseline="central" letter-spacing="-2">투</text>`
+  },
+  {
+    name:'투표용지 체크박스',
+    desc:'네모 칸에 체크 — 투표+확인 의미를 한 번에.',
+    dark:true,
+    svg:`<rect width="100" height="100" fill="${BG}"/>
+         <rect x="24" y="24" width="52" height="52" rx="8" fill="none" stroke="${INK}" stroke-opacity="0.35" stroke-width="6"/>
+         <path d="M34 51 L46 63 L68 37" fill="none" stroke="${LIME}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>`
+  },
+  {
+    name:'회전 라임 스탬프',
+    desc:"포스트잇 스탬프 모티프(약간 기울인 라임) + 다크 체크.",
+    dark:true,
+    svg:`<rect width="100" height="100" fill="${BG}"/>
+         <g transform="rotate(-9 50 50)">
+           <rect x="26" y="30" width="48" height="40" rx="4" fill="${LIME}"/>
+           <path d="M37 51 L46 60 L63 40" fill="none" stroke="${BG}" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/>
+         </g>`
+  },
+  {
+    name:'기호 동그라미 + 체크',
+    desc:'투표 기호(○) 안의 체크. 중립 비교 정체성 암시.',
+    dark:true,
+    svg:`<rect width="100" height="100" fill="${BG}"/>
+         <circle cx="50" cy="50" r="30" fill="none" stroke="${CYAN}" stroke-width="6"/>
+         <path d="M36 51 L46 61 L65 39" fill="none" stroke="${LIME}" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>`
+  },
+  {
+    name:'사이언/라임 스플릿',
+    desc:'대각 분할 — 비교(둘을 나란히)의 시각적 은유.',
+    dark:true,
+    svg:`<rect width="100" height="100" fill="${ELEV}"/>
+         <path d="M0 0 H100 V100 Z" fill="${CYAN}" fill-opacity="0.9"/>
+         <path d="M0 0 V100 H100 Z" fill="${LIME}"/>
+         <path d="M30 50 L45 65 L72 33" fill="none" stroke="${BG}" stroke-width="9" stroke-linecap="round" stroke-linejoin="round"/>`
+  },
+  {
+    name:'TC 모노그램',
+    desc:"Toocheck 약자. 사이언 T + 라임 C 겹침. 영문 컨텍스트용.",
+    dark:true,
+    svg:`<rect width="100" height="100" fill="${BG}"/>
+         <text x="38" y="54" fill="${CYAN}" font-family="Space Grotesk,sans-serif" font-weight="700" font-size="62" text-anchor="middle" dominant-baseline="central">T</text>
+         <text x="64" y="58" fill="${LIME}" font-family="Space Grotesk,sans-serif" font-weight="700" font-size="62" text-anchor="middle" dominant-baseline="central">C</text>`
+  },
+  {
+    name:'HUD 브래킷 + 체크',
+    desc:'방송 그래픽 코너 브래킷 + 라임 체크. 앱 톤과 가장 일관.',
+    dark:true,
+    svg:`<rect width="100" height="100" fill="${BG}"/>
+         <path d="M22 32 V22 H32" fill="none" stroke="${CYAN}" stroke-width="6" stroke-linecap="square"/>
+         <path d="M78 68 V78 H68" fill="none" stroke="${CYAN}" stroke-width="6" stroke-linecap="square"/>
+         <path d="M30 52 L45 67 L72 34" fill="none" stroke="${LIME}" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>`
+  },
+];
+
+function svgEl(inner, px){
+  return `<svg width="${px}" height="${px}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">${inner}</svg>`;
+}
+
+const grid = document.getElementById('grid');
+ICONS.forEach((ic, i) => {
+  const no = String(i+1).padStart(2,'0');
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="cap">
+      <span class="no">${no}</span>
+      <div>
+        <div class="name">${ic.name}</div>
+        <div class="desc">${ic.desc}</div>
+      </div>
+    </div>
+    <div class="specimens">
+      <div class="big">${svgEl(ic.svg,104)}</div>
+      <div class="sizes">
+        <div class="sz">${svgEl(ic.svg,32)}<label>32px</label></div>
+        <div class="sz">${svgEl(ic.svg,16)}<label>16px</label></div>
+      </div>
+    </div>
+    <div class="tabrow">
+      <div class="tab">${svgEl(ic.svg,16)}<span class="t">투체크 · 투표 전 체크</span><span class="x">×</span></div>
+    </div>
+    <div class="tabrow tabdark">
+      <div class="tab">${svgEl(ic.svg,16)}<span class="t">투체크 · 투표 전 체크</span><span class="x">×</span></div>
+    </div>
+  `;
+  grid.appendChild(card);
+});
+</script>
+
+</body>
+</html>

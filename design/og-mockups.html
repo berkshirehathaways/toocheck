@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>투체크 · OG 공유 이미지 시안 10종</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+<style>
+  :root{
+    --bg:#050505; --bg-elev:#0c0d10; --ink:#F3F4F6;
+    --cyan:#06b6d4; --lime:#bef264;
+    --info:#3b6fb0; --check:#a86b1f; --attention:#7c2b2b;
+    --hair:rgba(255,255,255,.10); --hair-soft:rgba(255,255,255,.06);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    font-family:'Pretendard Variable',Pretendard,-apple-system,'Apple SD Gothic Neo',sans-serif;
+    background:#1a1b1e; color:#e7e7e7; padding:48px 32px 120px; line-height:1.6;
+  }
+  .page-head{max-width:1240px; margin:0 auto 48px;}
+  .page-head h1{font-size:30px; font-weight:800; letter-spacing:-.02em; color:#fff; margin-bottom:10px;}
+  .page-head p{color:#a7a7a7; font-size:15px; max-width:760px;}
+  .page-head .meta{margin-top:14px; font-family:'JetBrains Mono',monospace; font-size:12px; color:#7a7a7a; letter-spacing:.06em;}
+
+  .gallery{max-width:1240px; margin:0 auto; display:flex; flex-direction:column; gap:56px;}
+  .item{display:flex; flex-direction:column; gap:14px;}
+  .caption{display:flex; align-items:baseline; gap:14px; flex-wrap:wrap;}
+  .caption .no{font-family:'Bebas Neue',sans-serif; font-size:28px; color:var(--cyan); line-height:1;}
+  .caption .title{font-size:18px; font-weight:700; color:#fff;}
+  .caption .desc{font-size:14px; color:#9a9a9a;}
+
+  /* 모든 카드는 1200×630 (OG/카카오 2:1 비율). 스크린샷용 실제 픽셀 크기 */
+  .card{
+    width:1200px; height:630px; position:relative; overflow:hidden;
+    border-radius:10px; box-shadow:0 20px 60px rgba(0,0,0,.5);
+    transform-origin:top left;
+  }
+  /* 화면이 좁으면 축소해서 보여주되, 캡처 시엔 100%로 */
+  @media (max-width:1280px){
+    .card{transform:scale(.97);}
+  }
+
+  /* ===== 공통 모티프 ===== */
+  .grid-bg{position:absolute; inset:0;
+    background-image:
+      linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px),
+      linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);
+    background-size:192px 192px,192px 192px,48px 48px,48px 48px;
+  }
+  .mono{font-family:'JetBrains Mono',monospace; text-transform:uppercase; letter-spacing:.22em;}
+  .lime-block{
+    background:var(--lime); color:#050505; padding:.04em .22em .12em;
+    display:inline-block; transform:rotate(-2.2deg);
+    box-shadow:0 8px 18px rgba(190,242,100,.28), inset 0 -2px 0 rgba(0,0,0,.06);
+  }
+  .bracket{position:absolute; width:46px; height:46px; border:3px solid var(--cyan);}
+  .bk-tl{top:40px; left:40px; border-right:0; border-bottom:0;}
+  .bk-tr{top:40px; right:40px; border-left:0; border-bottom:0;}
+  .bk-bl{bottom:40px; left:40px; border-right:0; border-top:0;}
+  .bk-br{bottom:40px; right:40px; border-left:0; border-top:0;}
+
+  .reg{position:absolute; width:34px; height:34px;}
+  .reg::before,.reg::after{content:''; position:absolute; background:rgba(255,255,255,.45);}
+  .reg::before{left:50%; top:0; width:1px; height:100%; transform:translateX(-.5px);}
+  .reg::after{top:50%; left:0; height:1px; width:100%; transform:translateY(-.5px);}
+
+  .disc{position:absolute; left:64px; right:64px; bottom:54px;
+    border-top:1px solid var(--hair); padding-top:18px;
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;}
+  .disc .txt{font-size:17px; color:rgba(243,244,246,.55); max-width:720px; line-height:1.45;}
+  .disc .brand{font-family:'JetBrains Mono',monospace; font-size:15px; letter-spacing:.1em; color:rgba(243,244,246,.7); white-space:nowrap;}
+  .disc .brand b{color:var(--ink);}
+
+  .footer-note{max-width:1240px; margin:64px auto 0; color:#7a7a7a; font-size:13px; line-height:1.7;}
+  .footer-note code{background:#000; padding:2px 7px; border-radius:4px; color:var(--lime); font-family:'JetBrains Mono',monospace;}
+</style>
+</head>
+<body>
+
+<div class="page-head">
+  <h1>투체크 · OG 공유 이미지 시안 10종</h1>
+  <p><b>투표 전 체크(투체크)</b>는 중앙선거관리위원회 공개자료를 바탕으로 후보자를 정치적 중립으로 비교해 보여주는 도구입니다. 아래는 카카오톡·SNS 링크 공유 시 노출되는 OG 썸네일 디자인 시안입니다.</p>
+  <div class="meta">SIZE 1200 × 630 (OG / KAKAO 2:1) · FONT Pretendard · Bebas Neue · JetBrains Mono · PALETTE #050505 / cyan #06b6d4 / lime #bef264</div>
+</div>
+
+<div class="gallery">
+
+  <!-- 01 시그니처 블루프린트 HUD -->
+  <div class="item">
+    <div class="caption"><span class="no">01</span><span class="title">시그니처 · 블루프린트 HUD</span><span class="desc">앱 본체와 동일한 방송 그래픽 톤. 코너 브래킷 + 라임 스탬프. 가장 안전한 메인 후보.</span></div>
+    <div class="card" style="background:var(--bg); color:var(--ink);">
+      <div class="grid-bg"></div>
+      <div class="bracket bk-tl"></div><div class="bracket bk-tr"></div>
+      <div class="bracket bk-bl"></div><div class="bracket bk-br"></div>
+      <div style="position:absolute; left:64px; top:108px;">
+        <div class="mono" style="font-size:18px; color:var(--cyan); margin-bottom:28px;">PUBLIC RECORD · 정치 중립 비교</div>
+        <div style="font-size:96px; font-weight:800; letter-spacing:-.03em; line-height:1.04;">
+          투표 전, <span class="lime-block">체크</span>
+        </div>
+        <div style="font-size:38px; font-weight:600; color:rgba(243,244,246,.78); margin-top:24px; letter-spacing:-.02em;">
+          후보자를 공개자료로 나란히 비교하세요
+        </div>
+      </div>
+      <div class="disc">
+        <div class="txt">공개자료 기반 정치 중립적 비교 도구입니다.</div>
+        <div class="brand"><b>투체크</b> · toocheck.site</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 02 라임 스탬프 타이포 -->
+  <div class="item">
+    <div class="caption"><span class="no">02</span><span class="title">라임 스탬프 타이포</span><span class="desc">브랜드명을 풀로 키우고 '체크'에 포스트잇 강조. 인지도 각인용.</span></div>
+    <div class="card" style="background:var(--bg); color:var(--ink); display:flex; align-items:center; justify-content:center;">
+      <div class="grid-bg" style="opacity:.6;"></div>
+      <div style="position:relative; text-align:center;">
+        <div class="mono" style="font-size:18px; color:var(--cyan); margin-bottom:32px;">2026 지방선거 · 후보 비교</div>
+        <div style="font-size:128px; font-weight:800; letter-spacing:-.04em; line-height:1;">
+          투표 전 <span class="lime-block" style="transform:rotate(-3deg);">체크</span>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:22px; letter-spacing:.3em; color:rgba(243,244,246,.55); margin-top:40px;">T O O C H E C K . S I T E</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 03 비교표 모티프 -->
+  <div class="item">
+    <div class="caption"><span class="no">03</span><span class="title">비교표 모티프</span><span class="desc">핵심 기능(나란히 비교)을 시각적으로. 기호만 표기 = 중립 원칙 반영.</span></div>
+    <div class="card" style="background:var(--bg); color:var(--ink);">
+      <div class="grid-bg" style="opacity:.4;"></div>
+      <div style="position:absolute; left:64px; top:72px; right:64px;">
+        <div class="mono" style="font-size:16px; color:var(--cyan);">COMPARE · 서울특별시장 후보</div>
+        <div style="font-size:52px; font-weight:800; letter-spacing:-.03em; margin-top:14px;">후보를 한 화면에서 비교</div>
+      </div>
+      <!-- faux compare columns -->
+      <div style="position:absolute; left:64px; right:64px; top:248px; display:flex; gap:20px;">
+        <!-- 항목 라벨 열 -->
+        <div style="width:150px; display:flex; flex-direction:column; gap:18px; padding-top:78px;">
+          <div class="mono" style="font-size:13px; color:rgba(243,244,246,.5);">재산</div>
+          <div class="mono" style="font-size:13px; color:rgba(243,244,246,.5);">전과</div>
+          <div class="mono" style="font-size:13px; color:rgba(243,244,246,.5);">병역</div>
+          <div class="mono" style="font-size:13px; color:rgba(243,244,246,.5);">공약</div>
+        </div>
+        <!-- 후보 컬럼 3개 -->
+        <div style="flex:1; background:var(--bg-elev); border:1px solid var(--hair); padding:22px;">
+          <div style="display:flex; align-items:center; gap:10px;"><span style="width:34px;height:34px;border-radius:50%;background:#fff;color:#000;font-weight:800;display:flex;align-items:center;justify-content:center;">1</span><span style="font-weight:700;font-size:18px;color:rgba(243,244,246,.5);">기호 1</span></div>
+          <div style="margin-top:18px; display:flex; flex-direction:column; gap:18px; font-family:'JetBrains Mono',monospace; font-size:16px;">
+            <span>21.4억</span><span style="color:var(--check);">2건</span><span>군필</span><span style="color:var(--lime);">5건</span>
+          </div>
+        </div>
+        <div style="flex:1; background:var(--bg-elev); border:1px solid var(--cyan); padding:22px; box-shadow:0 0 0 1px var(--cyan);">
+          <div style="display:flex; align-items:center; gap:10px;"><span style="width:34px;height:34px;border-radius:50%;background:#fff;color:#000;font-weight:800;display:flex;align-items:center;justify-content:center;">2</span><span style="font-weight:700;font-size:18px;color:rgba(243,244,246,.5);">기호 2</span></div>
+          <div style="margin-top:18px; display:flex; flex-direction:column; gap:18px; font-family:'JetBrains Mono',monospace; font-size:16px;">
+            <span>8.7억</span><span>없음</span><span>군필</span><span style="color:var(--lime);">5건</span>
+          </div>
+        </div>
+        <div style="flex:1; background:var(--bg-elev); border:1px solid var(--hair); padding:22px;">
+          <div style="display:flex; align-items:center; gap:10px;"><span style="width:34px;height:34px;border-radius:50%;background:#fff;color:#000;font-weight:800;display:flex;align-items:center;justify-content:center;">3</span><span style="font-weight:700;font-size:18px;color:rgba(243,244,246,.5);">기호 3</span></div>
+          <div style="margin-top:18px; display:flex; flex-direction:column; gap:18px; font-family:'JetBrains Mono',monospace; font-size:16px;">
+            <span>15.0억</span><span style="color:var(--attention);">3건</span><span style="color:var(--check);">비대상</span><span style="color:var(--lime);">4건</span>
+          </div>
+        </div>
+      </div>
+      <div class="brand" style="position:absolute; right:64px; bottom:48px; font-family:'JetBrains Mono',monospace; font-size:15px; letter-spacing:.1em; color:rgba(243,244,246,.7);"><b style="color:var(--ink);">투체크</b> · toocheck.site</div>
+    </div>
+  </div>
+
+  <!-- 04 방송 로워서드 / 스피드라인 -->
+  <div class="item">
+    <div class="caption"><span class="no">04</span><span class="title">방송 로워서드 · 스피드라인</span><span class="desc">뉴스 자막바 느낌. 사이언/라임 스피드라인으로 속도감과 시의성.</span></div>
+    <div class="card" style="background:var(--bg); color:var(--ink); display:flex; flex-direction:column; justify-content:flex-end;">
+      <div style="position:absolute; inset:0;
+        background-image:repeating-linear-gradient(105deg,transparent 0 180px,rgba(6,182,212,.10) 180px 182px,transparent 182px 320px,rgba(190,242,100,.08) 320px 322px,transparent 322px 520px,rgba(255,255,255,.05) 520px 521px,transparent 521px 760px);"></div>
+      <div style="position:absolute; top:84px; left:64px;">
+        <div class="mono" style="font-size:17px; color:var(--cyan);">LIVE · 공개자료 기반</div>
+      </div>
+      <!-- lower third bar -->
+      <div style="position:relative; margin:0 0 130px; display:flex;">
+        <div style="width:14px; background:var(--lime);"></div>
+        <div style="flex:1; background:linear-gradient(90deg,rgba(12,13,16,.96),rgba(12,13,16,.7)); border-top:1px solid var(--hair); border-bottom:1px solid var(--hair); padding:34px 64px;">
+          <div style="font-size:72px; font-weight:800; letter-spacing:-.03em; line-height:1.05;">알고 던지는 한 표</div>
+          <div style="font-size:30px; font-weight:600; color:rgba(243,244,246,.7); margin-top:10px;">후보자 재산·전과·공약을 공개자료로 확인</div>
+        </div>
+      </div>
+      <div style="position:absolute; right:64px; bottom:54px;" class="brand"><span style="font-family:'JetBrains Mono',monospace; font-size:15px; letter-spacing:.1em; color:rgba(243,244,246,.7);"><b style="color:var(--ink);">투체크</b> · toocheck.site</span></div>
+    </div>
+  </div>
+
+  <!-- 05 등록마크 미니멀 -->
+  <div class="item">
+    <div class="caption"><span class="no">05</span><span class="title">인쇄 등록마크 · 미니멀</span><span class="desc">여백 중심. 십자 등록마크로 '검수/정밀' 인상. 절제된 신뢰감.</span></div>
+    <div class="card" style="background:var(--bg); color:var(--ink); display:flex; align-items:center; justify-content:center;">
+      <div class="reg" style="top:46px; left:46px;"></div>
+      <div class="reg" style="top:46px; right:46px;"></div>
+      <div class="reg" style="bottom:46px; left:46px;"></div>
+      <div class="reg" style="bottom:46px; right:46px;"></div>
+      <div style="text-align:center;">
+        <div style="font-size:104px; font-weight:800; letter-spacing:-.04em;">투표 전 체크</div>
+        <div style="width:64px; height:3px; background:var(--cyan); margin:34px auto;"></div>
+        <div style="font-size:26px; font-weight:500; color:rgba(243,244,246,.6); letter-spacing:.02em;">공개자료 기반 · 정치 중립 후보 비교 도구</div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:15px; letter-spacing:.3em; color:rgba(243,244,246,.4); margin-top:30px;">TOOCHECK.SITE</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 06 기호 볼럿 -->
+  <div class="item">
+    <div class="caption"><span class="no">06</span><span class="title">기호(번호) 볼럿</span><span class="desc">투표용지 기호 동그라미. 신호색 3종으로 정보/확인/주의를 암시.</span></div>
+    <div class="card" style="background:var(--bg); color:var(--ink);">
+      <div class="grid-bg" style="opacity:.4;"></div>
+      <div style="position:absolute; left:64px; top:90px;">
+        <div class="mono" style="font-size:17px; color:var(--cyan); margin-bottom:22px;">정치 중립 · 기호만으로 비교</div>
+        <div style="font-size:78px; font-weight:800; letter-spacing:-.03em; line-height:1.06;">누가 더 준비됐나,<br/><span style="color:var(--lime);">기호로</span> 확인하세요</div>
+      </div>
+      <div style="position:absolute; right:80px; top:120px; display:flex; gap:26px;">
+        <div style="display:flex; flex-direction:column; gap:24px;">
+          <span style="width:120px;height:120px;border-radius:50%;border:4px solid #fff;color:#fff;font-weight:800;font-size:56px;display:flex;align-items:center;justify-content:center;">1</span>
+          <span style="width:120px;height:120px;border-radius:50%;border:4px solid var(--info);color:var(--info);font-weight:800;font-size:56px;display:flex;align-items:center;justify-content:center;">2</span>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:24px; margin-top:60px;">
+          <span style="width:120px;height:120px;border-radius:50%;border:4px solid var(--check);color:var(--check);font-weight:800;font-size:56px;display:flex;align-items:center;justify-content:center;">3</span>
+          <span style="width:120px;height:120px;border-radius:50%;border:4px solid var(--attention);color:var(--attention);font-weight:800;font-size:56px;display:flex;align-items:center;justify-content:center;">4</span>
+        </div>
+      </div>
+      <div class="disc">
+        <div class="txt">후보 지지·반대 의도가 없습니다. 공개자료만 인용합니다.</div>
+        <div class="brand"><b>투체크</b> · toocheck.site</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 07 질문형 CTA -->
+  <div class="item">
+    <div class="caption"><span class="no">07</span><span class="title">질문형 CTA</span><span class="desc">유권자에게 직접 말 걸기. 클릭 욕구 자극형 카피. SNS 확산용.</span></div>
+    <div class="card" style="background:var(--bg); color:var(--ink); display:flex; flex-direction:column; justify-content:center; padding:0 80px;">
+      <div class="grid-bg" style="opacity:.35;"></div>
+      <div style="position:relative;">
+        <div class="mono" style="font-size:18px; color:var(--cyan); margin-bottom:30px;">투표 전 체크</div>
+        <div style="font-size:90px; font-weight:800; letter-spacing:-.035em; line-height:1.08;">
+          내 지역구 후보,<br/>제대로 <span style="border-bottom:8px solid var(--cyan); padding-bottom:4px;">알고</span> 계신가요?
+        </div>
+        <div style="font-size:30px; font-weight:500; color:rgba(243,244,246,.65); margin-top:34px;">재산 · 전과 · 병역 · 공약을 30초 만에 비교 →</div>
+      </div>
+      <div style="position:absolute; right:80px; bottom:54px;" class="brand"><span style="font-family:'JetBrains Mono',monospace; font-size:15px; letter-spacing:.1em; color:rgba(243,244,246,.7);"><b style="color:var(--ink);">투체크</b> · toocheck.site</span></div>
+    </div>
+  </div>
+
+  <!-- 08 데이터 터미널 -->
+  <div class="item">
+    <div class="caption"><span class="no">08</span><span class="title">데이터 터미널 / 모노</span><span class="desc">모노스페이스 readout. '데이터 기반·검증' 무드. 디벨로퍼/데이터 친화.</span></div>
+    <div class="card" style="background:#060708; color:var(--ink); font-family:'JetBrains Mono',monospace; padding:64px;">
+      <div style="display:flex; gap:9px; margin-bottom:40px;">
+        <span style="width:14px;height:14px;border-radius:50%;background:#7c2b2b;"></span>
+        <span style="width:14px;height:14px;border-radius:50%;background:#a86b1f;"></span>
+        <span style="width:14px;height:14px;border-radius:50%;background:var(--lime);"></span>
+        <span style="margin-left:14px; font-size:15px; letter-spacing:.1em; color:rgba(243,244,246,.45);">toocheck — public-record compare</span>
+      </div>
+      <div style="font-size:17px; line-height:2.1; letter-spacing:.04em;">
+        <div style="color:rgba(243,244,246,.45);"><span style="color:var(--cyan);">$</span> toocheck fetch --source nec.go.kr</div>
+        <div style="color:var(--lime);">✓ 후보 6명 · 공개자료 로드 완료</div>
+        <div style="color:rgba(243,244,246,.45);"><span style="color:var(--cyan);">$</span> toocheck compare --district 서울시장</div>
+        <div>&nbsp;&nbsp;재산 ····· <span style="color:#fff;">load</span>&nbsp;&nbsp;전과 ····· <span style="color:#fff;">load</span>&nbsp;&nbsp;병역 ····· <span style="color:#fff;">load</span>&nbsp;&nbsp;공약 ····· <span style="color:#fff;">load</span></div>
+      </div>
+      <div style="margin-top:46px;">
+        <div style="font-family:'Pretendard Variable',sans-serif; font-size:62px; font-weight:800; letter-spacing:-.03em;">공개자료를 <span class="lime-block">검증</span>해 비교합니다</div>
+      </div>
+      <div style="position:absolute; right:64px; bottom:54px; font-size:15px; letter-spacing:.1em; color:rgba(243,244,246,.6);"><span style="color:var(--ink); font-weight:700;">투체크</span> · toocheck.site</div>
+    </div>
+  </div>
+
+  <!-- 09 라이트 에디토리얼 -->
+  <div class="item">
+    <div class="caption"><span class="no">09</span><span class="title">라이트 에디토리얼</span><span class="desc">기존 후보 공유 카드와 통일된 화이트 톤. 카톡 다크모드에서 눈에 띔.</span></div>
+    <div class="card" style="background:#ffffff; color:#171a1f; padding:64px; display:flex; flex-direction:column;">
+      <div style="display:flex; align-items:baseline; gap:14px;">
+        <span style="font-size:34px; font-weight:800; letter-spacing:-.03em;">투체크</span>
+        <span style="font-size:18px; color:#5a606b;">투표 전 체크</span>
+      </div>
+      <div style="margin:auto 0;">
+        <div style="font-family:'JetBrains Mono',monospace; font-size:15px; letter-spacing:.2em; color:var(--info); text-transform:uppercase; margin-bottom:24px;">Public Record · Neutral</div>
+        <div style="font-size:80px; font-weight:800; letter-spacing:-.035em; line-height:1.1;">후보자 정보,<br/>공개자료로 비교</div>
+        <div style="font-size:26px; color:#5a606b; margin-top:24px; font-weight:500;">재산 · 전과 · 병역 · 공약을 출처와 함께</div>
+      </div>
+      <div style="border-top:1px solid #dee2e8; padding-top:20px; display:flex; justify-content:space-between; align-items:flex-end;">
+        <span style="font-size:17px; color:#5a606b; max-width:680px;">공개자료 기반 정치 중립적 비교 도구입니다. 오류는 수정 요청을 보내주세요.</span>
+        <span style="font-family:'JetBrains Mono',monospace; font-size:14px; color:#171a1f; letter-spacing:.08em;"><b>투체크팀</b> · toocheck.site</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- 10 D-DAY 히어로 -->
+  <div class="item">
+    <div class="caption"><span class="no">10</span><span class="title">D-DAY 히어로</span><span class="desc">선거일 카운트다운. 시의성·긴급성으로 클릭 유도. 선거 직전 캠페인용.</span></div>
+    <div class="card" style="background:var(--bg); color:var(--ink); display:flex; flex-direction:column; justify-content:center; padding:0 80px;">
+      <div class="grid-bg" style="opacity:.35;"></div>
+      <div class="bracket bk-tl"></div><div class="bracket bk-br"></div>
+      <div style="position:relative; display:flex; align-items:center; gap:56px;">
+        <div style="text-align:center;">
+          <div class="mono" style="font-size:20px; color:var(--cyan); margin-bottom:8px;">2026 지방선거</div>
+          <div style="font-family:'Bebas Neue',sans-serif; font-size:200px; line-height:.82; color:var(--lime);">D-5</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:18px; letter-spacing:.2em; color:rgba(243,244,246,.5); margin-top:6px;">06 · 03 · WED</div>
+        </div>
+        <div style="width:1px; height:230px; background:var(--hair);"></div>
+        <div>
+          <div style="font-size:72px; font-weight:800; letter-spacing:-.03em; line-height:1.08;">투표 전,<br/>후보를 <span class="lime-block">체크</span>하세요</div>
+          <div style="font-size:26px; color:rgba(243,244,246,.65); margin-top:24px; font-weight:500;">내 지역구 후보를 공개자료로 비교</div>
+        </div>
+      </div>
+      <div style="position:absolute; right:80px; bottom:54px;" class="brand"><span style="font-family:'JetBrains Mono',monospace; font-size:15px; letter-spacing:.1em; color:rgba(243,244,246,.7);"><b style="color:var(--ink);">투체크</b> · toocheck.site</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="footer-note">
+  <p><b>사용 안내</b> — 각 카드는 정확히 <code>1200 × 630px</code>(OG 표준, 카카오 2:1 큰 이미지 호환)로 제작되었습니다. 브라우저에서 이 파일을 열고 원하는 카드를 캡처하거나, 추후 <code>app/opengraph-image.tsx</code>(또는 <code>@vercel/og</code>)로 옮겨 동적 OG 라우트로 자동 생성할 수 있습니다.</p>
+  <p style="margin-top:8px;">현재 <code>app/layout.tsx</code>의 <code>robots: {`{index:false}`}</code> 및 OG 이미지 미지정 상태이므로, 시안 확정 후 <code>metadata.openGraph.images</code>에 연결하면 됩니다.</p>
+</div>
+
+</body>
+</html>
