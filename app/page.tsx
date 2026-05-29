@@ -37,7 +37,7 @@ export default function HomePage() {
       <section className="relative border-b border-hair bg-bg">
         <div className="blueprint-grid pointer-events-none absolute inset-0 opacity-30" />
         <SpeedLines />
-        <div className="relative mx-auto grid max-w-7xl items-start gap-12 px-6 py-20 lg:grid-cols-[1.15fr_1fr] lg:py-28">
+        <div className="relative mx-auto grid max-w-7xl items-start gap-12 px-6 py-12 sm:py-20 lg:grid-cols-[1.15fr_1fr] lg:py-28">
           {/* LEFT — headline */}
           <div className="flex flex-col">
             <StatusChip tone="live">
