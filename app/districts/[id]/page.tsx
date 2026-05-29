@@ -4,9 +4,11 @@ import { notFound } from 'next/navigation';
 import {
   CandidateCard,
   ChipDivider,
+  ShareButton,
   StatusChip,
 } from '@/components/domain';
 import { SortSelector } from '@/components/domain/SortSelector';
+import { SITE } from '@/lib/site/config';
 import { formatSourceBasis } from '@/lib/format-date';
 import { isSortKey, sortCompareRows, type SortKey } from '@/lib/api/sort';
 import {
@@ -26,9 +28,12 @@ export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
   const d = getDistrict(id);
   if (!d) return { title: '지역을 찾을 수 없음' };
+  const ogImage = `${SITE.url}/api/share-card/region/${id}`;
   return {
     title: `${d.name} 후보 목록`,
     description: `${d.name}의 후보 정보 비교 — 공개자료 기준`,
+    openGraph: { images: [{ url: ogImage, width: 1080, height: 1080 }] },
+    twitter: { card: 'summary_large_image', images: [ogImage] },
   };
 }
 
@@ -59,7 +64,16 @@ export default async function DistrictPage({ params, searchParams }: PageProps) 
               {district.name}
             </h1>
           </div>
-          <SortSelector basePath={`/districts/${id}`} current={sort} />
+          <div className="flex items-center gap-2">
+            <ShareButton
+              size="sm"
+              path={`/districts/${id}`}
+              title={`${district.name} 후보`}
+              description={`${district.name} 후보 비교 — ${SITE.disclaimerShort}`}
+              imagePath={`/api/share-card/region/${id}`}
+            />
+            <SortSelector basePath={`/districts/${id}`} current={sort} />
+          </div>
         </div>
       </div>
 

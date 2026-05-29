@@ -18,3 +18,5 @@ export { AddressSearch } from './AddressSearch';
 export type { AddressSearchResult, AddressSearchProps } from './AddressSearch';
 export { DistrictLookupPanel } from './DistrictLookupPanel';
 export { RegionSearch } from './RegionSearch';
+export { ShareButton } from './ShareButton';
+export type { ShareButtonProps } from './ShareButton';

@@ -6,6 +6,7 @@ import {
   NeutralBadge,
   RegionSearch,
   RegistrationMarks,
+  ShareButton,
   SpeedLines,
   StatusChip,
 } from '@/components/domain';
@@ -86,9 +87,18 @@ export default function HomePage() {
               </Link>
             </div>
 
-            <p className="label-ko mt-6 text-dim">
-              모든 후보 정보는 중앙선거관리위원회 공개자료에 기반합니다.
-            </p>
+            <div className="mt-6 flex items-center gap-3">
+              <ShareButton
+                size="sm"
+                path="/"
+                title={`${SITE.nameKo} · ${SITE.nameShort}`}
+                description={SITE.disclaimerShort}
+                imagePath={`/api/share-card/region/${featuredId}`}
+              />
+              <p className="label-ko text-dim">
+                모든 후보 정보는 중앙선거관리위원회 공개자료에 기반합니다.
+              </p>
+            </div>
           </div>
 
           {/* RIGHT — live sample data instrument */}

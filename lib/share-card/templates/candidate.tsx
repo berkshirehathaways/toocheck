@@ -33,22 +33,27 @@ export function CandidateTemplate({ candidate, row, basisDate }: CandidateTempla
         </div>
       </div>
 
+      {/* Satori는 flex 컬럼의 Fragment 자식을 평탄화하지 못해 행이 가로로 붕괴한다.
+          조건부를 각 행에 분산해 직접 자식으로 둔다. */}
       <div style={{ marginTop: 40, display: 'flex', flexDirection: 'column', gap: 22 }}>
         {pending ? (
           <span style={{ fontSize: 28, color: COLORS.muted }}>자료 확인 중인 후보입니다.</span>
-        ) : (
-          <>
-            <RowItem label="재산신고액" value={formatKrwShort(row.disclosure?.assetTotal ?? null)} />
-            <RowItem
-              label="전과 공개"
-              value={(row.disclosure?.criminalRecords.length ?? 0) > 0 ? '있음' : '없음'}
-            />
-            <RowItem
-              label="체납 공개"
-              value={(row.disclosure?.taxArrears.length ?? 0) > 0 ? '있음' : '없음'}
-            />
-          </>
-        )}
+        ) : null}
+        {!pending ? (
+          <RowItem label="재산신고액" value={formatKrwShort(row.disclosure?.assetTotal ?? null)} />
+        ) : null}
+        {!pending ? (
+          <RowItem
+            label="전과 공개"
+            value={(row.disclosure?.criminalRecords.length ?? 0) > 0 ? '있음' : '없음'}
+          />
+        ) : null}
+        {!pending ? (
+          <RowItem
+            label="체납 공개"
+            value={(row.disclosure?.taxArrears.length ?? 0) > 0 ? '있음' : '없음'}
+          />
+        ) : null}
       </div>
       <Disclaimer />
     </Frame>
@@ -57,7 +62,7 @@ export function CandidateTemplate({ candidate, row, basisDate }: CandidateTempla
 
 function RowItem({ label, value }: { label: string; value: string }) {
   return (
-    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
+    <div style={{ display: 'flex', width: '100%', justifyContent: 'space-between', alignItems: 'baseline' }}>
       <span style={{ fontSize: 28, color: COLORS.muted }}>{label}</span>
       <span style={{ fontSize: 40, fontWeight: 700 }}>{value}</span>
     </div>

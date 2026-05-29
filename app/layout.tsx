@@ -3,6 +3,7 @@ import { Bebas_Neue, JetBrains_Mono, Space_Grotesk } from 'next/font/google';
 import { SITE } from '@/lib/site/config';
 import { SiteHeader } from '@/components/layout/Header';
 import { SiteFooter } from '@/components/layout/Footer';
+import { KakaoInit } from '@/components/layout/KakaoInit';
 import './globals.css';
 
 const bebas = Bebas_Neue({
@@ -71,6 +72,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${bebas.variable} ${mono.variable} ${body.variable}`}
     >
       <body className="flex min-h-screen flex-col bg-bg text-ink antialiased">
+        {process.env.NEXT_PUBLIC_KAKAO_JS_KEY ? (
+          <KakaoInit jsKey={process.env.NEXT_PUBLIC_KAKAO_JS_KEY} />
+        ) : null}
         <SiteHeader />
         <div className="flex-1">{children}</div>
         <SiteFooter />
