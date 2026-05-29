@@ -10,10 +10,12 @@ import {
   NeutralBadge,
   PromiseCard,
   RegistrationMarks,
+  ShareButton,
   SourceLink,
   StatusChip,
   ChipDivider,
 } from '@/components/domain';
+import { SITE } from '@/lib/site/config';
 import { buildCrossCheckPoints } from '@/lib/cross-check';
 import { formatSourceBasis } from '@/lib/format-date';
 import {
@@ -40,9 +42,12 @@ export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
   const c = getCandidate(id);
   if (!c) return { title: '후보를 찾을 수 없음' };
+  const ogImage = `${SITE.url}/api/share-card/candidate/${id}`;
   return {
     title: `기호 ${c.ballotNumber} ${c.name} (${c.party})`,
     description: `${c.name} 후보의 공개자료·공약 — 정치적으로 중립적인 비교 자료`,
+    openGraph: { images: [{ url: ogImage, width: 1080, height: 1080 }] },
+    twitter: { card: 'summary_large_image', images: [ogImage] },
   };
 }
 
@@ -144,11 +149,18 @@ export default async function CandidatePage({ params }: PageProps) {
                 <span>{district.name} 후보 목록</span>
               </Link>
             ) : null}
-            <div className="mt-4 flex flex-wrap gap-2">
+            <div className="mt-4 flex flex-wrap items-center gap-2">
               {candidate.electionRunCount ? (
                 <NeutralBadge tone="muted">입후보 {candidate.electionRunCount}회</NeutralBadge>
               ) : null}
               <NeutralBadge tone="muted">출처 {String(disclosure?.sourceUrls.length ?? 0).padStart(2, '0')}건</NeutralBadge>
+              <ShareButton
+                size="sm"
+                path={`/candidates/${id}`}
+                title={`기호 ${candidate.ballotNumber} ${candidate.name} · ${candidate.party}`}
+                description={`${district?.name ?? ''} 후보 공개자료·공약 — ${SITE.disclaimerShort}`}
+                imagePath={`/api/share-card/candidate/${id}`}
+              />
             </div>
           </div>
         </div>

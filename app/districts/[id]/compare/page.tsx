@@ -4,10 +4,11 @@ import { notFound } from 'next/navigation';
 import { CompareTable } from '@/components/domain/CompareTable';
 import { CompareMobile } from '@/components/domain/CompareMobile';
 import { SortSelector } from '@/components/domain/SortSelector';
-import { HudLabel, StatusChip, ChipDivider } from '@/components/domain';
+import { HudLabel, StatusChip, ChipDivider, ShareButton } from '@/components/domain';
 import { formatSourceBasis } from '@/lib/format-date';
 import { isSortKey, sortCompareRows, type SortKey } from '@/lib/api/sort';
 import { getCompareData, getDistrict, getDistrictSourceCheckedAt } from '@/mocks/loader';
+import { SITE } from '@/lib/site/config';
 
 import './print.css';
 
@@ -20,7 +21,12 @@ export async function generateMetadata({ params }: PageProps) {
   const { id } = await params;
   const d = getDistrict(id);
   if (!d) return { title: '지역을 찾을 수 없음' };
-  return { title: `${d.name} 후보 비교표` };
+  const ogImage = `${SITE.url}/api/share-card/compare/${id}`;
+  return {
+    title: `${d.name} 후보 비교표`,
+    openGraph: { images: [{ url: ogImage, width: 1080, height: 1080 }] },
+    twitter: { card: 'summary_large_image', images: [ogImage] },
+  };
 }
 
 export default async function ComparePage({ params, searchParams }: PageProps) {
@@ -45,7 +51,14 @@ export default async function ComparePage({ params, searchParams }: PageProps) {
               {district.name} · 비교표
             </h1>
           </div>
-          <div className="flex flex-wrap items-center gap-3 print:hidden">
+          <div className="flex flex-wrap items-center gap-2 print:hidden">
+            <ShareButton
+              size="sm"
+              path={`/districts/${id}/compare`}
+              title={`${district.name} 후보 비교표`}
+              description={`${district.name} 후보 11개 항목 비교 — ${SITE.disclaimerShort}`}
+              imagePath={`/api/share-card/compare/${id}`}
+            />
             <SortSelector basePath={`/districts/${id}/compare`} current={sort} />
           </div>
         </div>
