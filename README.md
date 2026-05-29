@@ -3,12 +3,12 @@
 공개자료를 바탕으로 후보자 정보를 비교해 보여주는 정치 중립 비교 도구. mock-first localhost MVP.
 
 - 서비스: <https://toocheck.site>
-- 구현: 션
+- 구현: [@shaun0927](https://github.com/shaun0927) (션)
 - 프로젝트 기획: [@berkshirehathaways](https://github.com/berkshirehathaways)
 - 운영: 투체크팀 · <contact@alphaview.kr>
 - 결정 동결: [`docs/prd-addendum.md`](./docs/prd-addendum.md), [이슈 #13](https://github.com/shaun0927/toocheck/issues/13)
 
-> 션이 만들고, [@berkshirehathaways](https://github.com/berkshirehathaways)가 기획한 프로젝트입니다.
+> [@shaun0927](https://github.com/shaun0927) (션)이 만들고, [@berkshirehathaways](https://github.com/berkshirehathaways)가 기획한 프로젝트입니다.
 
 ## 실행
 
